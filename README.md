@@ -2,6 +2,6 @@
 CSI 3335
 
 Team Members:
-*Richard Hutcheson
-*Austin Blanchard
-*Noah Lambaria
+* Richard Hutcheson
+* Austin Blanchard
+* Noah Lambaria
