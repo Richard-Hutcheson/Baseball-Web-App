@@ -19,8 +19,9 @@ Team Members:
 TIP:
 
 you can export your Anaconda environment using:\
-"conda <env_name> export > <environment_file>.yml"
+"conda env export > <environment_file>.yml" 
+*make sure to activate the environment you want to export first*
 
 
 and recreate it using:\
-"conda <env_name> create -f <environment_file>.yml"
+"conda env create -f <environment_file>.yml"
