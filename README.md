@@ -13,4 +13,4 @@ you can export your Anaconda environment using:\
 
 
 and recreate it using:\
-conda <env_name> create -f <environment_file>.yml
+"conda <env_name> create -f <environment_file>.yml"
