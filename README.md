@@ -6,6 +6,14 @@ Team Members:
 * Austin Blanchard
 * Noah Lambaria
 
+
+## Install Instructions
+* 
+## Imported Modules
+* 
+
+
+
 TIP:
 
 you can export your Anaconda environment using:\
