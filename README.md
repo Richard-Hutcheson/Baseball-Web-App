@@ -25,3 +25,5 @@ you can export your Anaconda environment using:\
 
 and recreate it using:\
 "conda env create -f <environment_file>.yml"
+
+run flask with "flask run", ensure .flaskenv has FLASK_APP environment variable saved
