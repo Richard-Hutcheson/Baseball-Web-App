@@ -12,12 +12,11 @@ def login():
     if form.validate_on_submit():
         flash('Login requested for user {}, remember_me={}'.format(
             form.username.data, form.remember_me.data))
-        return redirect('/home')
+        return redirect('/index')
     return render_template('loginpage.html', title='Sign In', form=form)
 
 @app.route('/')
 @app.route('/index')
 def index():
-    form = LoginForm()
-    return render_template("loginpage.html")
+    return render_template("homepage.html")
 
