@@ -2,26 +2,36 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
   <title>Index</title>
 </head>
 
 <body>
-  <h1 style="color: blue">Welcome to Baseball DB app</h1>
-  <p>By: Richard Hutcheson, Austin Blanchard, and Noah Lambaria</p>
+    <h1 style="color: blue">Welcome to Baseball DB app</h1>
+    <p>By: Richard Hutcheson, Austin Blanchard, and Noah Lambaria</p>
 
-  <div class="LoginContainer">
-    <form action="" method="post">
-      <label for="Username">Username:</label>
-      <input type="text" name="Username" id="Username" value="{{request.form.Username}}"></input><br>
-      <label for="Password">Password: </label>
-      <input type="password" name="Password" id="Username" value="{{request.form.Password}}"></input><br>
+  {% extends "base.html" %}
+
+    {% block content %}
+    <h1>Sign In</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+        </p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p>{{ form.submit() }}</p>
     </form>
-  </div>
+    {% endblock %}
 
-  <button id="loginButton">Login</button>
+<!--  <button id="loginButton">Login</button>-->
 </body>
 
 </html>
