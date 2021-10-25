@@ -2,33 +2,40 @@
 <html lang="en">
 
 <head>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='test.css') }}">
+   <!-- <img  class="animated-gif" src="{{url_for('static', filename='bb_gif')}}" /> -->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='baseballphoto.css') }}">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Index</title>
 </head>
-
 <body>
-    <h1 style="color: blue">Welcome to Baseball DB app</h1>
-    <p>By: Richard Hutcheson, Austin Blanchard, and Noah Lambaria</p>
 
-    {% extends "base.html" %}
+    <h1 style="color: black"><center>Welcome to Baseball DB app</center></h1>
+    <p><div style="text-align: center;">By: Richard Hutcheson, Austin Blanchard, and Noah Lambaria</div></p>
+
+
 
     {% block content %}
-        <h1>Sign In</h1>
+        <h1><div style="text-align: center;">Sign In</div></h1>
         <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
-            <p>
-                {{ form.username.label }}<br>
-                {{ form.username(size=32) }}
+                <p>
+                <center>
+                    {{ form.username.label }}<br>
+                    {{ form.username(size=32) }}
+                </center>
             </p>
             <p>
+                <center>
                 {{ form.password.label }}<br>
                 {{ form.password(size=32) }}
+                </center>
             </p>
-            <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-            <p>{{ form.submit() }}</p>
+            <center>
+                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                <p>{{ form.submit() }}</p>
+            </center>
         </form>
     {% endblock %}
 
