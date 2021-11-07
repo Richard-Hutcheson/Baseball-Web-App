@@ -1,15 +1,26 @@
 # Import Module
 import csv
 import os
-  
+
+
+OUTPUT_DIR = "./"
 #change the current directory into folder with CSV files
-os.chdir("csv_files")
+os.chdir("../csv_files")
 #get list of file names in directory
 fileList = os.listdir()
 #for every file in directory...
-for file in fileList:
-    print(file) # print file name
-    
+# for file in fileList:
+#     print(file) # print file name
+
+print(fileList)
+
+print("Clean tables: ")
+print("1. People")
+print("2. Batting")
+print("3. Pitching")
+tableOpt = int(input("Enter table: "))
+
+
     #open the file, indicate ',' as delimiter, and print each row of file
     with open(file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -22,7 +33,7 @@ for file in fileList:
             # if you want to print
             #else:
                 #print(row)
-            
+
             line_count += 1
 
         print("Processed ", line_count, " lines\n")
