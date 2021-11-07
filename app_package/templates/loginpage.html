@@ -3,50 +3,61 @@
 
 <head>
    <!-- <img  class="animated-gif" src="{{url_for('static', filename='bb_gif')}}" /> -->
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='baseballphoto.css') }}">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<!-- Google Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="../static//animate.css">
+	<!-- Custom Stylesheet -->
+	<link rel="stylesheet" href="../static//style.css">
+    <link rel= "stylesheet" type= "text/css" href= "../static/loginPage.css">
+
+  <title>Login</title>
 </head>
 <body>
-
-    <h1 style="color: black"><center>Welcome to Baseball DB app</center></h1>
-    <p><div style="text-align: center;">By: Richard Hutcheson, Austin Blanchard, and Noah Lambaria</div></p>
-
-
-
-    {% block content %}
-        <h1><div style="text-align: center;">Sign In</div></h1>
-        <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-                <p>
-                <center>
-                    {{ form.username.label }}<br>
-                    {{ form.username(size=32) }}
-                </center>
-            </p>
-            <p>
-                <center>
-                {{ form.password.label }}<br>
-                {{ form.password(size=32) }}
-                </center>
-            </p>
-            <center>
-                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-                <p>{{ form.submit() }}</p>
-            </center>
-                <p>
-                <center>
-                    <button type="button">
-                    <a href="/register">Register</a>
-                        </button>
-                </center>
-            </p>
-        </form>
-    {% endblock %}
-
-<!--  <button id="loginButton">Login</button>-->
+	<div class="container">
+		<div class="top">
+			<h1 id="title" class="hidden"><span id="logo">Baseball <span>App</span></span></h1>
+		</div>
+		<div class="login-box animated fadeInUp">
+			<div class="box-header">
+				<h2>Log In</h2>
+			</div>
+			<label for="username">Username</label>
+			<br/>
+			<input type="text" id="username">
+			<br/>
+			<label for="password">Password</label>
+			<br/>
+			<input type="password" id="password">
+			<br/>
+			<button type="submit">Sign In</button>
+			<br/>
+			<a href="#"><p class="small">Create An Account</p></a>
+		</div>
+	</div>
+    <footer class ="footer">Made by: Richard Hutcheson, Noah Lambaria, Austin Blanchard</footer>
 </body>
+
+<script>
+	$(document).ready(function () {
+    	$('#logo').addClass('animated fadeInDown');
+    	$("input:text:visible:first").focus();
+	});
+	$('#username').focus(function() {
+		$('label[for="username"]').addClass('selected');
+	});
+	$('#username').blur(function() {
+		$('label[for="username"]').removeClass('selected');
+	});
+	$('#password').focus(function() {
+		$('label[for="password"]').addClass('selected');
+	});
+	$('#password').blur(function() {
+		$('label[for="password"]').removeClass('selected');
+	});
+</script>
 
 </html>

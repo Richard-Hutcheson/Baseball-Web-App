@@ -1,4 +1,4 @@
-name: base
+name: baseballEnv
 channels:
   - defaults
 dependencies:
@@ -343,4 +343,4 @@ dependencies:
   - zstd=1.4.5=h41d2c2f_0
   - pip:
     - python-dotenv==0.19.1
-prefix: /Users/noah/opt/anaconda3/envs/baseball_project
+prefix: 

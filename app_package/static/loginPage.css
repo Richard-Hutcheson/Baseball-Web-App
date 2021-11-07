@@ -1,0 +1,13 @@
+.footer{
+    position: absolute;
+    display: block;
+    color: white;
+    bottom: 0em;
+    text-align: center;
+    left: 50%;
+    width: 100%;
+    height: 50px;
+    transform: translateX(-50%);
+    margin-bottom: 0;
+    background-color: rgba(65, 65, 65, 0.466);
+}

@@ -15,6 +15,13 @@ Team Members:
 * CSV
 
 
+# Anaconda Dependencies
+* sqlAlchemy
+* colorama
+* pymysql
+* pip install python-dotenv
+* conda install -c anaconda flask
+* conda install -c anaconda flask-wtf
 
 TIP:
 

@@ -1,1 +1,2 @@
 FLASK_APP=homepage.py
+FLASK_ENV=development
