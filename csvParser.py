@@ -3,7 +3,7 @@ import csv
 import os
   
 #change the current directory into folder with CSV files
-os.chdir("./csv_files")
+os.chdir("csv_files")
 #get list of file names in directory
 fileList = os.listdir()
 #for every file in directory...
