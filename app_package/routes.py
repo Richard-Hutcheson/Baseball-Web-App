@@ -9,6 +9,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # def homePage():
 #     return render_template('homepage.html')
 #
+
+@app.route('/')
+@app.route('/index')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -18,10 +21,6 @@ def login():
         return redirect('/mainpage')
     return render_template('loginpage.html', title='Sign In', form=form)
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return render_template("homepage.html")
 
 @app.route('/mainpage')
 def mainpage():
