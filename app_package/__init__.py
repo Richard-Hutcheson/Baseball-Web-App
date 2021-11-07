@@ -5,9 +5,6 @@ from sqlalchemy_utils import database_exists, create_database
 from myConfig import Config
 from dbconfig import user
 import pymysql
-from app_package import Classes
-from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
 
 
 app = Flask(__name__)
