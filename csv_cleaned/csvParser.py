@@ -3,16 +3,17 @@ import csv
 import os
 import pandas as pd
 
-def clean_people(files):
-    # os.chdir("./csv_files")
-
-    file = 'People.csv'
-
-    df = pd.read_csv(file, delimiter=',', usecols=['playerID', 'nameFirst', 'nameLast', 'birthYear','birthMonth','birthDay','birthCountry','birthState','birthCity', 'deathYear','deathMonth','deathDay','deathCountry','deathState','deathCity','weight','height' ])
-
+def saveCSV(dataFrame):
     os.chdir("../csv_cleaned")
+    dataFrame.to_csv('Person.csv', index=False)
 
-    df.to_csv('Person.csv', header=True)
+def clean_people(files):
+    file = 'People.csv'
+    df = pd.read_csv(file, delimiter=',')
+
+    df_clean = df[['playerID', 'nameFirst', 'nameLast', 'birthYear','birthMonth','birthDay','birthCountry','birthState','birthCity', 'deathYear','deathMonth','deathDay','deathCountry','deathState','deathCity','weight','height']]
+
+    saveCSV(df_clean)
 
 def main():
     #change the current directory into folder with CSV files
