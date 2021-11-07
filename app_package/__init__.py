@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 from myConfig import Config
-from dbconfig import user
+from dbconfigAPP import user
 import pymysql
 
 
