@@ -5,28 +5,6 @@ import pandas as pd
 import pymysql
 from dbconfigAPP import user
 
-def loadIntoDB(cur, tableName, columnNames):
-
-    params = columnNames
-
-    params.insert(0, tableName)
-
-    createTable = '''CREATE TABLE IF NOT EXISTS %s ( \
-        
-        
-    );'''
-
-    params = [os.getcwd() + '/Person.csv']
-
-    loadIntoDB = '''LOAD DATA INFILE %s \
-            INTO TABLE discounts \
-            FIELDS TERMINATED BY ',' \
-            ENCLOSED BY '"' \
-            LINES TERMINATED BY '\n' \
-            IGNORE 1 ROWS;'''
-
-    cur.execute(loadIntoDB, params)
-
 def saveCSV(dataFrame, cur):
     os.chdir("../csv_cleaned")
     dataFrame.to_csv('Person.csv', index=False)
@@ -41,7 +19,6 @@ def clean_peopleCSV(files, cur):
     df_clean = df[columns]
 
     saveCSV(df_clean, cur)
-    loadIntoDB(cur, 'People', columns)
 
 def main():
 
@@ -53,9 +30,9 @@ def main():
     #get list of file names in directory
     fileList = os.listdir()
 
-    print(os.listdir())
-
     clean_peopleCSV(fileList, cur)
+
+
 
     con.close()
 
