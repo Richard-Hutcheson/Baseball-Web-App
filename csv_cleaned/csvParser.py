@@ -5,36 +5,64 @@ import pandas as pd
 import pymysql
 from dbconfigAPP import user
 
-def saveCSV(dataFrame, cur):
+def saveCSV(dataFrame, name):
     os.chdir("../csv_cleaned")
-    dataFrame.to_csv('Person.csv', index=False)
+    dataFrame.to_csv(name, index=False)
 
 
-def clean_peopleCSV(files, cur):
+def clean_peopleCSV(files):
     file = 'People.csv'
     df = pd.read_csv(file, delimiter=',')
 
-    columns = ['playerID', 'nameFirst', 'nameLast', 'birthYear','birthMonth','birthDay','birthCountry','birthState','birthCity', 'deathYear','deathMonth','deathDay','deathCountry','deathState','deathCity','weight','height']
+    columnNames = ['playerID', 'nameFirst', 'nameLast', 'birthYear','birthMonth','birthDay','birthCountry','birthState','birthCity', 'deathYear','deathMonth','deathDay','deathCountry','deathState','deathCity','weight','height']
 
-    df_clean = df[columns]
+    df_clean = df[columnNames]
 
-    saveCSV(df_clean, cur)
+    df_clean = df_clean.rename(columns={"playerID" : "personID"})
+
+    saveCSV(df_clean, file)
+
+def clean_managerCSV(files):
+    file = 'Managers.csv'
+    file2 = 'ManagersHalf.csv'
+
+    df = pd.read_csv(file, delimiter=',')
+    df_half = pd.read_csv(file2, delimiter=',')
+
+    df.loc[df['lgID'].isnull(), 'lgID'] = "NA"
+
+    df.insert(loc=5, column='half', value=[None for i in range(0, df.shape[0])])
+    df_half.insert(loc=10, column='plyrMgr', value=[None for i in range(0, df_half.shape[0])])
+
+    df_half['isSeasonHalf'] = True
+    df['isSeasonHalf'] = False
+
+    df_combined = pd.concat([df, df_half])
+
+    df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
+
+    saveCSV(df_combined, file)
+
+
+def clean_player(files):
+    return 0;
 
 def main():
 
-    con = pymysql.connect(user=user['username'], password=user['password'], host=user['host'], db=user['db'])
-
-    cur = con.cursor()
     #change the current directory into folder with CSV files
     os.chdir("./csv_files")
     #get list of file names in directory
     fileList = os.listdir()
 
-    clean_peopleCSV(fileList, cur)
+    print("cleaning People.csv...")
+    clean_peopleCSV(fileList)
+
+    print("cleaning Manager.csv...")
+    os.chdir("../csv_files")
+    clean_managerCSV(fileList)
 
 
 
-    con.close()
 
         # with open(file) as csv_file:
         #     csv_reader = csv.reader(csv_file, delimiter=',')

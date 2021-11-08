@@ -1,4 +1,4 @@
-playerID,nameFirst,nameLast,birthYear,birthMonth,birthDay,birthCountry,birthState,birthCity,deathYear,deathMonth,deathDay,deathCountry,deathState,deathCity,weight,height
+personID,nameFirst,nameLast,birthYear,birthMonth,birthDay,birthCountry,birthState,birthCity,deathYear,deathMonth,deathDay,deathCountry,deathState,deathCity,weight,height
 aardsda01,David,Aardsma,1981.0,12.0,27.0,USA,CO,Denver,,,,,,,215.0,75.0
 aaronha01,Hank,Aaron,1934.0,2.0,5.0,USA,AL,Mobile,2021.0,1.0,22.0,USA,GA,Atlanta,180.0,72.0
 aaronto01,Tommie,Aaron,1939.0,8.0,5.0,USA,AL,Mobile,1984.0,8.0,16.0,USA,GA,Atlanta,190.0,75.0
