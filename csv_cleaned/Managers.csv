@@ -1,4 +1,4 @@
-playerID,yearID,teamID,lgID,inseason,half,G,W,L,rank,plyrMgr,isSeasonHalf
+personID,yearID,teamID,lgID,inseason,half,G,W,L,rank,plyrMgr,isSeasonHalf
 wrighha01,1871,BS1,NA,1,,31,20,10,3.0,Y,False
 youngni99,1871,WS3,NA,1,,32,15,15,4.0,N,False
 cravebi01,1871,TRO,NA,2,,25,12,12,6.0,Y,False

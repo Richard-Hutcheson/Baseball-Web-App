@@ -10,7 +10,7 @@ def saveCSV(dataFrame, name):
     dataFrame.to_csv(name, index=False)
 
 
-def clean_peopleCSV(files):
+def clean_peopleCSV():
     file = 'People.csv'
     df = pd.read_csv(file, delimiter=',')
 
@@ -22,7 +22,7 @@ def clean_peopleCSV(files):
 
     saveCSV(df_clean, file)
 
-def clean_managerCSV(files):
+def clean_managerCSV():
     file = 'Managers.csv'
     file2 = 'ManagersHalf.csv'
 
@@ -39,13 +39,21 @@ def clean_managerCSV(files):
 
     df_combined = pd.concat([df, df_half])
 
+    df_combined = df_combined.rename(columns={'playerID' : 'personID'})
+
     df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
 
     saveCSV(df_combined, file)
 
+def clean_playerCSV():
+    out_file = 'players.csv'
+    pit_file = 'Pitching.csv'
+    bat_file = 'Batting.csv'
+    outfield_file = 'Fielding.csv'
 
-def clean_player(files):
-    return 0;
+    df_pit_file = pd.read_csv(pit_file, delimiter=',')
+    df_bat_file = pd.read_csv(bat_file, delimiter=',')
+    df_outfield_file = pd.read_csv(outfield_file, delimiter=',')
 
 def main():
 
@@ -55,12 +63,15 @@ def main():
     fileList = os.listdir()
 
     print("cleaning People.csv...")
-    clean_peopleCSV(fileList)
+    clean_peopleCSV()
 
     print("cleaning Manager.csv...")
     os.chdir("../csv_files")
-    clean_managerCSV(fileList)
+    clean_managerCSV()
 
+    print("cleaning Players")
+    os.chdir("../csv_files")
+    clean_playerCSV()
 
 
 
