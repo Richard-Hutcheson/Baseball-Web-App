@@ -28,15 +28,9 @@ def mainpage():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm(request.form)
-    if request.method == 'POST' and form.validate():
-        #this will generate a hashed password that is 80 characters long
-        hash_pass = generate_password_hash(form.password.data,method='sha256')
-        #user = User(form.username.data,hash_pass)
+    
+    return render_template('register.html', title='Create Account')
 
-
-        #db_session.add(user)
-        flash('account created!')
-        return redirect('/login')
-    return render_template('register.html', title='Register', form=form)
-
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('pageNotFound.html')
