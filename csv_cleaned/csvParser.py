@@ -118,6 +118,46 @@ def clean_pitchingCSV():
 
     saveCSV(df_combined, pit_file)
 
+def clean_fieldingCSV():
+    fielding_file = 'Fielding.csv'
+    fielding_post_file = 'FieldingPost.csv'
+
+    df_fielding = pd.read_csv(fielding_file, delimiter=',')
+    df_fielding_post = pd.read_csv(fielding_post_file, delimiter=',')
+
+    # moved round column
+    fielding_post_round_col = df_fielding_post.pop('round')
+    df_fielding_post.insert(loc=df_fielding_post.shape[1], column='round', value=fielding_post_round_col)
+
+    # added empty stint column to post
+    df_fielding_post.insert(loc=2, column='stint', value=[None for i in range(0, df_fielding_post.shape[0])])
+
+    # added empty round column to the fielding table
+    df_fielding.insert(loc=df_fielding.shape[1], column='round', value=[None for i in range(0, df_fielding.shape[0])])
+
+    # added post season column
+    df_fielding.insert(loc=df_fielding.shape[1], column='isPostSeason', value=[False for i in range(0, df_fielding.shape[0])])
+    df_fielding_post.insert(loc=df_fielding_post.shape[1], column='isPostSeason', value=[True for i in range(0, df_fielding_post.shape[0])])
+
+    # added empty TP column to fielding df
+    df_fielding.insert(loc=13, column='TP', value=[None for i in range(0, df_fielding.shape[0])])
+
+    # added empty WP to fielding post data
+    df_fielding_post.insert(loc=15, column='WP', value=[None for i in range(0, df_fielding_post.shape[0])])
+
+    df_fielding_post.insert(loc=18, column='ZR', value=[None for i in range(0, df_fielding_post.shape[0])])
+
+    assert(len(df_fielding.columns.values) == len(df_fielding_post.columns.values))
+
+    for i in range(0, len(df_fielding.columns.values)):
+        assert(df_fielding.columns.values[i] == df_fielding_post.columns.values[i])
+
+    df_combined = pd.concat([df_fielding, df_fielding_post])
+
+    df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
+
+    saveCSV(df_combined, fielding_file)
+
 
 def clean_playerCSV():
     out_file = 'players.csv'
@@ -138,20 +178,29 @@ def main():
     #get list of file names in directory
     fileList = os.listdir()
 
+    # clean People.csv
     print("cleaning People.csv...")
     clean_peopleCSV()
 
-    print("cleaning Manager.csv...")
+    # clean Managers.csv
+    print("cleaning Managers.csv...")
     os.chdir("../csv_files")
     clean_managerCSV()
 
+    # clean Batting.csv
     print("cleaning Batting.csv...")
     os.chdir("../csv_files")
     clean_battingCSV()
 
+    # clean Pitching.csv
     print("cleaning Pitching.csv...")
     os.chdir("../csv_files")
     clean_pitchingCSV()
+
+    # clean Fielding.csv
+    print("cleaning Fielding.csv")
+    os.chdir("../csv_files")
+    clean_fieldingCSV()
 
 if __name__ == "__main__":
     main()
