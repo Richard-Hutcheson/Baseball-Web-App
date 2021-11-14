@@ -45,6 +45,43 @@ def clean_managerCSV():
 
     saveCSV(df_combined, file)
 
+def clean_battingCSV():
+    bat_file = 'Batting.csv'
+    bat_post_file = 'BattingPost.csv'
+
+    df_batting = pd.read_csv(bat_file, delimiter=',')
+    df_batting_post = pd.read_csv(bat_post_file, delimiter=',')
+
+    playerIDCol_post = df_batting_post.pop('playerID')
+    df_batting_post.insert(loc=0, column='playerID', value=playerIDCol_post)
+
+    roundCol_post = df_batting_post.pop('round')
+    df_batting_post.insert(loc=21, column='round', value=roundCol_post)
+
+    # insert empty stint column into batting_post data
+    df_batting_post.insert(loc=2, column='stint', value=[None for i in range(0, df_batting_post.shape[0])])
+
+    df_batting.insert(loc=22, column='round', value=[None for i in range(0, df_batting.shape[0])])
+
+    # add is postSeason Column
+    df_batting.insert(loc=22, column='isPostSeason', value=[False for i in range(0, df_batting.shape[0])])
+    df_batting_post.insert(loc=22, column='isPostSeason', value=[True for i in range(0, df_batting_post.shape[0])])
+
+    # check to make sure the
+    assert(len(df_batting.columns.values) == len(df_batting_post.columns.values))
+
+    df_combined = pd.concat([df_batting, df_batting_post])
+
+    df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
+
+    saveCSV(df_combined, bat_file)
+
+def clean_pitchingCSV():
+    pit_file = 'Pitching.csv'
+
+    df_pit_file = pd.read_csv(pit_file, delimiter=',')
+
+
 def clean_playerCSV():
     out_file = 'players.csv'
     pit_file = 'Pitching.csv'
@@ -54,6 +91,8 @@ def clean_playerCSV():
     df_pit_file = pd.read_csv(pit_file, delimiter=',')
     df_bat_file = pd.read_csv(bat_file, delimiter=',')
     df_outfield_file = pd.read_csv(outfield_file, delimiter=',')
+
+
 
 def main():
 
@@ -69,27 +108,13 @@ def main():
     os.chdir("../csv_files")
     clean_managerCSV()
 
-    print("cleaning Players")
+    print("cleaning Batting.csv...")
     os.chdir("../csv_files")
-    clean_playerCSV()
+    clean_battingCSV()
 
-
-
-        # with open(file) as csv_file:
-        #     csv_reader = csv.reader(csv_file, delimiter=',')
-        #     line_count = 0
-        #     for row in csv_reader:
-        #         #column names
-        #         if line_count == 0:
-        #             for col in row:
-        #                 print("\t", col)
-        #         # if you want to print
-        #         #else:
-        #             #print(row)
-        #
-        #         line_count += 1
-        #
-        #     print("Processed ", line_count, " lines\n")
+    # print("cleaning Players...")
+    # os.chdir("../csv_files")
+    # clean_playerCSV()
 
 if __name__ == "__main__":
     main()
