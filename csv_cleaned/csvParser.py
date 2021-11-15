@@ -49,6 +49,8 @@ def clean_managerCSV():
 
     df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
 
+    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
+
     saveCSV(df_combined, file)
 
 def clean_battingCSV():
@@ -83,6 +85,9 @@ def clean_battingCSV():
 
     df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
 
+    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
+
+
     saveCSV(df_combined, bat_file)
 
 def clean_pitchingCSV():
@@ -115,6 +120,8 @@ def clean_pitchingCSV():
     df_combined = pd.concat([df_pit, df_pit_post])
 
     df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
+
+    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
 
     saveCSV(df_combined, pit_file)
 
@@ -156,18 +163,48 @@ def clean_fieldingCSV():
 
     df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
 
+    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
+
     saveCSV(df_combined, fielding_file)
 
 
-def clean_playerCSV():
-    out_file = 'players.csv'
+def clean_playersCSV():
+    out_file = 'Players.csv'
     pit_file = 'Pitching.csv'
     bat_file = 'Batting.csv'
     outfield_file = 'Fielding.csv'
 
-    df_pit_file = pd.read_csv(pit_file, delimiter=',')
-    df_bat_file = pd.read_csv(bat_file, delimiter=',')
-    df_outfield_file = pd.read_csv(outfield_file, delimiter=',')
+    pit_file_df = pd.read_csv(pit_file, delimiter=',')
+    bat_file_df = pd.read_csv(bat_file, delimiter=',')
+    field_file_df = pd.read_csv(outfield_file, delimiter=',')
+
+    pit_file_df = pit_file_df.loc[:, 'personID' : 'lgID']
+    bat_file_df = bat_file_df.loc[:, 'personID' : 'lgID']
+    field_file_df = field_file_df.loc[:, 'personID' : 'lgID']
+
+    # added is pitching
+    pit_file_df.insert(loc=pit_file_df.shape[1], column='isPitching', value=[True for i in range(0, pit_file_df.shape[0])])
+    bat_file_df.insert(loc=bat_file_df.shape[1], column='isPitching', value=[False for i in range(0, bat_file_df.shape[0])])
+    field_file_df.insert(loc=field_file_df.shape[1], column='isPitching', value=[False for i in range(0, field_file_df.shape[0])])
+
+
+    pit_file_df.insert(loc=pit_file_df.shape[1], column='isBatting', value=[False for i in range(0, pit_file_df.shape[0])])
+    bat_file_df.insert(loc=bat_file_df.shape[1], column='isBatting', value=[True for i in range(0, bat_file_df.shape[0])])
+    field_file_df.insert(loc=field_file_df.shape[1], column='isBatting', value=[False for i in range(0, field_file_df.shape[0])])
+
+    pit_file_df.insert(loc=pit_file_df.shape[1], column='isFielding', value=[False for i in range(0, pit_file_df.shape[0])])
+    bat_file_df.insert(loc=bat_file_df.shape[1], column='isFielding', value=[False for i in range(0, bat_file_df.shape[0])])
+    field_file_df.insert(loc=field_file_df.shape[1], column='isFielding', value=[True for i in range(0, field_file_df.shape[0])])
+
+    # TODO: MUST ADD POST SEASON DATA AND ROUND DATA
+
+    df_combined = pd.concat([pit_file_df, bat_file_df, field_file_df])
+
+    df_combined.sort_values(by=['yearID', 'personID'], ascending=True, inplace=True)
+
+    os.chdir("../csv_files")
+
+    saveCSV(df_combined, out_file)
 
 
 
@@ -198,9 +235,12 @@ def main():
     clean_pitchingCSV()
 
     # clean Fielding.csv
-    print("cleaning Fielding.csv")
+    print("cleaning Fielding.csv...")
     os.chdir("../csv_files")
     clean_fieldingCSV()
+
+    print("cleaning Players.csv...")
+    clean_playersCSV()
 
 if __name__ == "__main__":
     main()
