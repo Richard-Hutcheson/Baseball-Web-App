@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-   <!-- <img  class="animated-gif" src="{{url_for('static', filename='bb_gif')}}" /> -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -25,17 +24,19 @@
 			<div class="box-header">
 				<h2>Log In</h2>
 			</div>
-			<label for="username">Username</label>
-			<br/>
-			<input type="text" id="username">
-			<br/>
-			<label for="password">Password</label>
-			<br/>
-			<input type="password" id="password">
-			<br/>
-			<button type="submit">Sign In</button>
-			<br/>
-			<a href="#"><p class="small">Create An Account</p></a>
+			<form action = "/dashboard">
+				<label for="username">Username</label>
+				<br/>
+				<input type="text" id="username">
+				<br/>
+				<label for="password">Password</label>
+				<br/>
+				<input type="password" id="password">
+				<br/>
+				<button type="submit">Sign In</button>
+				<br/>
+			</form>
+			<a href="/register"><p class="small">Create An Account</p></a>
 		</div>
 	</div>
     <footer class ="footer">Made by: Richard Hutcheson, Noah Lambaria, Austin Blanchard</footer>
