@@ -178,9 +178,9 @@ def clean_playersCSV():
     bat_file_df = pd.read_csv(bat_file, delimiter=',')
     field_file_df = pd.read_csv(outfield_file, delimiter=',')
 
-    pit_file_df = pit_file_df.loc[:, 'personID' : 'lgID']
-    bat_file_df = bat_file_df.loc[:, 'personID' : 'lgID']
-    field_file_df = field_file_df.loc[:, 'personID' : 'lgID']
+    pit_file_df = pit_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
+    bat_file_df = bat_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
+    field_file_df = field_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
 
     # added is pitching
     pit_file_df.insert(loc=pit_file_df.shape[1], column='isPitching', value=[True for i in range(0, pit_file_df.shape[0])])
