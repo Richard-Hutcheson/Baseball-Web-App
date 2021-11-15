@@ -1,0 +1,202 @@
+html { 
+    background: url(../static/img/dashboardBG.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    }
+    
+body{
+    color: white;
+    height: 100%;
+}
+#bg{
+    background-image: url("../static/img/dashboardBG.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%; 
+}
+button{
+    font-family: inherit;
+    transition: .5s;
+}
+button:hover{
+    opacity: 75%;
+}
+#transparent{
+    position: absolute;
+    width: 100%;
+    height: inherit;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 0;
+    padding: 0;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+.navbar{
+    width: 100%;
+    height: 40px;
+    position: relative;
+    color: white;
+    top: 0;
+    left: 0;
+}
+#usernameID{
+    position: absolute;
+    display: inline;
+    font-weight: bold;
+    left: 3rem;
+    opacity: 100%;
+}
+#logoutID{
+    position: absolute;
+    display: inline;
+    right: 3rem;
+    text-decoration: underline;
+    color: white;
+    opacity: 100%;
+    margin: 1rem 0 1rem 0
+
+}
+#logoutID:hover{
+    opacity: 50%;
+}
+
+
+#standingtitle{
+    display:block;
+    position: relative;
+    text-align: center;
+    margin: 4rem 0 .5rem 0;
+    width: 100%;
+
+}
+#standingContainer{
+    position: relative;
+    border-style: solid;
+    border-radius: 1rem;
+    /* text-align: center; */
+    height: 3rem;
+    background-color: rgb(255, 255, 255);
+}
+
+
+#standingInner{
+    width: 500px;
+    height: inherit;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#yearGroup{
+    width: 250px;
+    position: relative;
+    display: block;
+
+    left: 50%;
+    transform: translateX(-50%);
+}
+#yearTextID{
+    position: relative;
+    width: 50px;
+    display: inline-block;
+    color: black;
+}
+#yearSelectDiv{
+    position: relative;
+    width: 80px;
+    display: inline-block;
+    background-color: white;
+    text-align: center;
+}
+#yearSelect{
+    width: 10rem;
+    border: none;
+    height: inherit;
+    border-style: solid;
+    border-radius: .5rem;
+    border-color: rgb(224, 213, 180);
+}
+
+#yearSelectBtn{
+
+    position: absolute;
+    display: block;
+    width: 5rem;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background-color: rgb(245, 237, 212);
+    border-style: solid;
+    border-width: 1rem;
+    border-color: rgb(245, 237, 212);
+    border-top-right-radius: .8rem;
+    border-bottom-right-radius: .8rem;
+
+}
+#yearSelectBtn:hover{
+    border-right-width: 0;
+}
+
+#favoriteTeamTxt{
+    text-align: center;
+    margin: 2rem 0 .5rem 0;
+
+}
+#roster{
+    position: relative;
+    border-style: solid;
+    height: auto;
+    min-height: 300px;
+    max-height: 500px;
+
+}
+#attributeList{
+    display: grid;
+    text-align: center;
+    /* grid-template-columns: 275px 75px 275px 75px 75px; */
+    grid-template-columns: 20% 15% 35% 15% 15%;
+
+    background-color: white;
+    color: black;
+}
+#rosterContent{
+    height: 90%;
+    overflow-y: auto;
+    width: 100%;
+}
+#player{
+    display: grid;
+    text-align: center;
+    /* grid-template-columns: 275px 75px 275px 75px 75px; */
+    grid-template-columns: 20% 15% 35% 15% 15%;
+
+}
+
+#faveTeamContainer{
+    margin-top: 1rem;
+}
+#selectorCenter{
+    text-align: center;
+}
+#faveTeamSelect{
+    width: 200px;
+
+}
+#faveTeamYrSelect{
+    width: 100px;
+}
+#changeBtn{
+    position: relative;
+    display: block;
+    margin: .5rem auto 0 auto;
+    background-color: rgb(224, 213, 180);
+    border-color: rgb(224, 213, 180);
+    border-style: solid;
+    border-radius: .5rem;
+    width: 100px;
+    height: 30px;
+}

@@ -22,14 +22,21 @@ def login():
     return render_template('loginpage.html', title='Sign In', form=form)
 
 
-@app.route('/mainpage')
-def mainpage():
-    return render_template("index.html")
+@app.route('/dashboard')
+def dashboard():
+    usernameUp = "userX".upper()
+    return render_template("dashboard.html", title = "Dashboard", username = usernameUp, css = "../static/dashboard.css" )
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     
     return render_template('register.html', title='Create Account')
+
+
+@app.route('/searchResults', methods=['GET', 'POST'])
+def searchResults():
+    
+    return render_template('searchResults.html', title='Results')
 
 @app.errorhandler(404)
 def not_found(e):
