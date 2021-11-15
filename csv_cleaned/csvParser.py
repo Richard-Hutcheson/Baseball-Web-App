@@ -196,7 +196,14 @@ def clean_playersCSV():
     bat_file_df.insert(loc=bat_file_df.shape[1], column='isFielding', value=[False for i in range(0, bat_file_df.shape[0])])
     field_file_df.insert(loc=field_file_df.shape[1], column='isFielding', value=[True for i in range(0, field_file_df.shape[0])])
 
-    # TODO: MUST ADD POST SEASON DATA AND ROUND DATA
+    # TODO: MUST ADD ROUND DATA
+
+    assert(len(pit_file_df.columns.values) == len(bat_file_df.columns.values))
+    assert(len(bat_file_df.columns.values) == len(field_file_df.columns.values))
+
+    for i in range(0, len(pit_file_df.columns.values)):
+        assert (pit_file_df.columns.values[i] == bat_file_df.columns.values[i])
+        assert (bat_file_df.columns.values[i] == field_file_df.columns.values[i])
 
     df_combined = pd.concat([pit_file_df, bat_file_df, field_file_df])
 
