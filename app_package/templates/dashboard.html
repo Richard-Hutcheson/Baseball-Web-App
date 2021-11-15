@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+
+{% block content %} 
+<div id = "bg"></div>
+<div id = "transparent"></div>
+<nav class = "navbar">
+    <p id = "usernameID">{{ username }}</p>
+    <a id = "logoutID" href= "/login">logout</a>
+</nav>
+
+<p id = "standingtitle" >Search Standing By Year</p>
+<div id = "standingContainer">
+    <form>
+        <div class = "center" id = "standingInner">
+            <div id = "yearGroup">
+                <p id = "yearTextID">year:</p>
+                <input type = "number" id = "yearSelect" min="1800" max="2000" required/>
+            </div>
+    
+        </div>
+    
+        <button id = "yearSelectBtn">
+        >
+        </button>
+    </form>
+</div>
+<p id="favoriteTeamTxt">Favorite Team: <span id = "favoriteTeam">RAN</span></p>
+<div id = "roster">
+    <div id ="attributeList">
+        <p>NAME</p>
+        <p>AGE</p>
+        <p>BIRTH PLACE</p>
+        <p>BATTER</p>
+        <p>PITCHER</p>
+    </div>
+    <div id ="rosterContent">
+
+        <div id = "player">
+            <span id = "nameVal">Richard Hutcheson</span>
+            <span id = "ageVal">21</span>
+            <span id = "birthPlaceVal"> Waco, TX, United States</span>
+            <span id = "batterVal">N</span>
+            <span id = "pitcherVal">Y</span> 
+        </div>
+        <div id = "player">
+            <span id = "nameVal">Noah Lambaria</span>
+            <span id = "ageVal">20</span>
+            <span id = "birthPlaceVal">San Antonio, TX, United States</span>
+            <span id = "batterVal">N</span>
+            <span id = "pitcherVal">N</span> 
+        </div>
+        <div id = "player">
+            <span id = "nameVal">Austin Blanchard</span>
+            <span id = "ageVal">99</span>
+            <span id = "birthPlaceVal">San Antonio, TX, United States</span>
+            <span id = "batterVal">Y</span>
+            <span id = "pitcherVal">N</span> 
+        </div>
+    </div>
+</div>
+<div id = "faveTeamContainer">
+    <form action="">
+        <div id ="selectorCenter">
+            <label for="faveTeamSelect">Favorite Team</label>
+            <select  id="faveTeamSelect"></select>
+            <label for="faveTeamYrSelect">Favorite Team Year</label>
+            <select  id="faveTeamYrSelect"></select>
+        </div>
+
+        <button id = "changeBtn" type="submit">CHANGE</button>
+    </form>
+
+</div>
+
+
+{% endblock content %}
