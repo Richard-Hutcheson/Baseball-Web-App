@@ -1,8 +1,6 @@
 from app_package import app
 from flask import render_template, redirect, request, flash
-from LoginForm import LoginForm
-from RegisterForm import RegistrationForm
-from werkzeug.security import generate_password_hash, check_password_hash
+
 #from User import User
 
 # @app.route('/home')
@@ -14,12 +12,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 @app.route('/index')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
-        return redirect('/mainpage')
-    return render_template('loginpage.html', title='Sign In', form=form)
+    return render_template('loginpage.html', title='Sign In')
 
 
 @app.route('/dashboard')
