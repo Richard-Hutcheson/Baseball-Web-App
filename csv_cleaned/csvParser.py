@@ -49,6 +49,8 @@ def clean_managerCSV():
 
     df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
 
+    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
+
     saveCSV(df_combined, file)
 
 def clean_battingCSV():
@@ -83,6 +85,8 @@ def clean_battingCSV():
 
     df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
 
+    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
+
     saveCSV(df_combined, bat_file)
 
 def clean_pitchingCSV():
@@ -116,19 +120,162 @@ def clean_pitchingCSV():
 
     df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
 
+    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
+
     saveCSV(df_combined, pit_file)
 
+def clean_fieldingCSV():
+    fielding_file = 'Fielding.csv'
+    fielding_post_file = 'FieldingPost.csv'
 
-def clean_playerCSV():
-    out_file = 'players.csv'
+    df_fielding = pd.read_csv(fielding_file, delimiter=',')
+    df_fielding_post = pd.read_csv(fielding_post_file, delimiter=',')
+
+    # moved round column
+    fielding_post_round_col = df_fielding_post.pop('round')
+    df_fielding_post.insert(loc=df_fielding_post.shape[1], column='round', value=fielding_post_round_col)
+
+    # added empty stint column to post
+    df_fielding_post.insert(loc=2, column='stint', value=[None for i in range(0, df_fielding_post.shape[0])])
+
+    # added empty round column to the fielding table
+    df_fielding.insert(loc=df_fielding.shape[1], column='round', value=[None for i in range(0, df_fielding.shape[0])])
+
+    # added post season column
+    df_fielding.insert(loc=df_fielding.shape[1], column='isPostSeason', value=[False for i in range(0, df_fielding.shape[0])])
+    df_fielding_post.insert(loc=df_fielding_post.shape[1], column='isPostSeason', value=[True for i in range(0, df_fielding_post.shape[0])])
+
+    # added empty TP column to fielding df
+    df_fielding.insert(loc=13, column='TP', value=[None for i in range(0, df_fielding.shape[0])])
+
+    # added empty WP to fielding post data
+    df_fielding_post.insert(loc=15, column='WP', value=[None for i in range(0, df_fielding_post.shape[0])])
+
+    df_fielding_post.insert(loc=18, column='ZR', value=[None for i in range(0, df_fielding_post.shape[0])])
+
+    assert(len(df_fielding.columns.values) == len(df_fielding_post.columns.values))
+
+    for i in range(0, len(df_fielding.columns.values)):
+        assert(df_fielding.columns.values[i] == df_fielding_post.columns.values[i])
+
+    df_combined = pd.concat([df_fielding, df_fielding_post])
+
+    df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
+
+    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
+
+    saveCSV(df_combined, fielding_file)
+
+
+def clean_playersCSV():
+    out_file = 'Players.csv'
     pit_file = 'Pitching.csv'
     bat_file = 'Batting.csv'
     outfield_file = 'Fielding.csv'
 
-    df_pit_file = pd.read_csv(pit_file, delimiter=',')
-    df_bat_file = pd.read_csv(bat_file, delimiter=',')
-    df_outfield_file = pd.read_csv(outfield_file, delimiter=',')
+    pit_file_df = pd.read_csv(pit_file, delimiter=',')
+    bat_file_df = pd.read_csv(bat_file, delimiter=',')
+    field_file_df = pd.read_csv(outfield_file, delimiter=',')
 
+    pit_file_df = pit_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
+    bat_file_df = bat_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
+    field_file_df = field_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
+
+    # added is pitching
+    pit_file_df.insert(loc=pit_file_df.shape[1], column='isPitching', value=[True for i in range(0, pit_file_df.shape[0])])
+    bat_file_df.insert(loc=bat_file_df.shape[1], column='isPitching', value=[False for i in range(0, bat_file_df.shape[0])])
+    field_file_df.insert(loc=field_file_df.shape[1], column='isPitching', value=[False for i in range(0, field_file_df.shape[0])])
+
+    pit_file_df.insert(loc=pit_file_df.shape[1], column='isBatting', value=[False for i in range(0, pit_file_df.shape[0])])
+    bat_file_df.insert(loc=bat_file_df.shape[1], column='isBatting', value=[True for i in range(0, bat_file_df.shape[0])])
+    field_file_df.insert(loc=field_file_df.shape[1], column='isBatting', value=[False for i in range(0, field_file_df.shape[0])])
+
+    pit_file_df.insert(loc=pit_file_df.shape[1], column='isFielding', value=[False for i in range(0, pit_file_df.shape[0])])
+    bat_file_df.insert(loc=bat_file_df.shape[1], column='isFielding', value=[False for i in range(0, bat_file_df.shape[0])])
+    field_file_df.insert(loc=field_file_df.shape[1], column='isFielding', value=[True for i in range(0, field_file_df.shape[0])])
+
+    # TODO: MUST ADD ROUND DATA
+
+    assert(len(pit_file_df.columns.values) == len(bat_file_df.columns.values))
+    assert(len(bat_file_df.columns.values) == len(field_file_df.columns.values))
+
+    for i in range(0, len(pit_file_df.columns.values)):
+        assert (pit_file_df.columns.values[i] == bat_file_df.columns.values[i])
+        assert (bat_file_df.columns.values[i] == field_file_df.columns.values[i])
+
+    df_combined = pd.concat([pit_file_df, bat_file_df, field_file_df])
+
+    df_combined.sort_values(by=['yearID', 'personID'], ascending=True, inplace=True)
+
+    os.chdir("../csv_files")
+
+    saveCSV(df_combined, out_file)
+
+def clean_salaryCSV():
+    salary_file = 'Salaries.csv'
+
+    df_salary = pd.read_csv(salary_file, delimiter=',')
+
+    playerID_col = df_salary.pop('playerID')
+    df_salary.insert(loc=0, column='personID', value=playerID_col)
+
+    saveCSV(df_salary, salary_file)
+
+def clean_appearancesCSV():
+    appearances_file = 'Appearances.csv'
+
+    df_appearances = pd.read_csv(appearances_file, delimiter=',')
+
+    playerID_col = df_appearances.pop('playerID')
+    df_appearances.insert(loc=0, column='personID', value=playerID_col)
+
+    saveCSV(df_appearances, appearances_file)
+
+def clean_parksCSV():
+    parks_file = 'Parks.csv'
+
+    df_park = pd.read_csv(parks_file, delimiter=',')
+
+    df_park.rename(columns={'park.key' : 'parkID',
+                    'park.name' : 'parkName',
+                    'park.alias' : 'parkAlias'}, inplace=True)
+
+    saveCSV(df_park, parks_file)
+
+def clean_teamsCSV():
+    teams_file = 'Teams.csv'
+
+    df_teams = pd.read_csv(teams_file, delimiter=',')
+
+    df_teams.rename(columns={'park' : 'parkName'}, inplace=True)
+
+    df_teamName_col = df_teams.pop('name')
+
+    df_teams.insert(loc=3, column='teamName', value=df_teamName_col)
+
+    saveCSV(df_teams, teams_file)
+
+def clean_divisionCSV():
+    div_file = 'Divisions.csv'
+
+    df_division = pd.read_csv(div_file, delimiter=',', usecols=['rowID', 'divID', 'divisionName', 'isActive'])
+
+    saveCSV(df_division, div_file)
+
+def clean_leaguesCSV():
+    league_file = 'Leagues.csv'
+
+    df_league = pd.read_csv(league_file, delimiter=',')
+
+    saveCSV(df_league, league_file)
+
+def clean_franchisesCSV():
+    franchises_file = 'TeamsFranchises.csv'
+    out_file = 'Franchises.csv'
+
+    df_franchises = pd.read_csv(franchises_file, delimiter=',')
+
+    saveCSV(df_franchises, out_file)
 
 
 def main():
@@ -138,20 +285,68 @@ def main():
     #get list of file names in directory
     fileList = os.listdir()
 
+    # clean People.csv
     print("cleaning People.csv...")
     clean_peopleCSV()
 
-    print("cleaning Manager.csv...")
+    # clean Managers.csv
+    print("cleaning Managers.csv...")
     os.chdir("../csv_files")
     clean_managerCSV()
 
+    # clean Batting.csv
     print("cleaning Batting.csv...")
     os.chdir("../csv_files")
     clean_battingCSV()
 
+    # clean Pitching.csv
     print("cleaning Pitching.csv...")
     os.chdir("../csv_files")
     clean_pitchingCSV()
+
+    # clean Fielding.csv
+    print("cleaning Fielding.csv...")
+    os.chdir("../csv_files")
+    clean_fieldingCSV()
+
+    # clean Players.csv dependencies: Batting.csv, Pitching.csv, Fielding.csv (in csv_cleaned)
+    print("cleaning Players.csv...")
+    clean_playersCSV()
+
+    # clean Salaries.csv
+    print("cleaning Salaries.csv...")
+    os.chdir("../csv_files")
+    clean_salaryCSV()
+
+    # clean Appearances.csv
+    print("cleaning Appearances.csv...")
+    os.chdir("../csv_files")
+    clean_appearancesCSV()
+
+    # clean Parks.csv
+    print("cleaning Parks.csv...")
+    os.chdir("../csv_files")
+    clean_parksCSV()
+
+    # clean Teams.csv
+    print("cleaning Teams.csv...")
+    os.chdir("../csv_files")
+    clean_teamsCSV()
+
+    # clean Division.csv
+    print("cleaning Division.csv...")
+    os.chdir("../csv_files")
+    clean_divisionCSV()
+
+    # clean Leagues.csv
+    print("cleaning Leagues.csv...")
+    os.chdir("../csv_files")
+    clean_leaguesCSV()
+
+    # clean Franchises.csv
+    print("cleaning Franchises.csv...")
+    os.chdir("../csv_files")
+    clean_franchisesCSV()
 
 if __name__ == "__main__":
     main()
