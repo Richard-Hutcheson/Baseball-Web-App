@@ -14,9 +14,18 @@ def clean_peopleCSV():
     file = 'People.csv'
     df = pd.read_csv(file, delimiter=',')
 
-    columnNames = ['playerID', 'nameFirst', 'nameLast', 'birthYear','birthMonth','birthDay','birthCountry','birthState','birthCity', 'deathYear','deathMonth','deathDay','deathCountry','deathState','deathCity','weight','height']
+    columnNames = ['playerID', 'nameFirst', 'nameLast', 'birthYear','birthMonth',
+                   'birthDay','birthCountry','birthState','birthCity', 'deathYear',
+                   'deathMonth','deathDay','deathCountry','deathState','deathCity',
+                   'weight','height','bats','throws','debut','finalGame','retroID','bbrefID']
 
     df_clean = df[columnNames]
+
+    #make sure all the columns were included in dataframe
+    assert(len(df_clean.columns.values) == len(columnNames))
+
+    for i in range(0, len(columnNames)):
+        assert(df_clean.columns.values[i] == columnNames[i])
 
     df_clean = df_clean.rename(columns={"playerID" : "personID"})
 
@@ -45,11 +54,14 @@ def clean_managerCSV():
 
     df_combined = pd.concat([df, df_half])
 
-    df_combined = df_combined.rename(columns={'playerID' : 'personID'})
+    df_combined.sort_values(by=['playerID'], ascending=True, inplace=True)
 
-    df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
-
-    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
+    df_combined.rename(columns={'playerID' : 'personID',
+                                'lgID' : 'leagueID',
+                                'yearID' : 'year',
+                                'G' : 'GamesManaged',
+                                'W' : 'Wins',
+                                'L' : 'Losses'}, inplace=True)
 
     saveCSV(df_combined, file)
 
@@ -83,9 +95,10 @@ def clean_battingCSV():
 
     df_combined = pd.concat([df_batting, df_batting_post])
 
-    df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
+    df_combined.sort_values(by=['yearID', 'playerID'], ascending=True, inplace=True)
 
-    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
+    df_combined.rename(columns={"playerID" : "personID",
+                                'AB' : 'AtBats'}, inplace=True)
 
     saveCSV(df_combined, bat_file)
 
@@ -382,9 +395,28 @@ def clean_seriesPostCSV():
     seriesPost_file = 'SeriesPost.csv'
     outFile = 'PostSeasonSeries.csv'
 
-    df_post = pd.read_csv(seriesPost_file)
+    df_post = pd.read_csv(seriesPost_file, delimiter=',')
 
     saveCSV(df_post, outFile)
+
+def clean_fieldingOF():
+    fieldingOF_file = 'FieldingOF.csv'
+
+    df_fieldingOF = pd.read_csv(fieldingOF_file, delimiter=',')
+
+    df_fieldingOF.rename(columns={'playerID' : 'personID'}, inplace=True)
+
+    saveCSV(df_fieldingOF, fieldingOF_file)
+
+def clean_fieldingOFSplit():
+    fieldingOFSplit_file = 'FieldingOFsplit.csv'
+
+    df_fieldingOFSplit = pd.read_csv(fieldingOFSplit_file, delimiter=',')
+
+    df_fieldingOFSplit.rename(columns={'playerID' : 'personID'}, inplace=True)
+
+    saveCSV(df_fieldingOFSplit, fieldingOFSplit_file)
+
 
 def main():
 
@@ -483,6 +515,14 @@ def main():
     print("cleaning SeriesPost.csv...")
     os.chdir("../csv_files")
     clean_seriesPostCSV()
+
+    print("cleaning FieldingOF.csv...")
+    os.chdir("../csv_files")
+    clean_fieldingOF()
+
+    print("cleaning FieldingOFSplit.csv...")
+    os.chdir("../csv_files")
+    clean_fieldingOFSplit()
 
 if __name__ == "__main__":
     main()
