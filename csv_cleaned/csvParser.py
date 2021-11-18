@@ -277,6 +277,114 @@ def clean_franchisesCSV():
 
     saveCSV(df_franchises, out_file)
 
+def clean_awardsCSV():
+    awards_man_file = 'AwardsManagers.csv'
+    awards_players_file = 'AwardsPlayers.csv'
+    awards_man_share_file = 'AwardsShareManagers.csv'
+    awards_players_share_file = 'AwardsSharePlayers.csv'
+    out_file = 'Awards.csv'
+
+    df_awards_man = pd.read_csv(awards_man_file, delimiter=',')
+    df_awards_players = pd.read_csv(awards_players_file, delimiter=',')
+    df_awards_man_share = pd.read_csv(awards_man_share_file, delimiter=',')
+    df_awards_players_share = pd.read_csv(awards_players_share_file, delimiter=',')
+
+    # make sure awards data columns are the same before combining
+    assert(len(df_awards_man.columns.values) == len(df_awards_players.columns.values))
+
+    for i in range(0, len(df_awards_man.columns.values)):
+        assert(df_awards_man.columns.values[i] == df_awards_players.columns.values[i])
+
+    df_awards_combined = pd.concat([df_awards_man, df_awards_players])
+
+    # insert awardID Column at the front of the data frame
+    personID_col = df_awards_combined.pop('playerID')
+    df_awards_combined.insert(loc=3, column='playerID', value=personID_col)
+
+    df_awards_combined.rename(columns={'playerID': 'personID'}, inplace=True)
+
+    # make sure the share data columns is equal before combining
+    assert (len(df_awards_man_share.columns.values) == len(df_awards_players_share.columns.values))
+
+    for i in range(0, len(df_awards_man_share.columns.values)):
+        assert (df_awards_man_share.columns.values[i] == df_awards_players_share.columns.values[i])
+
+    df_awards_combined_share = pd.concat([df_awards_man_share, df_awards_players_share])
+
+    df_awards_combined_share.rename(columns={'playerID' : 'personID'}, inplace=True)
+
+    df_awards_combined_share.insert(loc=df_awards_combined_share.shape[1], column='tie', value=[None for i in range(0, df_awards_combined_share.shape[0])])
+    df_awards_combined_share.insert(loc=df_awards_combined_share.shape[1], column='notes', value=[None for i in range(0, df_awards_combined_share.shape[0])])
+
+    df_awards_combined.insert(loc=4, column='votesFirst', value=[None for i in range(0, df_awards_combined.shape[0])])
+    df_awards_combined.insert(loc=4, column='pointsMax', value=[None for i in range(0, df_awards_combined.shape[0])])
+    df_awards_combined.insert(loc=4, column='pointsWon', value=[None for i in range(0, df_awards_combined.shape[0])])
+
+    df_awards_combined.insert(loc=df_awards_combined.shape[1], column='isShared', value=[False for i in range(0, df_awards_combined.shape[0])])
+    df_awards_combined_share.insert(loc=df_awards_combined_share.shape[1], column='isShared', value=[True for i in range(0, df_awards_combined_share.shape[0])])
+
+    assert(len(df_awards_combined.columns.values) == len(df_awards_combined_share.columns.values))
+
+    for i in range(0, len(df_awards_combined.columns.values)):
+        assert(df_awards_combined.columns.values[i] == df_awards_combined_share.columns.values[i])
+
+    df_awards = pd.concat([df_awards_combined, df_awards_combined_share])
+
+    df_awards.sort_values(by=['yearID', 'personID'], ascending=True, inplace=True)
+
+    saveCSV(df_awards, out_file)
+
+def clean_schoolCSV():
+    school_file = 'Schools.csv'
+
+    df_schools = pd.read_csv(school_file, delimiter=',')
+
+    saveCSV(df_schools, school_file)
+
+def clean_HallOfFameCSV():
+    hallOfFame_file = 'HallOfFame.csv'
+
+    df_halloffame = pd.read_csv(hallOfFame_file, delimiter=',')
+
+    df_halloffame.rename(columns={'playerID' : 'personID'}, inplace=True)
+
+    saveCSV(df_halloffame, hallOfFame_file)
+
+def clean_collegePlayerCSV():
+    collegePlayer_file = 'CollegePlaying.csv'
+
+    df_collegePlayer = pd.read_csv(collegePlayer_file, delimiter=',')
+
+    df_collegePlayer.rename(columns={'playerID' : 'personID'}, inplace=True)
+
+    saveCSV(df_collegePlayer, collegePlayer_file)
+
+def clean_allStarOccurences():
+    allStarFull_file = 'AllstarFull.csv'
+    outFile = 'AllStarOccurences.csv'
+
+    df_allstarfull = pd.read_csv(allStarFull_file, delimiter=',')
+
+    df_allstarfull.rename(columns={'playerID' : 'personID'}, inplace=True)
+
+    saveCSV(df_allstarfull, outFile)
+
+def clean_teamsHalfCSV():
+    teamsHalf_file = 'TeamsHalf.csv'
+
+    df_teamsHalf = pd.read_csv(teamsHalf_file, delimiter=',')
+
+    df_teamsHalf.rename(columns={'playerID' : 'personID'}, inplace=True)
+
+    saveCSV(df_teamsHalf, teamsHalf_file)
+
+def clean_seriesPostCSV():
+    seriesPost_file = 'SeriesPost.csv'
+    outFile = 'PostSeasonSeries.csv'
+
+    df_post = pd.read_csv(seriesPost_file)
+
+    saveCSV(df_post, outFile)
 
 def main():
 
@@ -347,6 +455,34 @@ def main():
     print("cleaning Franchises.csv...")
     os.chdir("../csv_files")
     clean_franchisesCSV()
+
+    print("cleaning Awards.csv...")
+    os.chdir("../csv_files")
+    clean_awardsCSV()
+
+    print("cleaning Schools.csv...")
+    os.chdir("../csv_files")
+    clean_schoolCSV()
+
+    print("cleaning HallOfFame.csv...")
+    os.chdir("../csv_files")
+    clean_HallOfFameCSV()
+
+    print("cleaning CollegePlaying.csv...")
+    os.chdir("../csv_files")
+    clean_collegePlayerCSV()
+
+    print("cleaning AllStarOccurences.csv...")
+    os.chdir("../csv_files")
+    clean_allStarOccurences()
+
+    print("cleaning TeamsHalf.csv...")
+    os.chdir("../csv_files")
+    clean_teamsHalfCSV()
+
+    print("cleaning SeriesPost.csv...")
+    os.chdir("../csv_files")
+    clean_seriesPostCSV()
 
 if __name__ == "__main__":
     main()
