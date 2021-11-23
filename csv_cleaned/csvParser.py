@@ -4,6 +4,8 @@ import os
 import pandas as pd
 import pymysql
 from dbconfigAPP import user
+import RenameColumns as cols
+
 
 def saveCSV(dataFrame, name):
     os.chdir("../csv_cleaned")
@@ -56,12 +58,7 @@ def clean_managerCSV():
 
     df_combined.sort_values(by=['playerID'], ascending=True, inplace=True)
 
-    df_combined.rename(columns={'playerID' : 'personID',
-                                'lgID' : 'leagueID',
-                                'yearID' : 'year',
-                                'G' : 'GamesManaged',
-                                'W' : 'Wins',
-                                'L' : 'Losses'}, inplace=True)
+    df_combined.rename(columns=cols.ManagerCols, inplace=True)
 
     saveCSV(df_combined, file)
 
@@ -97,8 +94,7 @@ def clean_battingCSV():
 
     df_combined.sort_values(by=['yearID', 'playerID'], ascending=True, inplace=True)
 
-    df_combined.rename(columns={"playerID" : "personID",
-                                'AB' : 'AtBats'}, inplace=True)
+    df_combined.rename(columns=cols.BattingCols, inplace=True)
 
     saveCSV(df_combined, bat_file)
 
@@ -133,7 +129,7 @@ def clean_pitchingCSV():
 
     df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
 
-    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
+    df_combined.rename(columns=cols.PitchingCols, inplace=True)
 
     saveCSV(df_combined, pit_file)
 
@@ -175,7 +171,7 @@ def clean_fieldingCSV():
 
     df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
 
-    df_combined.rename(columns={"playerID" : "personID"}, inplace=True)
+    df_combined.rename(columns=cols.FieldingCols, inplace=True)
 
     saveCSV(df_combined, fielding_file)
 
@@ -193,6 +189,10 @@ def clean_playersCSV():
     pit_file_df = pit_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
     bat_file_df = bat_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
     field_file_df = field_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
+
+    print(pit_file_df.columns.values)
+    print(bat_file_df.columns.values)
+    print(field_file_df.columns.values)
 
     # added is pitching
     pit_file_df.insert(loc=pit_file_df.shape[1], column='isPitching', value=[True for i in range(0, pit_file_df.shape[0])])
@@ -219,6 +219,8 @@ def clean_playersCSV():
     df_combined = pd.concat([pit_file_df, bat_file_df, field_file_df])
 
     df_combined.sort_values(by=['yearID', 'personID'], ascending=True, inplace=True)
+
+    df_combined.rename(columns={'lgID' : 'leagueID'} , inplace=True)
 
     os.chdir("../csv_files")
 

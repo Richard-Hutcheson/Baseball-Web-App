@@ -2,12 +2,15 @@
 
 files=`ls *.csv`
 
-echo $files
+# echo $files
 
 for i in $files;
 do
-  echo "CREATE TABLE $i ("
-  head -1 $i | sed 's/,/ VARCHAR(100), /g'
+  tableName="${i%.*}"
+  echo "CREATE TABLE $tableName ("
+  attr=`head -1 $i | sed 's/,/ VARCHAR(100), /g'`
+  attr="$attr VARCHAR(100)"
+  echo $attr
+  echo ")"
+  echo ""
 done
-
-echo " VARCHAR(100))"
