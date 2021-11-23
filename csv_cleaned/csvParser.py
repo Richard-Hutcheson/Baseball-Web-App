@@ -190,10 +190,6 @@ def clean_playersCSV():
     bat_file_df = bat_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
     field_file_df = field_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
 
-    print(pit_file_df.columns.values)
-    print(bat_file_df.columns.values)
-    print(field_file_df.columns.values)
-
     # added is pitching
     pit_file_df.insert(loc=pit_file_df.shape[1], column='isPitching', value=[True for i in range(0, pit_file_df.shape[0])])
     bat_file_df.insert(loc=bat_file_df.shape[1], column='isPitching', value=[False for i in range(0, bat_file_df.shape[0])])
@@ -347,6 +343,8 @@ def clean_awardsCSV():
 
     df_awards.sort_values(by=['yearID', 'personID'], ascending=True, inplace=True)
 
+    df_awards.rename(columns={'lgID' : 'leagueID'}, inplace=True)
+
     saveCSV(df_awards, out_file)
 
 def clean_schoolCSV():
@@ -380,7 +378,7 @@ def clean_allStarOccurences():
 
     df_allstarfull = pd.read_csv(allStarFull_file, delimiter=',')
 
-    df_allstarfull.rename(columns={'playerID' : 'personID'}, inplace=True)
+    df_allstarfull.rename(columns={'playerID' : 'personID', 'lgID' : 'leagueID'}, inplace=True)
 
     saveCSV(df_allstarfull, outFile)
 
@@ -389,7 +387,7 @@ def clean_teamsHalfCSV():
 
     df_teamsHalf = pd.read_csv(teamsHalf_file, delimiter=',')
 
-    df_teamsHalf.rename(columns={'playerID' : 'personID'}, inplace=True)
+    df_teamsHalf.rename(columns={'playerID' : 'personID', 'lgID' : 'leagueID'}, inplace=True)
 
     saveCSV(df_teamsHalf, teamsHalf_file)
 
@@ -406,7 +404,7 @@ def clean_fieldingOF():
 
     df_fieldingOF = pd.read_csv(fieldingOF_file, delimiter=',')
 
-    df_fieldingOF.rename(columns={'playerID' : 'personID'}, inplace=True)
+    df_fieldingOF.rename(columns={'playerID' : 'personID', 'lgID' : 'leagueID'}, inplace=True)
 
     saveCSV(df_fieldingOF, fieldingOF_file)
 
@@ -415,7 +413,7 @@ def clean_fieldingOFSplit():
 
     df_fieldingOFSplit = pd.read_csv(fieldingOFSplit_file, delimiter=',')
 
-    df_fieldingOFSplit.rename(columns={'playerID' : 'personID'}, inplace=True)
+    df_fieldingOFSplit.rename(columns={'playerID' : 'personID', 'lgID' : 'leagueID'}, inplace=True)
 
     saveCSV(df_fieldingOFSplit, fieldingOFSplit_file)
 
