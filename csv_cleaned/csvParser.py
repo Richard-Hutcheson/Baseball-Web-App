@@ -5,6 +5,7 @@ import pandas as pd
 import pymysql
 from dbconfigAPP import user
 import RenameColumns as cols
+import numpy
 
 
 def saveCSV(dataFrame, name):
@@ -186,9 +187,9 @@ def clean_playersCSV():
     bat_file_df = pd.read_csv(bat_file, delimiter=',')
     field_file_df = pd.read_csv(outfield_file, delimiter=',')
 
-    pit_file_df = pit_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
-    bat_file_df = bat_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
-    field_file_df = field_file_df.filter(['personID','yearID','stint','teamID','lgID','isPostSeason'])
+    pit_file_df = pit_file_df.filter(['personID','year','stint','teamID','lgID','isPostSeason'])
+    bat_file_df = bat_file_df.filter(['personID','year','stint','teamID','lgID','isPostSeason'])
+    field_file_df = field_file_df.filter(['personID','year','stint','teamID','lgID','isPostSeason'])
 
     # added is pitching
     pit_file_df.insert(loc=pit_file_df.shape[1], column='isPitching', value=[True for i in range(0, pit_file_df.shape[0])])
@@ -214,7 +215,7 @@ def clean_playersCSV():
 
     df_combined = pd.concat([pit_file_df, bat_file_df, field_file_df])
 
-    df_combined.sort_values(by=['yearID', 'personID'], ascending=True, inplace=True)
+    df_combined.sort_values(by=['year', 'personID'], ascending=True, inplace=True)
 
     df_combined.rename(columns={'lgID' : 'leagueID'} , inplace=True)
 
@@ -255,14 +256,46 @@ def clean_parksCSV():
 
 def clean_teamsCSV():
     teams_file = 'Teams.csv'
+    parks_file = 'Parks.csv'
 
     df_teams = pd.read_csv(teams_file, delimiter=',')
-
-    df_teams.rename(columns={'park' : 'parkName'}, inplace=True)
+    os.chdir("../csv_cleaned")
+    df_parks = pd.read_csv(parks_file, delimiter=',')
+    os.chdir("../csv_files")
 
     df_teamName_col = df_teams.pop('name')
 
     df_teams.insert(loc=3, column='teamName', value=df_teamName_col)
+
+    df_teams.rename(columns=cols.TeamsCols, inplace=True)
+
+    # This code is adding park ID to teams 
+    # TODO: fix conflicting park names in dictionary
+
+    # parkName_parkID_dict = pd.Series(df_parks.parkID.values, index=[x.lower() for x in df_parks.parkName.values]).to_dict()
+    #
+    # df_parkAlias = df_parks[~df_parks['parkAlias'].isnull()]
+    #
+    # parkAlias_parkID_dict = pd.Series(df_parkAlias.parkID.values, index=[x.lower() for x in df_parkAlias.parkAlias.values]).to_dict()
+    #
+    # parkID_teams_col = []
+    #
+    # for i in df_teams.parkName.values:
+    #
+    #     if isinstance(i, float):
+    #         parkID_teams_col.append(None)
+    #         continue
+    #
+    #     entry = parkName_parkID_dict.get(i.lower())
+    #
+    #     if entry == None:
+    #         entry = parkAlias_parkID_dict.get(i.lower())
+    #         parkID_teams_col.append(entry)
+    #     else:
+    #         parkID_teams_col.append(entry)
+    #
+    #
+    # df_teams.insert(loc=20, column='parkID', value=parkID_teams_col)
 
     saveCSV(df_teams, teams_file)
 
@@ -271,12 +304,16 @@ def clean_divisionCSV():
 
     df_division = pd.read_csv(div_file, delimiter=',', usecols=['rowID', 'divID', 'divisionName', 'isActive'])
 
+    df_division.rename(columns={'divID' : 'divisionID'}, inplace=True)
+
     saveCSV(df_division, div_file)
 
 def clean_leaguesCSV():
     league_file = 'Leagues.csv'
 
     df_league = pd.read_csv(league_file, delimiter=',')
+
+    df_league.rename(columns={'lgID' : 'leagueID'}, inplace=True)
 
     saveCSV(df_league, league_file)
 
@@ -343,7 +380,9 @@ def clean_awardsCSV():
 
     df_awards.sort_values(by=['yearID', 'personID'], ascending=True, inplace=True)
 
-    df_awards.rename(columns={'lgID' : 'leagueID'}, inplace=True)
+    df_awards.rename(columns={'playerID' : 'personID',
+                                       'lgID' : 'leagueID',
+                                       'yearID' : 'year'}, inplace=True)
 
     saveCSV(df_awards, out_file)
 
@@ -352,6 +391,8 @@ def clean_schoolCSV():
 
     df_schools = pd.read_csv(school_file, delimiter=',')
 
+    df_schools.rename(columns={'name_full' : 'name'})
+
     saveCSV(df_schools, school_file)
 
 def clean_HallOfFameCSV():
@@ -359,7 +400,9 @@ def clean_HallOfFameCSV():
 
     df_halloffame = pd.read_csv(hallOfFame_file, delimiter=',')
 
-    df_halloffame.rename(columns={'playerID' : 'personID'}, inplace=True)
+    df_halloffame.rename(columns={'playerID' : 'personID',
+                                       'lgID' : 'leagueID',
+                                       'yearID' : 'year'}, inplace=True)
 
     saveCSV(df_halloffame, hallOfFame_file)
 
@@ -368,7 +411,9 @@ def clean_collegePlayerCSV():
 
     df_collegePlayer = pd.read_csv(collegePlayer_file, delimiter=',')
 
-    df_collegePlayer.rename(columns={'playerID' : 'personID'}, inplace=True)
+    df_collegePlayer.rename(columns={'playerID' : 'personID',
+                                       'lgID' : 'leagueID',
+                                       'yearID' : 'year'}, inplace=True)
 
     saveCSV(df_collegePlayer, collegePlayer_file)
 
@@ -378,7 +423,9 @@ def clean_allStarOccurences():
 
     df_allstarfull = pd.read_csv(allStarFull_file, delimiter=',')
 
-    df_allstarfull.rename(columns={'playerID' : 'personID', 'lgID' : 'leagueID'}, inplace=True)
+    df_allstarfull.rename(columns={'playerID' : 'personID',
+                                       'lgID' : 'leagueID',
+                                       'yearID' : 'year'}, inplace=True)
 
     saveCSV(df_allstarfull, outFile)
 
@@ -387,7 +434,9 @@ def clean_teamsHalfCSV():
 
     df_teamsHalf = pd.read_csv(teamsHalf_file, delimiter=',')
 
-    df_teamsHalf.rename(columns={'playerID' : 'personID', 'lgID' : 'leagueID'}, inplace=True)
+    df_teamsHalf.rename(columns={'playerID' : 'personID',
+                                       'lgID' : 'leagueID',
+                                       'yearID' : 'year'}, inplace=True)
 
     saveCSV(df_teamsHalf, teamsHalf_file)
 
@@ -404,7 +453,9 @@ def clean_fieldingOF():
 
     df_fieldingOF = pd.read_csv(fieldingOF_file, delimiter=',')
 
-    df_fieldingOF.rename(columns={'playerID' : 'personID', 'lgID' : 'leagueID'}, inplace=True)
+    df_fieldingOF.rename(columns={'playerID' : 'personID',
+                                       'lgID' : 'leagueID',
+                                       'yearID' : 'year'}, inplace=True)
 
     saveCSV(df_fieldingOF, fieldingOF_file)
 
@@ -413,7 +464,9 @@ def clean_fieldingOFSplit():
 
     df_fieldingOFSplit = pd.read_csv(fieldingOFSplit_file, delimiter=',')
 
-    df_fieldingOFSplit.rename(columns={'playerID' : 'personID', 'lgID' : 'leagueID'}, inplace=True)
+    df_fieldingOFSplit.rename(columns={'playerID' : 'personID',
+                                       'lgID' : 'leagueID',
+                                       'yearID' : 'year'}, inplace=True)
 
     saveCSV(df_fieldingOFSplit, fieldingOFSplit_file)
 
@@ -468,7 +521,7 @@ def main():
     os.chdir("../csv_files")
     clean_parksCSV()
 
-    # clean Teams.csv
+    # clean Teams.csv dependencies csv_cleaned/Parks.csv
     print("cleaning Teams.csv...")
     os.chdir("../csv_files")
     clean_teamsCSV()

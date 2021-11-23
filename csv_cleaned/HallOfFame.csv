@@ -1,4 +1,4 @@
-personID,yearID,votedBy,ballots,needed,votes,inducted,category,needed_note
+personID,year,votedBy,ballots,needed,votes,inducted,category,needed_note
 cobbty01,1936,BBWAA,226.0,170.0,222.0,Y,Player,
 ruthba01,1936,BBWAA,226.0,170.0,215.0,Y,Player,
 wagneho01,1936,BBWAA,226.0,170.0,215.0,Y,Player,

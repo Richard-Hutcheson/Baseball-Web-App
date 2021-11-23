@@ -1,4 +1,4 @@
-rowID,divID,divisionName,isActive
+rowID,divisionID,divisionName,isActive
 1,E,AL East,Y
 2,W,AL West,Y
 3,C,AL Central,Y

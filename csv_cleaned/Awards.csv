@@ -1,4 +1,4 @@
-awardID,yearID,leagueID,personID,pointsWon,pointsMax,votesFirst,tie,notes,isShared
+awardID,year,leagueID,personID,pointsWon,pointsMax,votesFirst,tie,notes,isShared
 Pitching Triple Crown,1877,NL,bondto01,,,,,,False
 Triple Crown,1878,NL,hinespa01,,,,,,False
 Pitching Triple Crown,1884,AA,heckegu01,,,,,,False
