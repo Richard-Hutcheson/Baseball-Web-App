@@ -41,6 +41,7 @@ def clean_managerCSV():
     df = pd.read_csv(file, delimiter=',')
     df_half = pd.read_csv(file2, delimiter=',')
 
+    # pandas interprets the "NA" league id as a null value
     df.loc[df['lgID'].isnull(), 'lgID'] = "NA"
 
     df.insert(loc=5, column='half', value=[None for i in range(0, df.shape[0])])
@@ -60,6 +61,9 @@ def clean_managerCSV():
     df_combined.sort_values(by=['playerID'], ascending=True, inplace=True)
 
     df_combined.rename(columns=cols.ManagerCols, inplace=True)
+
+    # pandas interprets the "NA" league id as a null value
+    df_combined.loc[df_combined['leagueID'].isnull(), 'leagueID'] = "NA"
 
     saveCSV(df_combined, file)
 
@@ -97,6 +101,9 @@ def clean_battingCSV():
 
     df_combined.rename(columns=cols.BattingCols, inplace=True)
 
+    # pandas interprets the "NA" league id as a null value
+    df_combined.loc[df_combined['leagueID'].isnull(), 'leagueID'] = "NA"
+
     saveCSV(df_combined, bat_file)
 
 def clean_pitchingCSV():
@@ -131,6 +138,9 @@ def clean_pitchingCSV():
     df_combined.sort_values(by=['yearID'], ascending=True, inplace=True)
 
     df_combined.rename(columns=cols.PitchingCols, inplace=True)
+
+    # pandas interprets the "NA" league id as a null value
+    df_combined.loc[df_combined['leagueID'].isnull(), 'leagueID'] = "NA"
 
     saveCSV(df_combined, pit_file)
 
@@ -174,6 +184,9 @@ def clean_fieldingCSV():
 
     df_combined.rename(columns=cols.FieldingCols, inplace=True)
 
+    # pandas interprets the "NA" league id as a null value
+    df_combined.loc[df_combined['leagueID'].isnull(), 'leagueID'] = "NA"
+
     saveCSV(df_combined, fielding_file)
 
 
@@ -204,7 +217,6 @@ def clean_playersCSV():
     bat_file_df.insert(loc=bat_file_df.shape[1], column='isFielding', value=[False for i in range(0, bat_file_df.shape[0])])
     field_file_df.insert(loc=field_file_df.shape[1], column='isFielding', value=[True for i in range(0, field_file_df.shape[0])])
 
-    # TODO: MUST ADD ROUND DATA
 
     assert(len(pit_file_df.columns.values) == len(bat_file_df.columns.values))
     assert(len(bat_file_df.columns.values) == len(field_file_df.columns.values))
@@ -216,8 +228,6 @@ def clean_playersCSV():
     df_combined = pd.concat([pit_file_df, bat_file_df, field_file_df])
 
     df_combined.sort_values(by=['year', 'personID'], ascending=True, inplace=True)
-
-    df_combined.rename(columns={'lgID' : 'leagueID'} , inplace=True)
 
     os.chdir("../csv_files")
 
@@ -233,6 +243,9 @@ def clean_salaryCSV():
 
     df_salary.rename(columns={'yearID' : 'year', 'lgID' : 'leagueID'}, inplace=True)
 
+    # pandas interprets the "NA" league id as a null value
+    df_salary.loc[df_salary['leagueID'].isnull(), 'leagueID'] = "NA"
+
     saveCSV(df_salary, salary_file)
 
 def clean_appearancesCSV():
@@ -244,6 +257,9 @@ def clean_appearancesCSV():
     df_appearances.insert(loc=0, column='personID', value=playerID_col)
 
     df_appearances.rename(columns=cols.AppearancesCols, inplace=True)
+
+    # pandas interprets the "NA" league id as a null value
+    df_appearances.loc[df_appearances['leagueID'].isnull(), 'leagueID'] = "NA"
 
     saveCSV(df_appearances, appearances_file)
 
@@ -301,6 +317,9 @@ def clean_teamsCSV():
     #
     # df_teams.insert(loc=20, column='parkID', value=parkID_teams_col)
 
+    # pandas interprets the "NA" league id as a null value
+    df_teams.loc[df_teams['leagueID'].isnull(), 'leagueID'] = "NA"
+
     saveCSV(df_teams, teams_file)
 
 def clean_divisionCSV():
@@ -318,6 +337,9 @@ def clean_leaguesCSV():
     df_league = pd.read_csv(league_file, delimiter=',')
 
     df_league.rename(columns={'lgID' : 'leagueID'}, inplace=True)
+
+    # pandas interprets the "NA" league id as a null value
+    df_league.loc[df_league['leagueID'].isnull(), 'leagueID'] = "NA"
 
     saveCSV(df_league, league_file)
 
@@ -388,6 +410,9 @@ def clean_awardsCSV():
                                        'lgID' : 'leagueID',
                                        'yearID' : 'year'}, inplace=True)
 
+    # pandas interprets the "NA" league id as a null value
+    df_awards.loc[df_awards['leagueID'].isnull(), 'leagueID'] = "NA"
+
     saveCSV(df_awards, out_file)
 
 def clean_schoolCSV():
@@ -405,7 +430,6 @@ def clean_HallOfFameCSV():
     df_halloffame = pd.read_csv(hallOfFame_file, delimiter=',')
 
     df_halloffame.rename(columns={'playerID' : 'personID',
-                                       'lgID' : 'leagueID',
                                        'yearID' : 'year'}, inplace=True)
 
     saveCSV(df_halloffame, hallOfFame_file)
@@ -416,7 +440,6 @@ def clean_collegePlayerCSV():
     df_collegePlayer = pd.read_csv(collegePlayer_file, delimiter=',')
 
     df_collegePlayer.rename(columns={'playerID' : 'personID',
-                                       'lgID' : 'leagueID',
                                        'yearID' : 'year'}, inplace=True)
 
     saveCSV(df_collegePlayer, collegePlayer_file)
@@ -431,6 +454,9 @@ def clean_allStarOccurences():
                                        'lgID' : 'leagueID',
                                        'yearID' : 'year'}, inplace=True)
 
+    # pandas interprets the "NA" league id as a null value
+    df_allstarfull.loc[df_allstarfull['leagueID'].isnull(), 'leagueID'] = "NA"
+
     saveCSV(df_allstarfull, outFile)
 
 def clean_teamsHalfCSV():
@@ -441,6 +467,9 @@ def clean_teamsHalfCSV():
     df_teamsHalf.rename(columns={'playerID' : 'personID',
                                        'lgID' : 'leagueID',
                                        'yearID' : 'year'}, inplace=True)
+
+    # pandas interprets the "NA" league id as a null value
+    df_teamsHalf.loc[df_teamsHalf['leagueID'].isnull(), 'leagueID'] = "NA"
 
     saveCSV(df_teamsHalf, teamsHalf_file)
 
@@ -454,9 +483,15 @@ def clean_seriesPostCSV():
                             'lgIDwinner' : 'leagueIDWinner',
                             'lgIDloser' : 'leagueIDLoser'}, inplace=True)
 
+    # pandas interprets the "NA" league id as a null value
+    df_post.loc[df_post['leagueIDWinner'].isnull(), 'leagueIDWinner'] = "NA"
+
+    # pandas interprets the "NA" league id as a null value
+    df_post.loc[df_post['leagueIDLoser'].isnull(), 'leagueIDLoser'] = "NA"
+
     saveCSV(df_post, outFile)
 
-def clean_fieldingOF():
+def clean_fieldingOFCSV():
     fieldingOF_file = 'FieldingOF.csv'
 
     df_fieldingOF = pd.read_csv(fieldingOF_file, delimiter=',')
@@ -465,18 +500,32 @@ def clean_fieldingOF():
 
     saveCSV(df_fieldingOF, fieldingOF_file)
 
-def clean_fieldingOFSplit():
+def clean_fieldingOFSplitCSV():
     fieldingOFSplit_file = 'FieldingOFsplit.csv'
 
     df_fieldingOFSplit = pd.read_csv(fieldingOFSplit_file, delimiter=',')
 
     df_fieldingOFSplit.rename(columns=cols.FieldingOFSplitCols, inplace=True)
 
+    # pandas interprets the "NA" league id as a null value
+    df_fieldingOFSplit.loc[df_fieldingOFSplit['leagueID'].isnull(), 'leagueID'] = "NA"
+
     # columns are not in use and lahmann doesnt even include them in docs
     df_fieldingOFSplit.drop(columns=['PB','WP','SB','CS','ZR'], inplace=True)
 
     saveCSV(df_fieldingOFSplit, fieldingOFSplit_file)
 
+def clean_homegamesCSV():
+    homegames_file = 'HomeGames.csv'
+
+    df_homegames = pd.read_csv(homegames_file, delimiter=',')
+
+    df_homegames.rename(columns=cols.HomeGamesCols, inplace=True)
+
+    # pandas interprets the "NA" league id as a null value
+    df_homegames.loc[df_homegames['leagueID'].isnull(), 'leagueID'] = "NA"
+
+    saveCSV(df_homegames, homegames_file)
 
 def main():
 
@@ -578,11 +627,15 @@ def main():
 
     print("cleaning FieldingOF.csv...")
     os.chdir("../csv_files")
-    clean_fieldingOF()
+    clean_fieldingOFCSV()
 
     print("cleaning FieldingOFSplit.csv...")
     os.chdir("../csv_files")
-    clean_fieldingOFSplit()
+    clean_fieldingOFSplitCSV()
+
+    print("cleaning HomeGames.csv...")
+    os.chdir("../csv_files")
+    clean_homegamesCSV()
 
 if __name__ == "__main__":
     main()

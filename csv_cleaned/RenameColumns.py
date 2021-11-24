@@ -135,9 +135,9 @@ AppearancesCols = {
 }
 
 FieldingOFCols = {
-'Glf'     :      'Games played in left field',
-'Gcf'     :       'Games played in center field',
-'Grf'     :       'Games played in right field',
+'Glf'     :      'GamesPlayedLeftField',
+'Gcf'     :       'GamesPlayedCenterField',
+'Grf'     :       'GamesPlayedRightField',
 'playerID' : 'personID',
 'lgID' : 'leagueID',
 'yearID' : 'year'
@@ -148,11 +148,22 @@ FieldingOFSplitCols = {
 'lgID' : 'leagueID',
 'yearID' : 'year',
 'lgID'   :        'leagueID',
-'Pos'      :      'Position',
+'POS'      :      'Position',
 'G'        :      'Games',
 'GS'       :      'GamesStarted',
 'PO'       :      'Putouts',
 'A'        :      'Assists',
 'E'        :      'Errors',
 'DP'       :      'DoublePlays'
+}
+
+HomeGamesCols = {
+'year.key'	 :	'year',
+'league.key' :	'leagueID',
+'team.key'	 :	'teamID',
+'park.key'	 :	'parkID',
+'span.first' :  'debutGameDate',
+'span.last'	 :	'endGameDate',
+'games'      :  'gamesPlayed',
+'openings'   :  'datesPlayed'
 }

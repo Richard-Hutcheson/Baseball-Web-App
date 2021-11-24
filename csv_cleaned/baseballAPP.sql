@@ -54,11 +54,11 @@ personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), teamID VARCHAR(100
 );
 
 CREATE TABLE FieldingOF (
-personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), Games played in left field VARCHAR(100), Games played in center field VARCHAR(100), Games played in right field VARCHAR(100)
+personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), GamesPlayedLeftField VARCHAR(100), GamesPlayedCenterField VARCHAR(100), GamesPlayedRightField VARCHAR(100)
 );
 
 CREATE TABLE FieldingOFsplit (
-personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), POS VARCHAR(100), Games VARCHAR(100), GamesStarted VARCHAR(100), InnOuts VARCHAR(100), Putouts VARCHAR(100), Assists VARCHAR(100), Errors VARCHAR(100), DoublePlays VARCHAR(100)
+personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), Position VARCHAR(100), Games VARCHAR(100), GamesStarted VARCHAR(100), InnOuts VARCHAR(100), Putouts VARCHAR(100), Assists VARCHAR(100), Errors VARCHAR(100), DoublePlays VARCHAR(100)
 );
 
 CREATE TABLE Franchises (

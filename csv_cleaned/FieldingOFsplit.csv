@@ -1,4 +1,4 @@
-personID,year,stint,teamID,leagueID,POS,Games,GamesStarted,InnOuts,Putouts,Assists,Errors,DoublePlays
+personID,year,stint,teamID,leagueID,Position,Games,GamesStarted,InnOuts,Putouts,Assists,Errors,DoublePlays
 aaronha01,1954,1,ML1,NL,LF,105,102,2773,205,4,6,0
 aaronha01,1954,1,ML1,NL,RF,11,11,320,12,1,1,1
 abramca01,1954,1,PIT,NL,LF,5,5,120,12,2,0,0
