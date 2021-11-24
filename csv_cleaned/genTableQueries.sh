@@ -31,7 +31,16 @@ do
   echo
 done
 
+echo
+echo
+
 for i in $files;
 do
-
+  tableName="${i%.*}"
+  echo "LOAD DATA INFILE './$i'"
+  echo "INTO TABLE $tableName"
+  echo "FIELDS TERMINATED BY ','"
+  echo "LINES TERMINATED BY '\n'"
+  echo "IGNORE 1 ROWS;"
+  echo
 done

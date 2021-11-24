@@ -167,3 +167,13 @@ HomeGamesCols = {
 'games'      :  'gamesPlayed',
 'openings'   :  'datesPlayed'
 }
+
+TeamsHalfCols = {
+'playerID' : 'personID',
+'lgID' : 'leagueID',
+'yearID' : 'year',
+'divID' : 'divisionID',
+'G'    :   'GamesPlayed',
+'W'    :   'Wins',
+'L'    :   'Losses'
+}

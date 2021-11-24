@@ -86,8 +86,8 @@ def clean_battingCSV():
     df_batting.insert(loc=22, column='round', value=[None for i in range(0, df_batting.shape[0])])
 
     # add is postSeason Column
-    df_batting.insert(loc=22, column='isPostSeason', value=[False for i in range(0, df_batting.shape[0])])
-    df_batting_post.insert(loc=22, column='isPostSeason', value=[True for i in range(0, df_batting_post.shape[0])])
+    df_batting.insert(loc=22, column='isPostSeason', value=['N' for i in range(0, df_batting.shape[0])])
+    df_batting_post.insert(loc=22, column='isPostSeason', value=['Y' for i in range(0, df_batting_post.shape[0])])
 
     # check to make sure the number of columns is equal
     assert(len(df_batting.columns.values) == len(df_batting_post.columns.values))
@@ -124,8 +124,8 @@ def clean_pitchingCSV():
     # add empty round column to the end of pitching data frame
     df_pit.insert(loc=df_pit.shape[1], column='round', value=[None for i in range(0, df_pit.shape[0])])
 
-    df_pit.insert(loc=df_pit.shape[1], column='isPostSeason', value=[False for i in range(0, df_pit.shape[0])])
-    df_pit_post.insert(loc=df_pit_post.shape[1], column='isPostSeason', value=[True for i in range(0, df_pit_post.shape[0])])
+    df_pit.insert(loc=df_pit.shape[1], column='isPostSeason', value=['N' for i in range(0, df_pit.shape[0])])
+    df_pit_post.insert(loc=df_pit_post.shape[1], column='isPostSeason', value=['Y' for i in range(0, df_pit_post.shape[0])])
 
     # check that the pitching data and the post pitching data has the same columns
     assert(len(df_pit.columns.values) == len(df_pit_post.columns))
@@ -162,8 +162,8 @@ def clean_fieldingCSV():
     df_fielding.insert(loc=df_fielding.shape[1], column='round', value=[None for i in range(0, df_fielding.shape[0])])
 
     # added post season column
-    df_fielding.insert(loc=df_fielding.shape[1], column='isPostSeason', value=[False for i in range(0, df_fielding.shape[0])])
-    df_fielding_post.insert(loc=df_fielding_post.shape[1], column='isPostSeason', value=[True for i in range(0, df_fielding_post.shape[0])])
+    df_fielding.insert(loc=df_fielding.shape[1], column='isPostSeason', value=['N' for i in range(0, df_fielding.shape[0])])
+    df_fielding_post.insert(loc=df_fielding_post.shape[1], column='isPostSeason', value=['Y' for i in range(0, df_fielding_post.shape[0])])
 
     # added empty TP column to fielding df
     df_fielding.insert(loc=13, column='TP', value=[None for i in range(0, df_fielding.shape[0])])
@@ -205,17 +205,17 @@ def clean_playersCSV():
     field_file_df = field_file_df.filter(['personID','year','stint','teamID','lgID','isPostSeason'])
 
     # added is pitching
-    pit_file_df.insert(loc=pit_file_df.shape[1], column='isPitching', value=[True for i in range(0, pit_file_df.shape[0])])
-    bat_file_df.insert(loc=bat_file_df.shape[1], column='isPitching', value=[False for i in range(0, bat_file_df.shape[0])])
-    field_file_df.insert(loc=field_file_df.shape[1], column='isPitching', value=[False for i in range(0, field_file_df.shape[0])])
+    pit_file_df.insert(loc=pit_file_df.shape[1], column='isPitching', value=['Y' for i in range(0, pit_file_df.shape[0])])
+    bat_file_df.insert(loc=bat_file_df.shape[1], column='isPitching', value=['N' for i in range(0, bat_file_df.shape[0])])
+    field_file_df.insert(loc=field_file_df.shape[1], column='isPitching', value=['N' for i in range(0, field_file_df.shape[0])])
 
-    pit_file_df.insert(loc=pit_file_df.shape[1], column='isBatting', value=[False for i in range(0, pit_file_df.shape[0])])
-    bat_file_df.insert(loc=bat_file_df.shape[1], column='isBatting', value=[True for i in range(0, bat_file_df.shape[0])])
-    field_file_df.insert(loc=field_file_df.shape[1], column='isBatting', value=[False for i in range(0, field_file_df.shape[0])])
+    pit_file_df.insert(loc=pit_file_df.shape[1], column='isBatting', value=['N' for i in range(0, pit_file_df.shape[0])])
+    bat_file_df.insert(loc=bat_file_df.shape[1], column='isBatting', value=['Y' for i in range(0, bat_file_df.shape[0])])
+    field_file_df.insert(loc=field_file_df.shape[1], column='isBatting', value=['N' for i in range(0, field_file_df.shape[0])])
 
-    pit_file_df.insert(loc=pit_file_df.shape[1], column='isFielding', value=[False for i in range(0, pit_file_df.shape[0])])
-    bat_file_df.insert(loc=bat_file_df.shape[1], column='isFielding', value=[False for i in range(0, bat_file_df.shape[0])])
-    field_file_df.insert(loc=field_file_df.shape[1], column='isFielding', value=[True for i in range(0, field_file_df.shape[0])])
+    pit_file_df.insert(loc=pit_file_df.shape[1], column='isFielding', value=['N' for i in range(0, pit_file_df.shape[0])])
+    bat_file_df.insert(loc=bat_file_df.shape[1], column='isFielding', value=['N' for i in range(0, bat_file_df.shape[0])])
+    field_file_df.insert(loc=field_file_df.shape[1], column='isFielding', value=['Y' for i in range(0, field_file_df.shape[0])])
 
 
     assert(len(pit_file_df.columns.values) == len(bat_file_df.columns.values))
@@ -352,12 +352,15 @@ def clean_franchisesCSV():
     saveCSV(df_franchises, out_file)
 
 def clean_awardsCSV():
+
+    # awards file dependencies
     awards_man_file = 'AwardsManagers.csv'
     awards_players_file = 'AwardsPlayers.csv'
     awards_man_share_file = 'AwardsShareManagers.csv'
     awards_players_share_file = 'AwardsSharePlayers.csv'
     out_file = 'Awards.csv'
 
+    # create dataframes of all the file dependencies
     df_awards_man = pd.read_csv(awards_man_file, delimiter=',')
     df_awards_players = pd.read_csv(awards_players_file, delimiter=',')
     df_awards_man_share = pd.read_csv(awards_man_share_file, delimiter=',')
@@ -369,6 +372,7 @@ def clean_awardsCSV():
     for i in range(0, len(df_awards_man.columns.values)):
         assert(df_awards_man.columns.values[i] == df_awards_players.columns.values[i])
 
+    # combine the managers and players table
     df_awards_combined = pd.concat([df_awards_man, df_awards_players])
 
     # insert awardID Column at the front of the data frame
@@ -394,8 +398,8 @@ def clean_awardsCSV():
     df_awards_combined.insert(loc=4, column='pointsMax', value=[None for i in range(0, df_awards_combined.shape[0])])
     df_awards_combined.insert(loc=4, column='pointsWon', value=[None for i in range(0, df_awards_combined.shape[0])])
 
-    df_awards_combined.insert(loc=df_awards_combined.shape[1], column='isShared', value=[False for i in range(0, df_awards_combined.shape[0])])
-    df_awards_combined_share.insert(loc=df_awards_combined_share.shape[1], column='isShared', value=[True for i in range(0, df_awards_combined_share.shape[0])])
+    df_awards_combined.insert(loc=df_awards_combined.shape[1], column='isShared', value=['N' for i in range(0, df_awards_combined.shape[0])])
+    df_awards_combined_share.insert(loc=df_awards_combined_share.shape[1], column='isShared', value=['Y' for i in range(0, df_awards_combined_share.shape[0])])
 
     assert(len(df_awards_combined.columns.values) == len(df_awards_combined_share.columns.values))
 
@@ -420,7 +424,7 @@ def clean_schoolCSV():
 
     df_schools = pd.read_csv(school_file, delimiter=',')
 
-    df_schools.rename(columns={'name_full' : 'name'})
+    df_schools.rename(columns={'name_full' : 'schoolName'}, inplace=True)
 
     saveCSV(df_schools, school_file)
 
@@ -464,9 +468,7 @@ def clean_teamsHalfCSV():
 
     df_teamsHalf = pd.read_csv(teamsHalf_file, delimiter=',')
 
-    df_teamsHalf.rename(columns={'playerID' : 'personID',
-                                       'lgID' : 'leagueID',
-                                       'yearID' : 'year'}, inplace=True)
+    df_teamsHalf.rename(columns=cols.TeamsHalfCols, inplace=True)
 
     # pandas interprets the "NA" league id as a null value
     df_teamsHalf.loc[df_teamsHalf['leagueID'].isnull(), 'leagueID'] = "NA"
