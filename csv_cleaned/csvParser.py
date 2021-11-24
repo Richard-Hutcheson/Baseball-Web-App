@@ -450,13 +450,18 @@ def clean_collegePlayerCSV():
 
 def clean_allStarOccurences():
     allStarFull_file = 'AllstarFull.csv'
-    outFile = 'AllStarOccurences.csv'
+    outFile = 'AllStar.csv'
 
     df_allstarfull = pd.read_csv(allStarFull_file, delimiter=',')
 
     df_allstarfull.rename(columns={'playerID' : 'personID',
                                        'lgID' : 'leagueID',
-                                       'yearID' : 'year'}, inplace=True)
+                                       'yearID' : 'year',
+                                       'GP' : 'PlayedInGame'}, inplace=True)
+
+    # replace the 1/0 with Y/N
+    df_allstarfull.loc[df_allstarfull['PlayedInGame'] == 1, 'PlayedInGame'] = 'Y'
+    df_allstarfull.loc[df_allstarfull['PlayedInGame'] == 0, 'PlayedInGame'] = 'N'
 
     # pandas interprets the "NA" league id as a null value
     df_allstarfull.loc[df_allstarfull['leagueID'].isnull(), 'leagueID'] = "NA"

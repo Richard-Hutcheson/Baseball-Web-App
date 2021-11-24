@@ -1,7 +1,7 @@
 USE baseballAPP;
 
 
-DROP TABLE IF EXISTS AllStarOccurences;
+DROP TABLE IF EXISTS AllStar;
 DROP TABLE IF EXISTS Appearances;
 DROP TABLE IF EXISTS Awards;
 DROP TABLE IF EXISTS Batting;
@@ -26,8 +26,8 @@ DROP TABLE IF EXISTS Teams;
 DROP TABLE IF EXISTS TeamsHalf;
 
 
-CREATE TABLE AllStarOccurences (
-personID VARCHAR(100), year VARCHAR(100), gameNum VARCHAR(100), gameID VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), GP VARCHAR(100), startingPos VARCHAR(100)
+CREATE TABLE AllStar (
+personID VARCHAR(100), year VARCHAR(100), gameNum VARCHAR(100), gameID VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), PlayedInGame VARCHAR(100), startingPos VARCHAR(100)
 );
 
 CREATE TABLE Appearances (
@@ -51,7 +51,7 @@ rowID VARCHAR(100), divisionID VARCHAR(100), divisionName VARCHAR(100), isActive
 );
 
 CREATE TABLE Fielding (
-personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), Position VARCHAR(100), Games VARCHAR(100), GamesStarted VARCHAR(100), InnOuts VARCHAR(100), Putouts VARCHAR(100), Assists VARCHAR(100), Errors VARCHAR(100), DoublePlays VARCHAR(100), TP VARCHAR(100), PassedBallsByCatchers VARCHAR(100), WildPitchesByCatchers VARCHAR(100), OpponentStolenBasesByCatchers VARCHAR(100), OpponentsCaughtStealingByCatchers VARCHAR(100), ZoneRating VARCHAR(100), round VARCHAR(100), isPostSeason VARCHAR(100)
+personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), Position VARCHAR(100), Games VARCHAR(100), GamesStarted VARCHAR(100), InnOuts VARCHAR(100), Putouts VARCHAR(100), Assists VARCHAR(100), Errors VARCHAR(100), DoublePlays VARCHAR(100), TriplePlays VARCHAR(100), PassedBallsByCatchers VARCHAR(100), WildPitchesByCatchers VARCHAR(100), OpponentStolenBasesByCatchers VARCHAR(100), OpponentsCaughtStealingByCatchers VARCHAR(100), ZoneRating VARCHAR(100), round VARCHAR(100), isPostSeason VARCHAR(100)
 );
 
 CREATE TABLE FieldingOF (
@@ -120,8 +120,8 @@ year VARCHAR(100), leagueID VARCHAR(100), teamID VARCHAR(100), Half VARCHAR(100)
 
 
 
-LOAD DATA INFILE './AllStarOccurences.csv'
-INTO TABLE AllStarOccurences
+LOAD DATA INFILE './AllStar.csv'
+INTO TABLE AllStar
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
