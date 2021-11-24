@@ -1,8 +1,9 @@
 #!/bin/bash
 
+# This script makes create table scripts in SQL
+
 files=`ls *.csv`
 
-# echo $files
 
 echo "USE baseballAPP;"
 echo
@@ -18,6 +19,7 @@ done
 echo
 echo
 
+#generate create table queries
 for i in $files;
 do
   tableName="${i%.*}"
