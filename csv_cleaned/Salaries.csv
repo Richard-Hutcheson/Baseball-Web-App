@@ -1,4 +1,4 @@
-personID,yearID,teamID,lgID,salary
+personID,year,teamID,leagueID,salary
 barkele01,1985,ATL,NL,870000
 bedrost01,1985,ATL,NL,550000
 benedbr01,1985,ATL,NL,545000

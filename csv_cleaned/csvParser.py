@@ -231,6 +231,8 @@ def clean_salaryCSV():
     playerID_col = df_salary.pop('playerID')
     df_salary.insert(loc=0, column='personID', value=playerID_col)
 
+    df_salary.rename(columns={'yearID' : 'year', 'lgID' : 'leagueID'}, inplace=True)
+
     saveCSV(df_salary, salary_file)
 
 def clean_appearancesCSV():
@@ -240,6 +242,8 @@ def clean_appearancesCSV():
 
     playerID_col = df_appearances.pop('playerID')
     df_appearances.insert(loc=0, column='personID', value=playerID_col)
+
+    df_appearances.rename(columns=cols.AppearancesCols, inplace=True)
 
     saveCSV(df_appearances, appearances_file)
 
@@ -269,7 +273,7 @@ def clean_teamsCSV():
 
     df_teams.rename(columns=cols.TeamsCols, inplace=True)
 
-    # This code is adding park ID to teams 
+    # This code is adding park ID to teams
     # TODO: fix conflicting park names in dictionary
 
     # parkName_parkID_dict = pd.Series(df_parks.parkID.values, index=[x.lower() for x in df_parks.parkName.values]).to_dict()
@@ -446,6 +450,10 @@ def clean_seriesPostCSV():
 
     df_post = pd.read_csv(seriesPost_file, delimiter=',')
 
+    df_post.rename(columns={'yearID' : 'year',
+                            'lgIDwinner' : 'leagueIDWinner',
+                            'lgIDloser' : 'leagueIDLoser'}, inplace=True)
+
     saveCSV(df_post, outFile)
 
 def clean_fieldingOF():
@@ -453,9 +461,7 @@ def clean_fieldingOF():
 
     df_fieldingOF = pd.read_csv(fieldingOF_file, delimiter=',')
 
-    df_fieldingOF.rename(columns={'playerID' : 'personID',
-                                       'lgID' : 'leagueID',
-                                       'yearID' : 'year'}, inplace=True)
+    df_fieldingOF.rename(columns=cols.FieldingOFCols, inplace=True)
 
     saveCSV(df_fieldingOF, fieldingOF_file)
 
@@ -464,9 +470,10 @@ def clean_fieldingOFSplit():
 
     df_fieldingOFSplit = pd.read_csv(fieldingOFSplit_file, delimiter=',')
 
-    df_fieldingOFSplit.rename(columns={'playerID' : 'personID',
-                                       'lgID' : 'leagueID',
-                                       'yearID' : 'year'}, inplace=True)
+    df_fieldingOFSplit.rename(columns=cols.FieldingOFSplitCols, inplace=True)
+
+    # columns are not in use and lahmann doesnt even include them in docs
+    df_fieldingOFSplit.drop(columns=['PB','WP','SB','CS','ZR'], inplace=True)
 
     saveCSV(df_fieldingOFSplit, fieldingOFSplit_file)
 

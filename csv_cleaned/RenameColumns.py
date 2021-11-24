@@ -56,7 +56,7 @@ PitchingCols = {'playerID' :       'personID',
 FieldingCols = {'playerID'  :     'personID',
                 'yearID'    :     'year',
                 'lgID'      :     'leagueID',
-                'Pos'      :      'Position',
+                'POS'      :      'Position',
                 'G'        :      'Games',
                 'GS'       :      'GamesStarted',
                 'PO'       :      'Putouts',
@@ -109,4 +109,50 @@ TeamsCols = {'yearID' : 'year',
              'FP' : 'FieldingPercentage',
              'BPF' : 'ThreeYearParkFactorBatters',
              'PPF' : 'ThreeYearParkFactorPitchers'
+}
+
+AppearancesCols = {
+'playerID'  :     'personID',
+'lgID'      :     'leagueID',
+'yearID'    :     'year',
+'G_all'     :     'TotalGamesPlayed',
+'GS'        :     'GamesStarted',
+'G_batting' :     'GamesPlayerBatted',
+'G_defense' :     'GamesPlayerOnDefense',
+'G_p'       :     'GamesAsPitcher',
+'G_c'       :     'GamesAsCatcher',
+'G_1b'      :     'GamesAsFirstBaseman',
+'G_2b'      :     'GamesAsSecondBaseman',
+'G_3b'      :     'GamesAsThirdBaseman',
+'G_ss'      :     'GamesAsShortstop',
+'G_lf'      :     'GamesAsLeftfielder',
+'G_cf'      :     'GamesAsCenterfielder',
+'G_rf'      :     'GamesAsRightfielder',
+'G_of'      :     'GamesAsOutfielder',
+'G_dh'      :     'GamesAsDesignatedHitter',
+'G_ph'      :     'GamesAsPinchHitter',
+'G_pr'      :     'GamesAsPinchRunner'
+}
+
+FieldingOFCols = {
+'Glf'     :      'Games played in left field',
+'Gcf'     :       'Games played in center field',
+'Grf'     :       'Games played in right field',
+'playerID' : 'personID',
+'lgID' : 'leagueID',
+'yearID' : 'year'
+}
+
+FieldingOFSplitCols = {
+'playerID' : 'personID',
+'lgID' : 'leagueID',
+'yearID' : 'year',
+'lgID'   :        'leagueID',
+'Pos'      :      'Position',
+'G'        :      'Games',
+'GS'       :      'GamesStarted',
+'PO'       :      'Putouts',
+'A'        :      'Assists',
+'E'        :      'Errors',
+'DP'       :      'DoublePlays'
 }
