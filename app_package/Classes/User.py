@@ -1,4 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
+from app_package import app
+]from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, Integer, String, Numeric, create_engine
@@ -7,7 +8,6 @@ import pymysql
 
 Base = declarative_base()
 
-db = SQLAlchemy()
 
 class User(db.Model):
     __tablename__ = "users"
