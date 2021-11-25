@@ -18,8 +18,8 @@ Team Members:
 # Anaconda Dependencies
 * conda install -c conda-forge flask-sqlalchemy
 * conda install -c conda-forge sqlalchemy-utils
-* colorama
-* pymysql
+* conda install -c anaconda colorama
+* conda install -c anaconda pymysql
 * pip install python-dotenv
 * conda install -c anaconda flask
 * conda install -c anaconda flask-wtf

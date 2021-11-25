@@ -150,6 +150,7 @@ button:hover{
     position: relative;
     border-style: solid;
     height: auto;
+    background-color: antiquewhite;
     min-height: 300px;
     max-height: 500px;
 
