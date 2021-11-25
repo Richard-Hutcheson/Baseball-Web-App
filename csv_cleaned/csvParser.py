@@ -3,7 +3,7 @@ import csv
 import os
 import pandas as pd
 import pymysql
-from dbconfigAPP import user
+from csi3335fall2021 import user
 import RenameColumns as cols
 import numpy
 

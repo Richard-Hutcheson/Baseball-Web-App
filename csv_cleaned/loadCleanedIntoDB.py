@@ -1,5 +1,5 @@
 import pymysql as sql
-from dbconfigAPP import user
+from csi3335fall2021 import user
 import os
 
 
