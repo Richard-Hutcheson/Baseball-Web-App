@@ -16,7 +16,8 @@ Team Members:
 
 
 # Anaconda Dependencies
-* sqlAlchemy
+* conda install -c conda-forge flask-sqlalchemy
+* conda install -c conda-forge sqlalchemy-utils
 * colorama
 * pymysql
 * pip install python-dotenv

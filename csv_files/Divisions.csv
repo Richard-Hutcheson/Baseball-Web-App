@@ -1,0 +1,12 @@
+rowID,divID,lgID,divisionName,isActive
+1,E,AL,AL East,Y
+2,W,AL,AL West,Y
+3,C,AL,AL Central,Y
+4,E,NL,NL East,Y
+5,W,NL,NL West,Y
+6,C,NL,NL Central,Y
+7,A,AA,Sole Division,N
+8,F,FL,Sole Division,N
+9,N,NA,Sole Division,N
+10,P,PL,Sole Division,N
+11,U,UA,Sole Division,N
