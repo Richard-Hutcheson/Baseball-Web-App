@@ -25,6 +25,7 @@ db = SQLAlchemy(app)
 # Package used to encrypt passwords for security purposes
 bcrypt = Bcrypt(app)
 
+# KEEP THIS
 from app_package import routes
 
 # Create all the tables

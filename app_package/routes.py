@@ -1,12 +1,17 @@
+import flask_bcrypt
+
 from app_package import app
 from flask import render_template, request
-from app_package.Classes import User
+
+from app_package import db
 
 
 # @app.route('/home')
 # def homePage():
 #     return render_template('homepage.html')
 #
+from app_package.Classes.user import User
+
 
 @app.route('/')
 @app.route('/index')
@@ -35,22 +40,21 @@ def handleRegistration():
         username = request.form.get('username')
         password = request.form.get('password')
         print("username = " + username + " password = " + password)
-        #if account is valid
-
+        # if account is valid
         user = User.query.filter_by(username=username).first()
 
         if not user:
-            # account can be created
-            user = User(username=username, password=password)
-
-
-
-
-
-        return render_template('loginpage.html', title='Sign In')
-
-    #if the account is invalid
-    return render_template('register.html', title='Create Account')
+            # account can be created, but first encrypt password
+            encrypt_pass = flask_bcrypt.generate_password_hash(password).decode('utf-8')
+            user = User(username=username,password=encrypt_pass)
+            db.session.add(user)
+            db.session.commit()
+            print("User doesnt exist yet")
+            return render_template('loginpage.html', title='Sign In')
+        else:
+            print("User exists")
+         #if the account is invalid
+        return render_template('register.html', title='Create Account')
 
 
 
