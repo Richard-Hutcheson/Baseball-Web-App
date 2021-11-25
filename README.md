@@ -22,7 +22,8 @@ Team Members:
 * conda install -c anaconda pymysql
 * pip install python-dotenv
 * conda install -c anaconda flask
-* conda install -c anaconda flask-wtf
+* conda install -c anaconda flask-wtf (not currently needed)
+* conda install -c conda-forge flask-bcrypt
 
 TIP:
 
