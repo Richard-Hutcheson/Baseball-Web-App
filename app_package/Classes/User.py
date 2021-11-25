@@ -1,13 +1,12 @@
 from app_package import app
-]from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, Integer, String, Numeric, create_engine
 from csi3335fall2021 import user
-import pymysql
+from app_package import db
 
 Base = declarative_base()
-
 
 class User(db.Model):
     __tablename__ = "users"

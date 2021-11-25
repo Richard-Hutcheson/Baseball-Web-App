@@ -1,7 +1,6 @@
 from app_package import app
-from flask import render_template, request
-from app_package.Classes import User
-
+from flask import render_template, redirect, request, flash, url_for
+from csi3335fall2021 import user
 
 # @app.route('/home')
 # def homePage():
@@ -35,25 +34,12 @@ def handleRegistration():
         username = request.form.get('username')
         password = request.form.get('password')
         print("username = " + username + " password = " + password)
+        
         #if account is valid
-
-        user = User.query.filter_by(username=username).first()
-
-        if not user:
-            # account can be created
-            user = User(username=username, password=password)
-
-
-
-
-
         return render_template('loginpage.html', title='Sign In')
 
     #if the account is invalid
     return render_template('register.html', title='Create Account')
-
-
-
 
 @app.errorhandler(404)
 def not_found(e):

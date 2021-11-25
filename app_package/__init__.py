@@ -5,7 +5,6 @@ from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 from myConfig import Config
 from csi3335fall2021 import user
-import pymysql
 
 
 app = Flask(__name__)
@@ -25,7 +24,7 @@ db = SQLAlchemy(app)
 # Package used to encrypt passwords for security purposes
 bcrypt = Bcrypt(app)
 
-from app_package import routes
+from app_package import routes #NEEDS TO BE HERE IN THIS ORDER
 
 # Create all the tables
 db.create_all()
