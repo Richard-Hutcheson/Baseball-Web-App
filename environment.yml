@@ -1,4 +1,4 @@
-name: Baseball-Web-App
+name: baseball_project
 channels:
   - defaults
 dependencies:

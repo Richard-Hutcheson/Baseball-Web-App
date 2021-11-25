@@ -1,3 +1,4 @@
+from flask_bcrypt import Bcrypt
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
@@ -9,7 +10,7 @@ import pymysql
 
 app = Flask(__name__)
 
-#create a new database in terminal called baseballAPP
+# create a new database in terminal called baseballAPP
 engineUrl = 'mysql+pymysql://' + user['username'] + ':' + user['password'] + '@' + user['host'] + ':3306/' + user['db']
 app.config['SQLALCHEMY_DATABASE_URI'] = engineUrl
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -21,6 +22,10 @@ if not database_exists(engine.url):
     create_database(engine.url)
 
 db = SQLAlchemy(app)
+# Package used to encrypt passwords for security purposes
+bcrypt = Bcrypt(app)
 
 from app_package import routes
 
+# Create all the tables
+db.create_all()

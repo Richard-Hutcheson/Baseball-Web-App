@@ -1,4 +1,4 @@
 user = {'host': 'localhost',
 	'username': 'root',
-	'password' : 'csi',
+	'password' : 'pass',
 	'db': 'baseballAPP'}
