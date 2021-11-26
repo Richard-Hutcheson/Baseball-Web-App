@@ -36,14 +36,14 @@ def searchResults():
 def handleLogin():
 
     if request.method == 'POST':
-        usernameTest = request.form.get('username')
-        passwordTest = request.form.get('password')
-        print("USERNAME = ", usernameTest, "\nPASSWORD = ", passwordTest)
-        user = User.query.filter_by(username=usernameTest).first()
-
-        if user and bcrypt.check_password_hash(user.password, passwordTest):
+        username = request.form.get('username')
+        password = request.form.get('password')
+        print("USERNAME = ", username, "\nPASSWORD = ", password)
+        user = User.query.filter_by(username=username).first()
+        print("user.password = ", user.password)
+        print("passwordTest = ", password)
+        if user and bcrypt.check_password_hash(user.password, str(password)):
             return redirect('/dashboard')
-
     return redirect('/login')
 
 
@@ -58,9 +58,10 @@ def handleRegistration():
         user = User.query.filter_by(username=username).first()
 
         if not user:
-            # account can be created, but first encrypt password
+            # account can be create
+            # d, but first encrypt password
             encrypt_pass = bcrypt.generate_password_hash(password).decode('utf-8')
-            user = User(username=username,password=encrypt_pass)
+            user = User(username=username,password=str(encrypt_pass))
             db.session.add(user)
             db.session.commit()
             return render_template('register.html', title='Create Account', created='success')
