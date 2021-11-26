@@ -19,14 +19,30 @@ done
 echo
 echo
 
-#generate create table queries
+# generate create table queries
 for i in $files;
 do
   tableName="${i%.*}"
+
+  #generate table query
   echo "CREATE TABLE $tableName ("
-  attr=`head -1 $i | sed 's/,/ VARCHAR(100), /g'`
-  attr="$attr VARCHAR(100)"
-  echo $attr
+  tableAttr=`head -1 $i`
+  DBattr=`echo $tableAttr | sed 's/,/ VARCHAR(100), /g'`
+
+  #check if there is a rowID primary key
+  PriKeyCheck=`echo $tableAttr | grep ".*RowID," | wc -c`
+
+  # check if there is a rowID and set it as the Primary key
+  if [[ $PriKeyCheck -ne 0 ]]
+  then
+    DBattr="$DBattr VARCHAR(100),"
+    DBattr="$DBattr PRIMARY KEY (`echo $tableAttr | sed 's/,/ /g' | awk '{print $1}'`)"
+  else
+    DBattr="$DBattr VARCHAR(100)"
+  fi
+
+  echo $DBattr
+
   echo ");"
   echo
 done
@@ -34,6 +50,7 @@ done
 echo
 echo
 
+# generate csv loading queries
 for i in $files;
 do
   tableName="${i%.*}"
