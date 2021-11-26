@@ -1,5 +1,4 @@
-import flask_bcrypt
-
+from app_package import bcrypt
 from app_package import app
 from flask import render_template, request, flash, redirect
 
@@ -40,9 +39,9 @@ def handleLogin():
         usernameTest = request.form.get('username')
         passwordTest = request.form.get('password')
         print("USERNAME = ", usernameTest, "\nPASSWORD = ", passwordTest)
-        user = User.query.filter_by(username=request.form.get('username')).first()
+        user = User.query.filter_by(username=usernameTest).first()
 
-        if user and flask_bcrypt.check_password_hash(user.password,request.form.get('password')):
+        if user and bcrypt.check_password_hash(user.password, passwordTest):
             return redirect('/dashboard')
 
     return redirect('/login')
@@ -60,7 +59,7 @@ def handleRegistration():
 
         if not user:
             # account can be created, but first encrypt password
-            encrypt_pass = flask_bcrypt.generate_password_hash(password).decode('utf-8')
+            encrypt_pass = bcrypt.generate_password_hash(password).decode('utf-8')
             user = User(username=username,password=encrypt_pass)
             db.session.add(user)
             db.session.commit()
