@@ -36,3 +36,8 @@ and recreate it using:\
 "conda env create -f <environment_file>.yml"
 
 run flask with "flask run", ensure .flaskenv has FLASK_APP environment variable saved
+
+#SQL BaseballAPP.sql instructions
+* run csvParser.py
+* copy all CSVs /usr/local/var/mysql/baseballAPP/
+* go to current directory of the BaseballApp.sql script and run in SQL
