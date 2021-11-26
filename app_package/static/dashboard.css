@@ -148,10 +148,11 @@ button:hover{
 }
 #roster{
     position: relative;
+    display: block;
     border-style: solid;
     height: auto;
-    background-color: antiquewhite;
     min-height: 300px;
+    background-color: red;
     max-height: 500px;
 
 }

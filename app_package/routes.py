@@ -1,4 +1,3 @@
-from app_package import bcrypt
 from app_package import app
 from flask import render_template, request, flash, redirect
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -40,9 +39,10 @@ def handleLogin():
         password = request.form.get('password')
 
         user = User.query.filter_by(username=username).first()
-
+        #user is valid, log them in
         if user and check_password_hash(user.password,password):
-            return redirect('/dashboard')
+            return render_template("dashboard.html", title = "Dashboard", username = username, css = "../static/dashboard.css" )
+
     return redirect('/login')
 
 
