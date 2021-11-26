@@ -50,6 +50,7 @@ button:hover{
     font-weight: bold;
     left: 3rem;
     opacity: 100%;
+    font-size: larger;
 }
 #logoutID{
     position: absolute;
@@ -152,9 +153,9 @@ button:hover{
     border-style: solid;
     height: auto;
     min-height: 300px;
-    background-color: red;
+    background-color: rgb(224, 213, 180);
     max-height: 500px;
-
+    color: black;
 }
 #attributeList{
     display: grid;
@@ -175,21 +176,28 @@ button:hover{
     text-align: center;
     /* grid-template-columns: 275px 75px 275px 75px 75px; */
     grid-template-columns: 20% 15% 35% 15% 15%;
-
+    border-bottom-style: solid;
+    border-color: white;
 }
 
 #faveTeamContainer{
     margin-top: 1rem;
 }
 #selectorCenter{
-    text-align: center;
+    display: block;
+    position: relative;
+    left: 50%;
+    width: 200px;
+    height: 100px;
+    transform: translateX(-50%);
 }
 #faveTeamSelect{
     width: 200px;
+    margin-bottom: 10px;
 
 }
 #faveTeamYrSelect{
-    width: 100px;
+    width: 200px;
 }
 #changeBtn{
     position: relative;

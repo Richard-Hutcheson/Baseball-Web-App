@@ -1,14 +1,18 @@
+from werkzeug.utils import redirect
 from app_package import app
-from flask import render_template, request, flash, redirect
+from flask import render_template, request, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from app_package import db
-
-
-# @app.route('/home')
-# def homePage():
-#     return render_template('homepage.html')
-#
 from app_package.Classes.user import User
+
+'''
+Future Richard, consider using sessions to pass data through redirection 
+without exposing information in the url heading
+
+-Past Richard
+
+'''
+
 
 
 @app.route('/')
@@ -19,7 +23,9 @@ def login():
 
 @app.route('/dashboard')
 def dashboard():
-    usernameUp = "userX".upper()
+
+    usernameUp = request.args.get('username').upper()
+
     return render_template("dashboard.html", title = "Dashboard", username = usernameUp, css = "../static/dashboard.css" )
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -41,9 +47,10 @@ def handleLogin():
         user = User.query.filter_by(username=username).first()
         #user is valid, log them in
         if user and check_password_hash(user.password,password):
-            return render_template("dashboard.html", title = "Dashboard", username = username, css = "../static/dashboard.css" )
+            return redirect(url_for('dashboard', username = username))
+            #return render_template("dashboard.html", title = "Dashboard", username = username, css = "../static/dashboard.css" )
 
-    return redirect('/login')
+    return redirect("/login")
 
 
 @app.route('/handleRegistration', methods=['GET', 'POST'])
