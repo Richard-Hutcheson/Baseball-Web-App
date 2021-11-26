@@ -39,7 +39,7 @@ def handleRegistration():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        print("username = " + username + " password = " + password)
+
         # if account is valid
         user = User.query.filter_by(username=username).first()
 
