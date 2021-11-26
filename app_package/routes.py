@@ -33,13 +33,19 @@ def register():
 def searchResults():
     return render_template('searchResults.html', title='Results')
 
-@app.route('/loginHandler', methods=['GET', 'POST'])
-def handleRegistration():
+@app.route('/handleLogin', methods=['GET', 'POST'])
+def handleLogin():
 
     if request.method == 'GET':
-        return redirect('/dashboard')
 
-    return redirect('/login')
+        user = User.query.filter_by(username=request.form.get('username')).first()
+
+        if user and flask_bcrypt.check_password_hash(user.password,request.form.get('password')):
+            return redirect('/dashboard')
+
+        else:
+            return redirect('/login')
+
 
 @app.route('/handleRegistration', methods=['GET', 'POST'])
 def handleRegistration():
