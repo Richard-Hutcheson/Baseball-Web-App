@@ -1,4 +1,4 @@
-CollegePlayingID,personID,schoolID,year
+CollegePlayingRowID,personID,schoolID,year
 0,aardsda01,pennst,2001
 1,aardsda01,rice,2002
 2,aardsda01,rice,2003

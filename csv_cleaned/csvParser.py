@@ -327,6 +327,8 @@ def clean_teamsCSV():
     # pandas interprets the "NA" league id as a null value
     df_teams.loc[df_teams['leagueID'].isnull(), 'leagueID'] = "NA"
 
+    df_teams.insert(loc=0, column='TeamsRowID', value=range(0, df_teams.shape[0]))
+
     saveCSV(df_teams, teams_file)
 
 def clean_divisionCSV():
@@ -334,7 +336,7 @@ def clean_divisionCSV():
 
     df_division = pd.read_csv(div_file, delimiter=',', usecols=['rowID', 'divID', 'divisionName', 'isActive'])
 
-    df_division.rename(columns={'divID' : 'divisionID'}, inplace=True)
+    df_division.rename(columns={'divID' : 'divisionID', 'rowID' : 'DivisionRowID'}, inplace=True)
 
     saveCSV(df_division, div_file)
 
@@ -456,7 +458,7 @@ def clean_collegePlayerCSV():
     df_collegePlayer.rename(columns={'playerID' : 'personID',
                                        'yearID' : 'year'}, inplace=True)
 
-    df_collegePlayer.insert(loc=0, column='CollegePlayingID', value=range(0, df_collegePlayer.shape[0]))
+    df_collegePlayer.insert(loc=0, column='CollegePlayingRowID', value=range(0, df_collegePlayer.shape[0]))
 
     saveCSV(df_collegePlayer, collegePlayer_file)
 
