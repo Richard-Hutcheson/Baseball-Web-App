@@ -49,8 +49,8 @@ def clean_managerCSV():
     df.insert(loc=5, column='half', value=["NULL" for i in range(0, df.shape[0])])
     df_half.insert(loc=10, column='plyrMgr', value=["NULL" for i in range(0, df_half.shape[0])])
 
-    df_half['isSeasonHalf'] = True
-    df['isSeasonHalf'] = False
+    df_half['isSeasonHalf'] = 'Y'
+    df['isSeasonHalf'] = 'N'
 
     # make sure half data and regular data have the same columns
     assert(len(df.columns.values) == len(df_half.columns.values))
