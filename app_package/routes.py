@@ -41,7 +41,6 @@ def handleLogin():
 
         user = User.query.filter_by(username=username).first()
 
-        # if user and bcrypt.check_password_hash(user.password, str(password)):
         if user and check_password_hash(user.password,password):
             return redirect('/dashboard')
     return redirect('/login')
@@ -58,9 +57,7 @@ def handleRegistration():
         user = User.query.filter_by(username=username).first()
 
         if not user:
-            # account can be create
-            # d, but first encrypt password
-            # encrypt_pass = bcrypt.generate_password_hash(password).decode('utf-8')
+            # account can be created, but first encrypt password
             encrypt_pass = generate_password_hash(password)
             user = User(username=username,password=encrypt_pass)
             db.session.add(user)
