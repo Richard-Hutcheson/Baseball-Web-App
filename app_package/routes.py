@@ -1,7 +1,7 @@
 import flask_bcrypt
 
 from app_package import app
-from flask import render_template, request
+from flask import render_template, request, flash, redirect
 
 from app_package import db
 
@@ -26,12 +26,20 @@ def dashboard():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html', title='Create Account')
+    return render_template('register.html', title='Create Account', created='')
 
 
 @app.route('/searchResults', methods=['GET', 'POST'])
 def searchResults():
     return render_template('searchResults.html', title='Results')
+
+@app.route('/loginHandler', methods=['GET', 'POST'])
+def handleRegistration():
+
+    if request.method == 'GET':
+        return redirect('/dashboard')
+
+    return redirect('/login')
 
 @app.route('/handleRegistration', methods=['GET', 'POST'])
 def handleRegistration():
@@ -49,12 +57,11 @@ def handleRegistration():
             user = User(username=username,password=encrypt_pass)
             db.session.add(user)
             db.session.commit()
-            print("User doesnt exist yet")
-            return render_template('loginpage.html', title='Sign In')
+            return render_template('register.html', title='Create Account', created='success')
         else:
             print("User exists")
          #if the account is invalid
-        return render_template('register.html', title='Create Account')
+        return render_template('register.html', title='Create Account', created='fail')
 
 
 
