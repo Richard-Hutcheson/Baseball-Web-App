@@ -1,7 +1,7 @@
 from app_package import bcrypt
 from app_package import app
 from flask import render_template, request, flash, redirect
-
+from werkzeug.security import generate_password_hash, check_password_hash
 from app_package import db
 
 
@@ -38,11 +38,11 @@ def handleLogin():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        print("USERNAME = ", username, "\nPASSWORD = ", password)
+
         user = User.query.filter_by(username=username).first()
-        print("user.password = ", user.password)
-        print("passwordTest = ", password)
-        if user and bcrypt.check_password_hash(user.password, str(password)):
+
+        # if user and bcrypt.check_password_hash(user.password, str(password)):
+        if user and check_password_hash(user.password,password):
             return redirect('/dashboard')
     return redirect('/login')
 
@@ -60,14 +60,15 @@ def handleRegistration():
         if not user:
             # account can be create
             # d, but first encrypt password
-            encrypt_pass = bcrypt.generate_password_hash(password).decode('utf-8')
-            user = User(username=username,password=str(encrypt_pass))
+            # encrypt_pass = bcrypt.generate_password_hash(password).decode('utf-8')
+            encrypt_pass = generate_password_hash(password)
+            user = User(username=username,password=encrypt_pass)
             db.session.add(user)
             db.session.commit()
             return render_template('register.html', title='Create Account', created='success')
         else:
             print("User exists")
-         #if the account is invalid
+         # if the account is invalid
         return render_template('register.html', title='Create Account', created='fail')
 
 
