@@ -7,7 +7,10 @@ from app_package.Classes.user import User
 
 '''
 Future Richard, consider using sessions to pass data through redirection 
-without exposing information in the url heading
+without exposing information in the url heading. If you are okay with
+showing details in the url, then consider a dictionary being passed
+through url_for and then iterate over them with jinja by parsing over
+them with request.args.get('')
 
 -Past Richard
 
@@ -24,7 +27,11 @@ def login():
 @app.route('/dashboard')
 def dashboard():
 
-    usernameUp = request.args.get('username').upper()
+    usernameUp = request.args.get('username')
+    if usernameUp is not None:
+        usernameUp = usernameUp.upper()
+    else:
+        usernameUp = "USER_Z"
 
     return render_template("dashboard.html", title = "Dashboard", username = usernameUp, css = "../static/dashboard.css" )
 
