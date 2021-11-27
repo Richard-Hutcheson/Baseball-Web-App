@@ -10,7 +10,7 @@ import pymysql
 
 app = Flask(__name__)
 
-# create a new database in terminal called baseballAPP
+# create a new database in terminal called baseballapp
 engineUrl = 'mysql+pymysql://' + user['username'] + ':' + user['password'] + '@' + user['host'] + ':3306/' + user['db']
 app.config['SQLALCHEMY_DATABASE_URI'] = engineUrl
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

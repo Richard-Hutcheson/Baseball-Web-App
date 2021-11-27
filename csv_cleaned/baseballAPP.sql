@@ -1,4 +1,4 @@
-USE baseballAPP;
+USE baseballapp;
 
 
 DROP TABLE IF EXISTS AllStar;
