@@ -1,3 +1,4 @@
+from flask.globals import session
 from werkzeug.utils import redirect
 from app_package import app
 from flask import render_template, request, url_for
@@ -27,8 +28,9 @@ def login():
 @app.route('/dashboard')
 def dashboard():
 
-    usernameUp = request.args.get('username')
-    if usernameUp is not None:
+
+    if 'username' in session:
+        usernameUp = session['username']
         usernameUp = usernameUp.upper()
     else:
         usernameUp = "USER_Z"
@@ -54,7 +56,8 @@ def handleLogin():
         user = User.query.filter_by(username=username).first()
         #user is valid, log them in
         if user and check_password_hash(user.password,password):
-            return redirect(url_for('dashboard', username = username))
+            session['username'] = username
+            return redirect(url_for('dashboard'))
             #return render_template("dashboard.html", title = "Dashboard", username = username, css = "../static/dashboard.css" )
 
     return redirect("/login")
@@ -82,8 +85,16 @@ def handleRegistration():
          # if the account is invalid
         return render_template('register.html', title='Create Account', created='fail')
 
+@app.route('/changeFaveTeam', methods=['GET', 'POST'])
+def changeFaveTeam():
+    
+    return redirect('/dashboard')
 
-
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    if 'username' in session:
+        session.pop('username', None)
+    return redirect("/login")
 
 @app.errorhandler(404)
 def not_found(e):
