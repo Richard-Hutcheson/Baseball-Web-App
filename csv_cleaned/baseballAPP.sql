@@ -118,7 +118,7 @@ OpponentStolenBasesByCatchers smallint(6),
 OpponentsCaughtStealingByCatchers smallint(6),
 ZoneRating double,
 round VARCHAR(10),
-isPostSeason CHAR(2)
+isPostSeason VARCHAR(2)
 );
 
 CREATE TABLE FieldingOF (
@@ -209,7 +209,7 @@ parkID VARCHAR(6),
 parkName VARCHAR(255),
 parkAlias VARCHAR(255),
 city VARCHAR(255),
-state VARCHAR(2),
+state VARCHAR(50),
 country VARCHAR(5),
 PRIMARY KEY (parkID)
 );
