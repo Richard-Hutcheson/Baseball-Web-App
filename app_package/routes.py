@@ -1,16 +1,21 @@
-import flask_bcrypt
-
+from werkzeug.utils import redirect
 from app_package import app
-from flask import render_template, request, flash, redirect
-
+from flask import render_template, request, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
 from app_package import db
-
-
-# @app.route('/home')
-# def homePage():
-#     return render_template('homepage.html')
-#
 from app_package.Classes.user import User
+
+'''
+Future Richard, consider using sessions to pass data through redirection 
+without exposing information in the url heading. If you are okay with
+showing details in the url, then consider a dictionary being passed
+through url_for and then iterate over them with jinja by parsing over
+them with request.args.get('')
+
+-Past Richard
+
+'''
+
 
 
 @app.route('/')
@@ -21,7 +26,13 @@ def login():
 
 @app.route('/dashboard')
 def dashboard():
-    usernameUp = "userX".upper()
+
+    usernameUp = request.args.get('username')
+    if usernameUp is not None:
+        usernameUp = usernameUp.upper()
+    else:
+        usernameUp = "USER_Z"
+
     return render_template("dashboard.html", title = "Dashboard", username = usernameUp, css = "../static/dashboard.css" )
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -33,13 +44,21 @@ def register():
 def searchResults():
     return render_template('searchResults.html', title='Results')
 
-@app.route('/loginHandler', methods=['GET', 'POST'])
-def handleRegistration():
+@app.route('/handleLogin', methods=['GET', 'POST'])
+def handleLogin():
 
-    if request.method == 'GET':
-        return redirect('/dashboard')
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
 
-    return redirect('/login')
+        user = User.query.filter_by(username=username).first()
+        #user is valid, log them in
+        if user and check_password_hash(user.password,password):
+            return redirect(url_for('dashboard', username = username))
+            #return render_template("dashboard.html", title = "Dashboard", username = username, css = "../static/dashboard.css" )
+
+    return redirect("/login")
+
 
 @app.route('/handleRegistration', methods=['GET', 'POST'])
 def handleRegistration():
@@ -53,14 +72,14 @@ def handleRegistration():
 
         if not user:
             # account can be created, but first encrypt password
-            encrypt_pass = flask_bcrypt.generate_password_hash(password).decode('utf-8')
+            encrypt_pass = generate_password_hash(password)
             user = User(username=username,password=encrypt_pass)
             db.session.add(user)
             db.session.commit()
             return render_template('register.html', title='Create Account', created='success')
         else:
             print("User exists")
-         #if the account is invalid
+         # if the account is invalid
         return render_template('register.html', title='Create Account', created='fail')
 
 

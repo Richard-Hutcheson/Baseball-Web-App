@@ -24,6 +24,7 @@ Team Members:
 * conda install -c anaconda flask
 * conda install -c anaconda flask-wtf (not currently needed)
 * conda install -c conda-forge flask-bcrypt
+* werkzeug
 
 TIP:
 

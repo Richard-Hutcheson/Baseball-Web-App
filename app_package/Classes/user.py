@@ -22,7 +22,3 @@ class User(db.Model):
         self.password = password
         self.favoriteTeam = favoriteTeam
         self.favoriteYear = favoriteYear
-
-    def __repr__(self):
-        return f'<User {self.name!r}>'
-
