@@ -150,6 +150,8 @@ def clean_pitchingCSV():
     # pandas interprets the "NA" league id as a null value
     df_combined.loc[df_combined['leagueID'].isnull(), 'leagueID'] = "NA"
 
+    df_combined.loc[df_combined['EarnedRunAvg'] == 'inf', 'EarnedRunAvg'] = 'NULL'
+
     df_combined.fillna("NULL", inplace=True)
 
     saveCSV(df_combined, pit_file)
