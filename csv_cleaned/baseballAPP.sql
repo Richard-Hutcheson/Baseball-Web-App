@@ -88,7 +88,7 @@ PRIMARY KEY (ManagerRowID)
 );
 
 CREATE TABLE Parks (
-parkID VARCHAR(6), parkName VARCHAR(255), parkAlias VARCHAR(255), city VARCHAR(255), state VARCHAR(2), country VARCHAR(5),
+parkID VARCHAR(6), parkName VARCHAR(255), parkAlias VARCHAR(255), city VARCHAR(255), state VARCHAR(255), country VARCHAR(5),
 PRIMARY KEY (parkID)
 );
 
@@ -98,8 +98,7 @@ PRIMARY KEY(personID)
 );
 
 CREATE TABLE Pitching (
-personID VARCHAR(10), year smallint(6), stint smallint(6), teamID VARCHAR(3), leagueID VARCHAR(2), Wins smallint(6), Losses smallint(6), Games smallint(6), GamesStarted smallint(6), CompleteGames smallint(6), Shutouts smallint(6), Saves smallint(6), IPouts INT(11), Hits smallint(6), EarnedRuns smallint(6), Homeruns smallint(6), Walks smallint(6), Strikeouts smallint(6), OpponentsBattingAvg double, EarnedRunAvg double, IntentionalWalks smallint(6), WildPitches smallint(6), BattersHitByPitch smallint(6), Balks smallint(6), BattersFacedByPitcher smallint(6), GamesFinished smallint(6), RunsAllowed smallint(6), SacrificesByOpposingBatters smallint(6), SacrificeFliesByOpposingBatters smallint(6), GIDPByOpposingBatter smallint(6), round VARCHAR(10), isPostSeason VARCHAR(2),
-PRIMARY KEY (personID)
+personID VARCHAR(10), year smallint(6), stint smallint(6), teamID VARCHAR(3), leagueID VARCHAR(2), Wins smallint(6), Losses smallint(6), Games smallint(6), GamesStarted smallint(6), CompleteGames smallint(6), Shutouts smallint(6), Saves smallint(6), IPouts INT(11), Hits smallint(6), EarnedRuns smallint(6), Homeruns smallint(6), Walks smallint(6), Strikeouts smallint(6), OpponentsBattingAvg double, EarnedRunAvg double, IntentionalWalks smallint(6), WildPitches smallint(6), BattersHitByPitch smallint(6), Balks smallint(6), BattersFacedByPitcher smallint(6), GamesFinished smallint(6), RunsAllowed smallint(6), SacrificesByOpposingBatters smallint(6), SacrificeFliesByOpposingBatters smallint(6), GIDPByOpposingBatter smallint(6), round VARCHAR(10), isPostSeason VARCHAR(2)
 );
 
 CREATE TABLE PlayerPositions (
@@ -599,6 +598,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Schools.csv'
 IGNORE INTO TABLE Schools
 FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive)
