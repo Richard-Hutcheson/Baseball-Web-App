@@ -6,6 +6,7 @@ body {
 	font-weight: 300;
 	margin: 0;
 	color: #666;
+	height: 100vh;
 }
 
 /* Typography */
@@ -16,7 +17,7 @@ h1#title {
 	color: white;
 	text-shadow: 0 0 10px rgba(0,0,0,0.8);
 	margin: 0 auto;
-	padding-top: 180px;
+	padding-top: 100px;
 	max-width: 300px;
 	text-align: center;
 	position: relative;

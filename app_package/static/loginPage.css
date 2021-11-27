@@ -10,4 +10,5 @@
     transform: translateX(-50%);
     margin-bottom: 0;
     background-color: rgba(65, 65, 65, 0.466);
+    z-index: -1;
 }
