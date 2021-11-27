@@ -167,11 +167,11 @@ button:hover{
     color: black;
 }
 #rosterContent{
-    height: 90%;
-    overflow-y: auto;
+    height: 400px;
+    overflow-y:scroll;
     width: 100%;
 }
-#player{
+.player{
     display: grid;
     text-align: center;
     /* grid-template-columns: 275px 75px 275px 75px 75px; */

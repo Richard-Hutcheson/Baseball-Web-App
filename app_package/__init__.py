@@ -7,7 +7,6 @@ from myConfig import Config
 from csi3335fall2021 import user
 import pymysql
 
-
 app = Flask(__name__)
 
 # create a new database in terminal called baseballapp
@@ -22,8 +21,6 @@ if not database_exists(engine.url):
     create_database(engine.url)
 
 db = SQLAlchemy(app)
-# Package used to encrypt passwords for security purposes
-bcrypt = Bcrypt(app)
 
 # KEEP THIS
 from app_package import routes
