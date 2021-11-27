@@ -137,7 +137,7 @@ PRIMARY KEY (TeamsHalfRowID)
 );
 
 
-LOAD DATA INFILE 'allstar.csv'
+LOAD DATA INFILE 'AllStar.csv'
 IGNORE INTO TABLE AllStar
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -157,7 +157,7 @@ startingPos = NULLIF(@vnine, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'awards.csv'
+LOAD DATA INFILE 'Awards.csv'
 IGNORE INTO TABLE Awards
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -179,7 +179,7 @@ isShared = NULLIF(@veleven, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'batting.csv'
+LOAD DATA INFILE 'Batting.csv'
 IGNORE INTO TABLE Batting
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -214,7 +214,7 @@ round = NULLIF(@vtwentyfour, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'collegeplaying.csv'
+LOAD DATA INFILE 'CollegePlaying.csv'
 IGNORE INTO TABLE CollegePlaying
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -229,7 +229,7 @@ year = NULLIF(@vfour, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'divisions.csv'
+LOAD DATA INFILE 'Divisions.csv'
 IGNORE INTO TABLE Divisions
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -244,7 +244,7 @@ isActive = NULLIF(@vfour, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'fielding.csv'
+LOAD DATA INFILE 'Fielding.csv'
 IGNORE INTO TABLE Fielding
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -276,7 +276,7 @@ isPostSeason = NULLIF(@vtwentyone, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'fieldingof.csv'
+LOAD DATA INFILE 'FieldingOF.csv'
 IGNORE INTO TABLE FieldingOF
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -293,7 +293,7 @@ GamesPlayedRightField = NULLIF(@vsix, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'fieldingofsplit.csv'
+LOAD DATA INFILE 'FieldingOFsplit.csv'
 IGNORE INTO TABLE FieldingOFsplit
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -317,7 +317,7 @@ DoublePlays = NULLIF(@vthirteen, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'franchises.csv'
+LOAD DATA INFILE 'Franchises.csv'
 IGNORE INTO TABLE Franchises
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -332,7 +332,7 @@ NAassoc = NULLIF(@vfour, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'halloffame.csv'
+LOAD DATA INFILE 'HallOfFame.csv'
 IGNORE INTO TABLE HallOfFame
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -353,7 +353,7 @@ needed_note = NULLIF(@vten, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'homegames.csv'
+LOAD DATA INFILE 'HomeGames.csv'
 IGNORE INTO TABLE HomeGames
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -373,7 +373,7 @@ attendance = NULLIF(@vnine, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'leagues.csv'
+LOAD DATA INFILE 'Leagues.csv'
 IGNORE INTO TABLE Leagues
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -387,7 +387,7 @@ isActive = NULLIF(@vthree, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'managers.csv'
+LOAD DATA INFILE 'Managers.csv'
 IGNORE INTO TABLE Managers
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -411,7 +411,7 @@ isSeasonHalf = NULLIF(@vthirteen, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'parks.csv'
+LOAD DATA INFILE 'Parks.csv'
 IGNORE INTO TABLE Parks
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -428,7 +428,7 @@ country = NULLIF(@vsix, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'people.csv'
+LOAD DATA INFILE 'People.csv'
 IGNORE INTO TABLE People
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -462,7 +462,7 @@ bbrefID = NULLIF(@vtwentythree, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'pitching.csv'
+LOAD DATA INFILE 'Pitching.csv'
 IGNORE INTO TABLE Pitching
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -505,7 +505,7 @@ isPostSeason = NULLIF(@vthirtytwo, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'playerpositions.csv'
+LOAD DATA INFILE 'PlayerPositions.csv'
 IGNORE INTO TABLE PlayerPositions
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -538,7 +538,7 @@ GamesAsPinchRunner = NULLIF(@vtwentytwo, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'players.csv'
+LOAD DATA INFILE 'Players.csv'
 IGNORE INTO TABLE Players
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -557,7 +557,7 @@ isFielding = NULLIF(@veight, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'postseasonseries.csv'
+LOAD DATA INFILE 'PostSeasonSeries.csv'
 IGNORE INTO TABLE PostSeasonSeries
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -578,7 +578,7 @@ ties = NULLIF(@vten, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'salaries.csv'
+LOAD DATA INFILE 'Salaries.csv'
 IGNORE INTO TABLE Salaries
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -595,7 +595,7 @@ salary = NULLIF(@vsix, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'schools.csv'
+LOAD DATA INFILE 'Schools.csv'
 IGNORE INTO TABLE Schools
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -611,7 +611,7 @@ country = NULLIF(@vfive, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'teams.csv'
+LOAD DATA INFILE 'Teams.csv'
 IGNORE INTO TABLE Teams
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
@@ -671,7 +671,7 @@ teamIDretro = NULLIF(@vfourtynine, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'teamshalf.csv'
+LOAD DATA INFILE 'TeamsHalf.csv'
 IGNORE INTO TABLE TeamsHalf
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
