@@ -339,10 +339,10 @@ PRIMARY KEY (salaryRowID)
 );
 
 CREATE TABLE Schools (
-schoolID VARCHAR(50),
+schoolID VARCHAR(55),
 schoolName CHAR(255),
 city CHAR(255),
-state CHAR(255),
+state VARCHAR(255),
 country CHAR(255),
 PRIMARY KEY (schoolID)
 );
@@ -877,6 +877,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Schools.csv'
 IGNORE INTO TABLE Schools
 FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive)
