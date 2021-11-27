@@ -21,11 +21,11 @@
         </div>
     
         <button id = "yearSelectBtn">
-        >
+        <b>></b>
         </button>
     </form>
 </div>
-<p id="favoriteTeamTxt">Favorite Team: <span id = "favoriteTeam">RAN</span></p>
+<p id="favoriteTeamTxt">Favorite Team: <span id = "favoriteTeam">{{faveTeam}}</span>, Year: {{faveTeamYear}}</p>
 <div id = "roster">
     <div id ="attributeList">
         <p>NAME</p>
@@ -35,37 +35,32 @@
         <p>PITCHER</p>
     </div>
     <div id ="rosterContent">
-
-        <div id = "player">
-            <span id = "nameVal">Richard Hutcheson</span>
-            <span id = "ageVal">21</span>
-            <span id = "birthPlaceVal"> Waco, TX, United States</span>
-            <span id = "batterVal">N</span>
-            <span id = "pitcherVal">Y</span> 
+        {% for player in players %}
+        <div class = "player">
+            <span class = "nameVal">{{player['name']}}</span>
+            <span class = "ageVal">{{player['age']}}</span>
+            <span class = "birthPlaceVal">{{player['birthPlace']}}</span>
+            <span class = "batterVal">N</span>
+            <span class = "pitcherVal">N</span> 
         </div>
-        <div id = "player">
-            <span id = "nameVal">Noah Lambaria</span>
-            <span id = "ageVal">20</span>
-            <span id = "birthPlaceVal">San Antonio, TX, United States</span>
-            <span id = "batterVal">N</span>
-            <span id = "pitcherVal">N</span> 
-        </div>
-        <div id = "player">
-            <span id = "nameVal">Austin Blanchard</span>
-            <span id = "ageVal">99</span>
-            <span id = "birthPlaceVal">San Antonio, TX, United States</span>
-            <span id = "batterVal">Y</span>
-            <span id = "pitcherVal">N</span> 
-        </div>
+        {% endfor %}
     </div>
 </div>
 <div id = "faveTeamContainer">
     <form action="/changeFaveTeam">
         <div id ="selectorCenter">
             <label for="faveTeamSelect">Favorite Team</label>
-            <select  id="faveTeamSelect"></select>
+            <select  id="faveTeamSelect">
+                {% for t in teamNames %}
+                    <option value = {{t}}>{{t}}</option>
+                {% endfor %}
+            </select>
             <label for="faveTeamYrSelect">Favorite Team Year</label>
-            <select  id="faveTeamYrSelect"></select>
+            <select  id="faveTeamYrSelect">
+                {% for y in teamYears %}
+                    <option value = {{y}}>{{y}}</option>
+                {% endfor %}
+            </select>
         </div>
 
         <button id = "changeBtn" type="submit">CHANGE</button>
