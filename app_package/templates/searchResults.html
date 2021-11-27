@@ -1,11 +1,48 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<!-- Google Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="../static/animate.css">
+    <link rel= "stylesheet" type= "text/css" href= "../static/searchResults.css">
 
+  <title>Search Results</title>
+</head>
 
-{% block content %} 
+{% block content %}
+<body>
 
+    <nav class = "navbar">
+        <a id = "redirectDashboard" href= "/dashboard"> Back to dashboard</a>
+    </nav>
 
+    <h1 id = "Standings"> Standings: </h1></div>
+</body>
 
-
-
+    <div class="animated pulse">
+<table>
+    <thead>
+    <tr>
+        <th>Team Name</th>
+        <th>Division</th>
+        <th>Playoff Results</th>
+        <th>Games Behind (GB)</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for row in output_data %}
+            <tr>
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    </div>
 
 {% endblock content %}

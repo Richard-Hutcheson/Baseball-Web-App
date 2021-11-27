@@ -18,11 +18,12 @@ Team Members:
 # Anaconda Dependencies
 * conda install -c conda-forge flask-sqlalchemy
 * conda install -c conda-forge sqlalchemy-utils
-* colorama
-* pymysql
+* conda install -c anaconda colorama
+* conda install -c anaconda pymysql
 * pip install python-dotenv
 * conda install -c anaconda flask
-* conda install -c anaconda flask-wtf
+* conda install -c anaconda flask-wtf (not currently needed)
+* conda install -c conda-forge flask-bcrypt
 
 TIP:
 
@@ -35,3 +36,8 @@ and recreate it using:\
 "conda env create -f <environment_file>.yml"
 
 run flask with "flask run", ensure .flaskenv has FLASK_APP environment variable saved
+
+#SQL BaseballAPP.sql instructions
+* run csvParser.py
+* copy all CSVs /usr/local/var/mysql/baseballAPP/
+* go to current directory of the BaseballApp.sql script and run in SQL

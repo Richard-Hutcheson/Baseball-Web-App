@@ -1,8 +1,7 @@
 USE baseballAPP;
 
 
-DROP TABLE IF EXISTS AllStarOccurences;
-DROP TABLE IF EXISTS Appearances;
+DROP TABLE IF EXISTS AllStar;
 DROP TABLE IF EXISTS Awards;
 DROP TABLE IF EXISTS Batting;
 DROP TABLE IF EXISTS CollegePlaying;
@@ -16,9 +15,10 @@ DROP TABLE IF EXISTS HomeGames;
 DROP TABLE IF EXISTS Leagues;
 DROP TABLE IF EXISTS Managers;
 DROP TABLE IF EXISTS Parks;
-DROP TABLE IF EXISTS People;
-DROP TABLE IF EXISTS Pitching;
 DROP TABLE IF EXISTS Players;
+DROP TABLE IF EXISTS Pitching;
+DROP TABLE IF EXISTS People;
+DROP TABLE IF EXISTS PlayerPositions;
 DROP TABLE IF EXISTS PostSeasonSeries;
 DROP TABLE IF EXISTS Salaries;
 DROP TABLE IF EXISTS Schools;
@@ -26,235 +26,669 @@ DROP TABLE IF EXISTS Teams;
 DROP TABLE IF EXISTS TeamsHalf;
 
 
-CREATE TABLE AllStarOccurences (
-personID VARCHAR(100), year VARCHAR(100), gameNum VARCHAR(100), gameID VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), GP VARCHAR(100), startingPos VARCHAR(100)
-);
-
-CREATE TABLE Appearances (
-personID VARCHAR(100), year VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), TotalGamesPlayed VARCHAR(100), GamesStarted VARCHAR(100), GamesPlayerBatted VARCHAR(100), GamesPlayerOnDefense VARCHAR(100), GamesAsPitcher VARCHAR(100), GamesAsCatcher VARCHAR(100), GamesAsFirstBaseman VARCHAR(100), GamesAsSecondBaseman VARCHAR(100), GamesAsThirdBaseman VARCHAR(100), GamesAsShortstop VARCHAR(100), GamesAsLeftfielder VARCHAR(100), GamesAsCenterfielder VARCHAR(100), GamesAsRightfielder VARCHAR(100), GamesAsOutfielder VARCHAR(100), GamesAsDesignatedHitter VARCHAR(100), GamesAsPinchHitter VARCHAR(100), GamesAsPinchRunner VARCHAR(100)
+CREATE TABLE AllStar (
+AllStarRowID int NOT NULL AUTO_INCREMENT, personID VARCHAR(10) NOT NULL, year smallint(6), gameNum smallint(6), gameID VARCHAR(12), teamID VARCHAR(3), leagueID VARCHAR(2), PlayedInGame VARCHAR(1), startingPos smallint(6),
+PRIMARY KEY (AllStarRowID)
 );
 
 CREATE TABLE Awards (
-awardID VARCHAR(100), year VARCHAR(100), leagueID VARCHAR(100), personID VARCHAR(100), pointsWon VARCHAR(100), pointsMax VARCHAR(100), votesFirst VARCHAR(100), tie VARCHAR(100), notes VARCHAR(100), isShared VARCHAR(100)
+AwardsRowID int NOT NULL AUTO_INCREMENT, awardName VARCHAR(75), year smallint(6), leagueID CHAR(2), personID VARCHAR(9), pointsWon double, pointsMax smallint(6), votesFirst double, tie VARCHAR(1), notes VARCHAR(100), isShared VARCHAR(1),
+PRIMARY KEY (AwardsRowID)
 );
 
 CREATE TABLE Batting (
-personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), Games VARCHAR(100), AtBats VARCHAR(100), Runs VARCHAR(100), Hits VARCHAR(100), Doubles VARCHAR(100), Triples VARCHAR(100), HomeRuns VARCHAR(100), RunsBattedIn VARCHAR(100), StolenBases VARCHAR(100), CaughtStealing VARCHAR(100), BaseOnBalls VARCHAR(100), StrikeOuts VARCHAR(100), IntentionalWalks VARCHAR(100), HitByPitch VARCHAR(100), SacrificeHits VARCHAR(100), SacrificeFlies VARCHAR(100), GroundedIntoDoublePlays VARCHAR(100), isPostSeason VARCHAR(100), round VARCHAR(100)
+personID VARCHAR(10), year smallint(6), stint smallint(6), teamID VARCHAR(3), leagueID CHAR(2), Games smallint(6), AtBats smallint(6), Runs smallint(6), Hits smallint(6), Doubles smallint(6), Triples smallint(6), HomeRuns smallint(6), RunsBattedIn smallint(6), StolenBases smallint(6), CaughtStealing smallint(6), BaseOnBalls smallint(6), StrikeOuts smallint(6), IntentionalWalks smallint(6), HitByPitch smallint(6), SacrificeHits smallint(6), SacrificeFlies smallint(6), GroundedIntoDoublePlays smallint(6), isPostSeason VARCHAR(2), round VARCHAR(10)
 );
 
 CREATE TABLE CollegePlaying (
-personID VARCHAR(100), schoolID VARCHAR(100), year VARCHAR(100)
+CollegePlayingRowID int NOT NULL AUTO_INCREMENT, personID VARCHAR(9), schoolID VARCHAR(15), year smallint(6),
+PRIMARY KEY (CollegePlayingRowID)
 );
 
 CREATE TABLE Divisions (
-rowID VARCHAR(100), divisionID VARCHAR(100), divisionName VARCHAR(100), isActive VARCHAR(100)
+DivisionRowID int NOT NULL AUTO_INCREMENT, divisionID VARCHAR(2), divisionName VARCHAR(50), isActive VARCHAR(1),
+PRIMARY KEY (DivisionRowID)
 );
 
 CREATE TABLE Fielding (
-personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), Position VARCHAR(100), Games VARCHAR(100), GamesStarted VARCHAR(100), InnOuts VARCHAR(100), Putouts VARCHAR(100), Assists VARCHAR(100), Errors VARCHAR(100), DoublePlays VARCHAR(100), TP VARCHAR(100), PassedBallsByCatchers VARCHAR(100), WildPitchesByCatchers VARCHAR(100), OpponentStolenBasesByCatchers VARCHAR(100), OpponentsCaughtStealingByCatchers VARCHAR(100), ZoneRating VARCHAR(100), round VARCHAR(100), isPostSeason VARCHAR(100)
+personID VARCHAR(10), year smallint(6), stint smallint(6), teamID VARCHAR(3), leagueID VARCHAR(2), Position VARCHAR(2), Games smallint(6), GamesStarted smallint(6), InnOuts smallint(6), Putouts smallint(6), Assists smallint(6), Errors smallint(6), DoublePlays smallint(6), TriplePlays smallint(6), PassedBallsByCatchers smallint(6), WildPitchesByCatchers smallint(6), OpponentStolenBasesByCatchers smallint(6), OpponentsCaughtStealingByCatchers smallint(6), ZoneRating double, round VARCHAR(10), isPostSeason CHAR(2)
 );
 
 CREATE TABLE FieldingOF (
-personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), GamesPlayedLeftField VARCHAR(100), GamesPlayedCenterField VARCHAR(100), GamesPlayedRightField VARCHAR(100)
+personID VARCHAR(10), year smallint(6), stint smallint(6), GamesPlayedLeftField smallint(6), GamesPlayedCenterField smallint(6), GamesPlayedRightField smallint(6)
 );
 
 CREATE TABLE FieldingOFsplit (
-personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), Position VARCHAR(100), Games VARCHAR(100), GamesStarted VARCHAR(100), InnOuts VARCHAR(100), Putouts VARCHAR(100), Assists VARCHAR(100), Errors VARCHAR(100), DoublePlays VARCHAR(100)
+personID VARCHAR(10), year smallint(6), stint smallint(6), teamID VARCHAR(3), leagueID CHAR(2), Position VARCHAR(2), Games smallint(6), GamesStarted smallint(6), InnOuts smallint(6), Putouts smallint(6), Assists smallint(6), Errors smallint(6), DoublePlays smallint(6)
 );
 
 CREATE TABLE Franchises (
-franchID VARCHAR(100), franchName VARCHAR(100), active VARCHAR(100), NAassoc VARCHAR(100)
+franchID VARCHAR(3), franchName VARCHAR(50), active VARCHAR(1), NAassoc VARCHAR(3),
+PRIMARY KEY (franchID)
 );
 
 CREATE TABLE HallOfFame (
-personID VARCHAR(100), year VARCHAR(100), votedBy VARCHAR(100), ballots VARCHAR(100), needed VARCHAR(100), votes VARCHAR(100), inducted VARCHAR(100), category VARCHAR(100), needed_note VARCHAR(100)
+HallOfFameRowID int NOT NULL AUTO_INCREMENT, personID VARCHAR(10), year smallint(6), votedBy VARCHAR(64), ballots smallint(6), needed smallint(6), votes smallint(6), inducted VARCHAR(1), category VARCHAR(20), needed_note VARCHAR(25),
+PRIMARY KEY (HallOfFameRowID)
 );
 
 CREATE TABLE HomeGames (
-year VARCHAR(100), leagueID VARCHAR(100), teamID VARCHAR(100), parkID VARCHAR(100), debutGameDate VARCHAR(100), endGameDate VARCHAR(100), gamesPlayed VARCHAR(100), datesPlayed VARCHAR(100), attendance VARCHAR(100)
+year smallint(6), leagueID CHAR(2), teamID VARCHAR(3), parkID VARCHAR(6), debutGameDate VARCHAR(255), endGameDate VARCHAR(255), gamesPlayed int(11), datesPlayed VARCHAR(255), attendance int(11)
 );
 
 CREATE TABLE Leagues (
-leagueID VARCHAR(100), leagueName VARCHAR(100), isActive VARCHAR(100)
+leagueID CHAR(2), leagueName VARCHAR(100), isActive VARCHAR(1),
+PRIMARY KEY (leagueID)
 );
 
 CREATE TABLE Managers (
-personID VARCHAR(100), year VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), inseason VARCHAR(100), half VARCHAR(100), GamesManaged VARCHAR(100), Wins VARCHAR(100), Losses VARCHAR(100), rank VARCHAR(100), plyrMgr VARCHAR(100), isSeasonHalf VARCHAR(100)
+ManagerRowID int NOT NULL AUTO_INCREMENT, personID VARCHAR(10), year smallint(6), teamID VARCHAR(3), leagueID CHAR(2), inseason smallint(6), half VARCHAR(100), GamesManaged smallint(6), Wins smallint(6), Losses smallint(6), rank smallint(6), plyrMgr VARCHAR(1), isSeasonHalf VARCHAR(2),
+PRIMARY KEY (ManagerRowID)
 );
 
 CREATE TABLE Parks (
-parkID VARCHAR(100), parkName VARCHAR(100), parkAlias VARCHAR(100), city VARCHAR(100), state VARCHAR(100), country VARCHAR(100)
+parkID VARCHAR(6), parkName VARCHAR(255), parkAlias VARCHAR(255), city VARCHAR(255), state VARCHAR(2), country VARCHAR(5),
+PRIMARY KEY (parkID)
 );
 
 CREATE TABLE People (
-personID VARCHAR(100), nameFirst VARCHAR(100), nameLast VARCHAR(100), birthYear VARCHAR(100), birthMonth VARCHAR(100), birthDay VARCHAR(100), birthCountry VARCHAR(100), birthState VARCHAR(100), birthCity VARCHAR(100), deathYear VARCHAR(100), deathMonth VARCHAR(100), deathDay VARCHAR(100), deathCountry VARCHAR(100), deathState VARCHAR(100), deathCity VARCHAR(100), weight VARCHAR(100), height VARCHAR(100), bats VARCHAR(100), throws VARCHAR(100), debut VARCHAR(100), finalGame VARCHAR(100), retroID VARCHAR(100), bbrefID VARCHAR(100)
+personID VARCHAR(10) NOT NULL, nameFirst VARCHAR(255), nameLast VARCHAR(255), birthYear INT(11), birthMonth INT(11), birthDay INT(11), birthCountry VARCHAR(255), birthState VARCHAR(255), birthCity VARCHAR(255), deathYear INT(11), deathMonth INT(11), deathDay INT(11), deathCountry VARCHAR(255), deathState VARCHAR(255), deathCity VARCHAR(255), weight INT(11), height INT(11), bats VARCHAR(255), throws VARCHAR(255), debut VARCHAR(255), finalGame VARCHAR(255), retroID VARCHAR(255), bbrefID VARCHAR(255),
+PRIMARY KEY(personID)
 );
 
 CREATE TABLE Pitching (
-personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), Wins VARCHAR(100), Losses VARCHAR(100), Games VARCHAR(100), GamesStarted VARCHAR(100), CompleteGames VARCHAR(100), Shutouts VARCHAR(100), Saves VARCHAR(100), IPouts VARCHAR(100), Hits VARCHAR(100), EarnedRuns VARCHAR(100), Homeruns VARCHAR(100), Walks VARCHAR(100), Strikeouts VARCHAR(100), OpponentsBattingAvg VARCHAR(100), EarnedRunAvg VARCHAR(100), IntentionalWalks VARCHAR(100), WildPitches VARCHAR(100), BattersHitByPitch VARCHAR(100), Balks VARCHAR(100), BattersFacedByPitcher VARCHAR(100), GamesFinished VARCHAR(100), RunsAllowed VARCHAR(100), SacrificesByOpposingBatters VARCHAR(100), SacrificeFliesByOpposingBatters VARCHAR(100), GIDPByOpposingBatter VARCHAR(100), round VARCHAR(100), isPostSeason VARCHAR(100)
+personID VARCHAR(10), year smallint(6), stint smallint(6), teamID VARCHAR(3), leagueID VARCHAR(2), Wins smallint(6), Losses smallint(6), Games smallint(6), GamesStarted smallint(6), CompleteGames smallint(6), Shutouts smallint(6), Saves smallint(6), IPouts INT(11), Hits smallint(6), EarnedRuns smallint(6), Homeruns smallint(6), Walks smallint(6), Strikeouts smallint(6), OpponentsBattingAvg double, EarnedRunAvg double, IntentionalWalks smallint(6), WildPitches smallint(6), BattersHitByPitch smallint(6), Balks smallint(6), BattersFacedByPitcher smallint(6), GamesFinished smallint(6), RunsAllowed smallint(6), SacrificesByOpposingBatters smallint(6), SacrificeFliesByOpposingBatters smallint(6), GIDPByOpposingBatter smallint(6), round VARCHAR(10), isPostSeason VARCHAR(2),
+PRIMARY KEY (personID)
+);
+
+CREATE TABLE PlayerPositions (
+playerPosRowID int NOT NULL AUTO_INCREMENT, personID VARCHAR(10), year smallint(6), teamID VARCHAR(3), leagueID CHAR(2), TotalGamesPlayed smallint(6), GamesStarted smallint(6), GamesPlayerBatted smallint(6), GamesPlayerOnDefense smallint(6), GamesAsPitcher smallint(6), GamesAsCatcher smallint(6), GamesAs1Baseman smallint(6), GamesAs2Baseman smallint(6), GamesAs3Baseman smallint(6), GamesAsShortstop smallint(6), GamesAsLeftfielder smallint(6), GamesAsCenterfielder smallint(6), GamesAsRightfielder smallint(6), GamesAsOutfielder smallint(6), GamesAsDesignatedHitter smallint(6), GamesAsPinchHitter smallint(6), GamesAsPinchRunner smallint(6),
+PRIMARY KEY (playerPosRowID)
 );
 
 CREATE TABLE Players (
-personID VARCHAR(100), year VARCHAR(100), stint VARCHAR(100), teamID VARCHAR(100), isPostSeason VARCHAR(100), isPitching VARCHAR(100), isBatting VARCHAR(100), isFielding VARCHAR(100)
+personID VARCHAR(100), year smallint(6), stint VARCHAR(100), teamID VARCHAR(3), isPostSeason VARCHAR(2), isPitching VARCHAR(1), isBatting VARCHAR(1), isFielding VARCHAR(1),
+FOREIGN KEY (personID) REFERENCES People(PersonID)
 );
 
 CREATE TABLE PostSeasonSeries (
-year VARCHAR(100), round VARCHAR(100), teamIDwinner VARCHAR(100), leagueIDWinner VARCHAR(100), teamIDloser VARCHAR(100), leagueIDLoser VARCHAR(100), wins VARCHAR(100), losses VARCHAR(100), ties VARCHAR(100)
+PostSeasonRowID int NOT NULL AUTO_INCREMENT, year smallint(6), round VARCHAR(100), teamIDwinner CHAR(3), leagueIDWinner CHAR(2), teamIDloser CHAR(3), leagueIDLoser CHAR(2), wins smallint(6), losses smallint(6), ties smallint(6),
+PRIMARY KEY (PostSeasonRowID)
 );
 
 CREATE TABLE Salaries (
-personID VARCHAR(100), year VARCHAR(100), teamID VARCHAR(100), leagueID VARCHAR(100), salary VARCHAR(100)
+salaryRowID int NOT NULL AUTO_INCREMENT, personID VARCHAR(10), year smallint(6), teamID VARCHAR(3), leagueID CHAR(2), salary double,
+PRIMARY KEY (salaryRowID)
 );
 
 CREATE TABLE Schools (
-schoolID VARCHAR(100), schoolName VARCHAR(100), city VARCHAR(100), state VARCHAR(100), country VARCHAR(100)
+schoolID VARCHAR(50), schoolName CHAR(255), city CHAR(255), state CHAR(255), country CHAR(255),
+PRIMARY KEY (schoolID)
 );
 
 CREATE TABLE Teams (
-year VARCHAR(100), leagueID VARCHAR(100), teamID VARCHAR(100), teamName VARCHAR(100), franchID VARCHAR(100), divisionID VARCHAR(100), Rank VARCHAR(100), GamesPlayed VARCHAR(100), GamesPlayedAtHome VARCHAR(100), Wins VARCHAR(100), Losses VARCHAR(100), DivisionWinner VARCHAR(100), WildcardWinner VARCHAR(100), LeagueChampion VARCHAR(100), WorldSeriesWinner VARCHAR(100), Runs VARCHAR(100), AtBats VARCHAR(100), HitsByBatters VARCHAR(100), Doubles VARCHAR(100), Triples VARCHAR(100), HomeRunsByBatters VARCHAR(100), WalksByBatters VARCHAR(100), StrikeoutsByBatters VARCHAR(100), StolenBases VARCHAR(100), CaughtStealing VARCHAR(100), BattersHitByPitch VARCHAR(100), SacrificeFlies VARCHAR(100), OpponentsRunsScored VARCHAR(100), EarnedRunsAllowed VARCHAR(100), EarnedRunAvg VARCHAR(100), CompleteGames VARCHAR(100), Shutouts VARCHAR(100), Saves VARCHAR(100), OutsPitched VARCHAR(100), HitsAllowed VARCHAR(100), HomeRunsAllowed VARCHAR(100), WalksAllowed VARCHAR(100), StrikeoutsByPitchers VARCHAR(100), Errors VARCHAR(100), DoublePlays VARCHAR(100), FieldingPercentage VARCHAR(100), parkName VARCHAR(100), attendance VARCHAR(100), ThreeYearParkFactorBatters VARCHAR(100), ThreeYearParkFactorPitchers VARCHAR(100), teamIDBR VARCHAR(100), teamIDlahman45 VARCHAR(100), teamIDretro VARCHAR(100)
+TeamsRowID INT NOT NULL AUTO_INCREMENT, year smallint(6), leagueID CHAR(2), teamID VARCHAR(3), teamName VARCHAR(255), franchID VARCHAR(3), divisionID VARCHAR(2), Rank smallint(6), GamesPlayed smallint(6), GamesPlayedAtHome smallint(6), Wins smallint(6), Losses smallint(6), DivisionWinner VARCHAR(1), WildcardWinner VARCHAR(1), LeagueChampion VARCHAR(1), WorldSeriesWinner VARCHAR(1), Runs smallint(6), AtBats smallint(6), HitsByBatters smallint(6), Doubles smallint(6), Triples smallint(6), HomeRunsByBatters smallint(6), WalksByBatters smallint(6), StrikeoutsByBatters smallint(6), StolenBases smallint(6), CaughtStealing smallint(6), BattersHitByPitch smallint(6), SacrificeFlies smallint(6), OpponentsRunsScored smallint(6), EarnedRunsAllowed smallint(6), EarnedRunAvg double, CompleteGames smallint(6), Shutouts smallint(6), Saves smallint(6), OutsPitched INT(11), HitsAllowed smallint(6), HomeRunsAllowed smallint(6), WalksAllowed smallint(6), StrikeoutsByPitchers smallint(6), Errors int(11), DoublePlays int(11), FieldingPercentage double, parkName varchar(50), attendance int(11), ThreeYearParkFactorBatters int(11), ThreeYearParkFactorPitchers int(11), teamIDBR VARCHAR(3), teamIDlahman45 VARCHAR(3), teamIDretro VARCHAR(3),
+PRIMARY KEY (TeamsRowID)
 );
 
 CREATE TABLE TeamsHalf (
-year VARCHAR(100), leagueID VARCHAR(100), teamID VARCHAR(100), Half VARCHAR(100), divisionID VARCHAR(100), DivWin VARCHAR(100), Rank VARCHAR(100), GamesPlayed VARCHAR(100), Wins VARCHAR(100), Losses VARCHAR(100)
+TeamsHalfRowID int NOT NULL AUTO_INCREMENT, year smallint(6), leagueID CHAR(2), teamID VARCHAR(3), Half VARCHAR(1), divisionID VARCHAR(2), DivWin VARCHAR(1), Rank smallint(6), GamesPlayed smallint(6), Wins smallint(6), Losses smallint(6),
+PRIMARY KEY (TeamsHalfRowID)
 );
 
 
-
-LOAD DATA INFILE './AllStarOccurences.csv'
-INTO TABLE AllStarOccurences
+LOAD DATA INFILE 'AllStar.csv'
+IGNORE INTO TABLE AllStar
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone, @vtwo, @vthree, @vfour, @vfive, @vsix, @vseven, @veight, @vnine)
+SET
+AllStarRowID = NULLIF(@vone, 'NULL'),
+personID = NULLIF(@vtwo, 'NULL'),
+year = NULLIF(@vthree, 'NULL'),
+gameNum = NULLIF(@vfour, 'NULL'),
+gameID = NULLIF(@vfive, 'NULL'),
+teamID = NULLIF(@vsix, 'NULL'),
+leagueID = NULLIF(@vseven, 'NULL'),
+PlayedInGame = NULLIF(@veight, 'NULL'),
+startingPos = NULLIF(@vnine, 'NULL')
+;
 
-LOAD DATA INFILE './Appearances.csv'
-INTO TABLE Appearances
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Awards.csv'
+IGNORE INTO TABLE Awards
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone, @vtwo, @vthree, @vfour, @vfive, @vsix, @vseven, @veight, @vnine, @vten, @veleven)
+SET
+AwardsRowID = NULLIF(@vone, 'NULL'),
+awardName = NULLIF(@vtwo, 'NULL'),
+year = NULLIF(@vthree, 'NULL'),
+leagueID = NULLIF(@vfour, 'NULL'),
+personID = NULLIF(@vfive, 'NULL'),
+pointsWon = NULLIF(@vsix, 'NULL'),
+pointsMax = NULLIF(@vseven, 'NULL'),
+votesFirst = NULLIF(@veight, 'NULL'),
+tie = NULLIF(@vnine, 'NULL'),
+notes = NULLIF(@vten, 'NULL'),
+isShared = NULLIF(@veleven, 'NULL')
+;
 
-LOAD DATA INFILE './Awards.csv'
-INTO TABLE Awards
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Batting.csv'
+IGNORE INTO TABLE Batting
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour)
+SET
+personID = NULLIF(@vone, 'NULL'),
+year = NULLIF(@vtwo, 'NULL'),
+stint = NULLIF(@vthree, 'NULL'),
+teamID = NULLIF(@vfour, 'NULL'),
+leagueID = NULLIF(@vfive, 'NULL'),
+Games = NULLIF(@vsix, 'NULL'),
+AtBats = NULLIF(@vseven, 'NULL'),
+Runs = NULLIF(@veight, 'NULL'),
+Hits = NULLIF(@vnine, 'NULL'),
+Doubles = NULLIF(@vten, 'NULL'),
+Triples = NULLIF(@veleven, 'NULL'),
+HomeRuns = NULLIF(@vtwelve, 'NULL'),
+RunsBattedIn = NULLIF(@vthirteen, 'NULL'),
+StolenBases = NULLIF(@vfourteen, 'NULL'),
+CaughtStealing = NULLIF(@vfifteen, 'NULL'),
+BaseOnBalls = NULLIF(@vsixteen, 'NULL'),
+StrikeOuts = NULLIF(@vseventeen, 'NULL'),
+IntentionalWalks = NULLIF(@veighteen, 'NULL'),
+HitByPitch = NULLIF(@vnineteen, 'NULL'),
+SacrificeHits = NULLIF(@vtwenty, 'NULL'),
+SacrificeFlies = NULLIF(@vtwentyone, 'NULL'),
+GroundedIntoDoublePlays = NULLIF(@vtwentytwo, 'NULL'),
+isPostSeason = NULLIF(@vtwentythree, 'NULL'),
+round = NULLIF(@vtwentyfour, 'NULL')
+;
 
-LOAD DATA INFILE './Batting.csv'
-INTO TABLE Batting
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'CollegePlaying.csv'
+IGNORE INTO TABLE CollegePlaying
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour)
+SET
+CollegePlayingRowID = NULLIF(@vone, 'NULL'),
+personID = NULLIF(@vtwo, 'NULL'),
+schoolID = NULLIF(@vthree, 'NULL'),
+year = NULLIF(@vfour, 'NULL')
+;
 
-LOAD DATA INFILE './CollegePlaying.csv'
-INTO TABLE CollegePlaying
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Divisions.csv'
+IGNORE INTO TABLE Divisions
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour)
+SET
+DivisionRowID = NULLIF(@vone, 'NULL'),
+divisionID = NULLIF(@vtwo, 'NULL'),
+divisionName = NULLIF(@vthree, 'NULL'),
+isActive = NULLIF(@vfour, 'NULL')
+;
 
-LOAD DATA INFILE './Divisions.csv'
-INTO TABLE Divisions
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Fielding.csv'
+IGNORE INTO TABLE Fielding
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@twentyone)
+SET
+personID = NULLIF(@vone, 'NULL'),
+year = NULLIF(@vtwo, 'NULL'),
+stint = NULLIF(@vthree, 'NULL'),
+teamID = NULLIF(@vfour, 'NULL'),
+leagueID = NULLIF(@vfive, 'NULL'),
+Position = NULLIF(@vsix, 'NULL'),
+Games = NULLIF(@vseven, 'NULL'),
+GamesStarted = NULLIF(@veight, 'NULL'),
+InnOuts = NULLIF(@vnine, 'NULL'),
+Putouts = NULLIF(@vten, 'NULL'),
+Assists = NULLIF(@veleven, 'NULL'),
+Errors = NULLIF(@vtwelve, 'NULL'),
+DoublePlays = NULLIF(@vthirteen, 'NULL'),
+TriplePlays = NULLIF(@vfourteen, 'NULL'),
+PassedBallsByCatchers = NULLIF(@vfifteen, 'NULL'),
+WildPitchesByCatchers = NULLIF(@vsixteen, 'NULL'),
+OpponentStolenBasesByCatchers = NULLIF(@vseventeen, 'NULL'),
+OpponentsCaughtStealingByCatchers = NULLIF(@veighteen, 'NULL'),
+ZoneRating = NULLIF(@vnineteen, 'NULL'),
+round = NULLIF(@vtwenty, 'NULL'),
+isPostSeason = NULLIF(@vtwentyone, 'NULL')
+;
 
-LOAD DATA INFILE './Fielding.csv'
-INTO TABLE Fielding
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'FieldingOF.csv'
+IGNORE INTO TABLE FieldingOF
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix)
+SET
+personID = NULLIF(@vone, 'NULL'),
+year = NULLIF(@vtwo, 'NULL'),
+stint = NULLIF(@vthree, 'NULL'),
+GamesPlayedLeftField = NULLIF(@vfour, 'NULL'),
+GamesPlayedCenterField = NULLIF(@vfive, 'NULL'),
+GamesPlayedRightField = NULLIF(@vsix, 'NULL')
+;
 
-LOAD DATA INFILE './FieldingOF.csv'
-INTO TABLE FieldingOF
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'FieldingOFsplit.csv'
+IGNORE INTO TABLE FieldingOFsplit
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen)
+SET
+personID = NULLIF(@vone, 'NULL'),
+year = NULLIF(@vtwo, 'NULL'),
+stint = NULLIF(@vthree, 'NULL'),
+teamID = NULLIF(@vfour, 'NULL'),
+leagueID = NULLIF(@vfive, 'NULL'),
+Position = NULLIF(@vsix, 'NULL'),
+Games = NULLIF(@vseven, 'NULL'),
+GamesStarted = NULLIF(@veight, 'NULL'),
+InnOuts = NULLIF(@vnine, 'NULL'),
+Putouts = NULLIF(@vten, 'NULL'),
+Assists = NULLIF(@veleven, 'NULL'),
+Errors = NULLIF(@vtwelve, 'NULL'),
+DoublePlays = NULLIF(@vthirteen, 'NULL')
+;
 
-LOAD DATA INFILE './FieldingOFsplit.csv'
-INTO TABLE FieldingOFsplit
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Franchises.csv'
+IGNORE INTO TABLE Franchises
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour)
+SET
+franchID = NULLIF(@vone, 'NULL'),
+franchName = NULLIF(@vtwo, 'NULL'),
+active = NULLIF(@vthree, 'NULL'),
+NAassoc = NULLIF(@vfour, 'NULL')
+;
 
-LOAD DATA INFILE './Franchises.csv'
-INTO TABLE Franchises
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'HallOfFame.csv'
+IGNORE INTO TABLE HallOfFame
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten)
+SET
+HallOfFameRowID = NULLIF(@vone, 'NULL'),
+personID = NULLIF(@vtwo, 'NULL'),
+year = NULLIF(@vthree, 'NULL'),
+votedBy = NULLIF(@vfour, 'NULL'),
+ballots = NULLIF(@vfive, 'NULL'),
+needed = NULLIF(@vsix, 'NULL'),
+votes = NULLIF(@vseven, 'NULL'),
+inducted = NULLIF(@veight, 'NULL'),
+category = NULLIF(@vnine, 'NULL'),
+needed_note = NULLIF(@vten, 'NULL')
+;
 
-LOAD DATA INFILE './HallOfFame.csv'
-INTO TABLE HallOfFame
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'HomeGames.csv'
+IGNORE INTO TABLE HomeGames
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine)
+SET
+year = NULLIF(@vone, 'NULL'),
+leagueID = NULLIF(@vtwo, 'NULL'),
+teamID = NULLIF(@vthree, 'NULL'),
+parkID = NULLIF(@vfour, 'NULL'),
+debutGameDate = NULLIF(@vfive, 'NULL'),
+endGameDate = NULLIF(@vsix, 'NULL'),
+gamesPlayed = NULLIF(@vseven, 'NULL'),
+datesPlayed = NULLIF(@veight, 'NULL'),
+attendance = NULLIF(@vnine, 'NULL')
+;
 
-LOAD DATA INFILE './HomeGames.csv'
-INTO TABLE HomeGames
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Leagues.csv'
+IGNORE INTO TABLE Leagues
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree)
+SET
+leagueID = NULLIF(@vone, 'NULL'),
+leagueName = NULLIF(@vtwo, 'NULL'),
+isActive = NULLIF(@vthree, 'NULL')
+;
 
-LOAD DATA INFILE './Leagues.csv'
-INTO TABLE Leagues
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Managers.csv'
+IGNORE INTO TABLE Managers
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen)
+SET
+ManagerRowID = NULLIF(@vone, 'NULL'),
+personID = NULLIF(@vtwo, 'NULL'),
+year = NULLIF(@vthree, 'NULL'),
+teamID = NULLIF(@vfour, 'NULL'),
+leagueID = NULLIF(@vfive, 'NULL'),
+inseason = NULLIF(@vsix, 'NULL'),
+half = NULLIF(@vseven, 'NULL'),
+GamesManaged = NULLIF(@veight, 'NULL'),
+Wins = NULLIF(@vnine, 'NULL'),
+Losses = NULLIF(@vten, 'NULL'),
+rank = NULLIF(@veleven, 'NULL'),
+plyrMgr = NULLIF(@vtwelve, 'NULL'),
+isSeasonHalf = NULLIF(@vthirteen, 'NULL')
+;
 
-LOAD DATA INFILE './Managers.csv'
-INTO TABLE Managers
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Parks.csv'
+IGNORE INTO TABLE Parks
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix)
+SET
+parkID = NULLIF(@vone, 'NULL'),
+parkName = NULLIF(@vtwo, 'NULL'),
+parkAlias = NULLIF(@vthree, 'NULL'),
+city = NULLIF(@vfour, 'NULL'),
+state = NULLIF(@vfive, 'NULL'),
+country = NULLIF(@vsix, 'NULL')
+;
 
-LOAD DATA INFILE './Parks.csv'
-INTO TABLE Parks
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'People.csv'
+IGNORE INTO TABLE People
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour)
+SET
+personID = NULLIF(@vone, 'NULL'),
+nameFirst = NULLIF(@vtwo, 'NULL'),
+nameLast = NULLIF(@vthree, 'NULL'),
+birthYear = NULLIF(@vfour, 'NULL'),
+birthMonth = NULLIF(@vfive, 'NULL'),
+birthDay = NULLIF(@vsix, 'NULL'),
+birthCountry = NULLIF(@vseven, 'NULL'),
+birthState = NULLIF(@veight, 'NULL'),
+birthCity = NULLIF(@vnine, 'NULL'),
+deathYear = NULLIF(@vten, 'NULL'),
+deathMonth = NULLIF(@veleven, 'NULL'),
+deathDay = NULLIF(@vtwelve, 'NULL'),
+deathCountry = NULLIF(@vthirteen, 'NULL'),
+deathState = NULLIF(@vfourteen, 'NULL'),
+deathCity = NULLIF(@vfifteen, 'NULL'),
+weight = NULLIF(@vsixteen, 'NULL'),
+height = NULLIF(@vseventeen, 'NULL'),
+bats = NULLIF(@veighteen, 'NULL'),
+throws = NULLIF(@vnineteen, 'NULL'),
+debut = NULLIF(@vtwenty, 'NULL'),
+finalGame = NULLIF(@vtwentyone, 'NULL'),
+retroID = NULLIF(@vtwentytwo, 'NULL'),
+bbrefID = NULLIF(@vtwentythree, 'NULL')
+;
 
-LOAD DATA INFILE './People.csv'
-INTO TABLE People
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Pitching.csv'
+IGNORE INTO TABLE Pitching
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour,@vtwentyfive,@vtwentysix,@vtwentyseven,@vtwentyeight,@vtwentynine,@vthirty,@vthirtyone,@vthirtytwo)
+SET
+personID = NULLIF(@vone, 'NULL'),
+year = NULLIF(@vtwo, 'NULL'),
+stint = NULLIF(@vthree, 'NULL'),
+teamID = NULLIF(@vfour, 'NULL'),
+leagueID = NULLIF(@vfive, 'NULL'),
+Wins = NULLIF(@vsix, 'NULL'),
+Losses = NULLIF(@vseven, 'NULL'),
+Games = NULLIF(@veight, 'NULL'),
+GamesStarted = NULLIF(@vnine, 'NULL'),
+CompleteGames = NULLIF(@vten, 'NULL'),
+Shutouts = NULLIF(@veleven, 'NULL'),
+Saves = NULLIF(@vtwelve, 'NULL'),
+IPouts = NULLIF(@vthirteen, 'NULL'),
+Hits = NULLIF(@vfourteen, 'NULL'),
+EarnedRuns = NULLIF(@vfifteen, 'NULL'),
+Homeruns = NULLIF(@vsixteen, 'NULL'),
+Walks = NULLIF(@vseventeen, 'NULL'),
+Strikeouts = NULLIF(@veighteen, 'NULL'),
+OpponentsBattingAvg = NULLIF(@vnineteen, 'NULL'),
+EarnedRunAvg = NULLIF(@vtwenty, 'NULL'),
+IntentionalWalks = NULLIF(@vtwentyone, 'NULL'),
+WildPitches = NULLIF(@vtwentytwo, 'NULL'),
+BattersHitByPitch = NULLIF(@vtwentythree, 'NULL'),
+Balks = NULLIF(@vtwentyfour, 'NULL'),
+BattersFacedByPitcher = NULLIF(@vtwentyfive, 'NULL'),
+GamesFinished = NULLIF(@vtwentysix, 'NULL'),
+RunsAllowed = NULLIF(@vtwentyseven, 'NULL'),
+SacrificesByOpposingBatters = NULLIF(@vtwentyeight, 'NULL'),
+SacrificeFliesByOpposingBatters = NULLIF(@vtwentynine, 'NULL'),
+GIDPByOpposingBatter = NULLIF(@vthirty, 'NULL'),
+round = NULLIF(@vthirtyone, 'NULL'),
+isPostSeason = NULLIF(@vthirtytwo, 'NULL')
+;
 
-LOAD DATA INFILE './Pitching.csv'
-INTO TABLE Pitching
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'PlayerPositions.csv'
+IGNORE INTO TABLE PlayerPositions
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo)
+SET
+playerPosRowID = NULLIF(@vone, 'NULL'),
+personID = NULLIF(@vtwo, 'NULL'),
+year = NULLIF(@vthree, 'NULL'),
+teamID = NULLIF(@vfour, 'NULL'),
+leagueID = NULLIF(@vfive, 'NULL'),
+TotalGamesPlayed = NULLIF(@vsix, 'NULL'),
+GamesStarted = NULLIF(@vseven, 'NULL'),
+GamesPlayerBatted = NULLIF(@veight, 'NULL'),
+GamesPlayerOnDefense = NULLIF(@vnine, 'NULL'),
+GamesAsPitcher = NULLIF(@vten, 'NULL'),
+GamesAsCatcher = NULLIF(@veleven, 'NULL'),
+GamesAs1Baseman = NULLIF(@vtwelve, 'NULL'),
+GamesAs2Baseman = NULLIF(@vthirteen, 'NULL'),
+GamesAs3Baseman = NULLIF(@vfourteen, 'NULL'),
+GamesAsShortstop = NULLIF(@vfifteen, 'NULL'),
+GamesAsLeftfielder = NULLIF(@vsixteen, 'NULL'),
+GamesAsCenterfielder = NULLIF(@vseventeen, 'NULL'),
+GamesAsRightfielder = NULLIF(@veighteen, 'NULL'),
+GamesAsOutfielder = NULLIF(@vnineteen, 'NULL'),
+GamesAsDesignatedHitter = NULLIF(@vtwenty, 'NULL'),
+GamesAsPinchHitter = NULLIF(@vtwentyone, 'NULL'),
+GamesAsPinchRunner = NULLIF(@vtwentytwo, 'NULL')
+;
 
-LOAD DATA INFILE './Players.csv'
-INTO TABLE Players
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Players.csv'
+IGNORE INTO TABLE Players
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight)
+SET
+personID = NULLIF(@vone, 'NULL'),
+year = NULLIF(@vtwo, 'NULL'),
+stint = NULLIF(@vthree, 'NULL'),
+teamID = NULLIF(@vfour, 'NULL'),
+isPostSeason = NULLIF(@vfive, 'NULL'),
+isPitching = NULLIF(@vsix, 'NULL'),
+isBatting = NULLIF(@vseven, 'NULL'),
+isFielding = NULLIF(@veight, 'NULL')
+;
 
-LOAD DATA INFILE './PostSeasonSeries.csv'
-INTO TABLE PostSeasonSeries
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'PostSeasonSeries.csv'
+IGNORE INTO TABLE PostSeasonSeries
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten)
+SET
+PostSeasonRowID = NULLIF(@vone, 'NULL'),
+year = NULLIF(@vtwo, 'NULL'),
+round = NULLIF(@vthree, 'NULL'),
+teamIDwinner = NULLIF(@vfour, 'NULL'),
+leagueIDWinner = NULLIF(@vfive, 'NULL'),
+teamIDloser = NULLIF(@vsix, 'NULL'),
+leagueIDLoser = NULLIF(@vseven, 'NULL'),
+wins = NULLIF(@veight, 'NULL'),
+losses = NULLIF(@vnine, 'NULL'),
+ties = NULLIF(@vten, 'NULL')
+;
 
-LOAD DATA INFILE './Salaries.csv'
-INTO TABLE Salaries
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Salaries.csv'
+IGNORE INTO TABLE Salaries
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix)
+SET
+salaryRowID = NULLIF(@vone, 'NULL'),
+personID = NULLIF(@vtwo, 'NULL'),
+year = NULLIF(@vthree, 'NULL'),
+teamID = NULLIF(@vfour, 'NULL'),
+leagueID = NULLIF(@vfive, 'NULL'),
+salary = NULLIF(@vsix, 'NULL')
+;
 
-LOAD DATA INFILE './Schools.csv'
-INTO TABLE Schools
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Schools.csv'
+IGNORE INTO TABLE Schools
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive)
+SET
+schoolID = NULLIF(@vone, 'NULL'),
+schoolName = NULLIF(@vtwo, 'NULL'),
+city = NULLIF(@vthree, 'NULL'),
+state = NULLIF(@vfour, 'NULL'),
+country = NULLIF(@vfive, 'NULL')
+;
 
-LOAD DATA INFILE './Teams.csv'
-INTO TABLE Teams
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'Teams.csv'
+IGNORE INTO TABLE Teams
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour,@vtwentyfive,@vtwentysix,@vtwentyseven,@vtwentyeight,@vtwentynine,@vthirty,@vthirtyone,@vthirtytwo,@thirtythree,@thirtyfour,@thirtyfive,@thirtysix,@thirtyseven,@thirtyeight,@thirtynine,@fourty,@fourtyone,@fourtytwo,@fourtythree,@fourtyfour,@fourtyfive,@fourtysix,@fourtyseven,@fourtyeight,@fourtynine)
+SET
+TeamsRowID = NULLIF(@vone, 'NULL'),
+year = NULLIF(@vtwo, 'NULL'),
+leagueID = NULLIF(@vthree, 'NULL'),
+teamID = NULLIF(@vfour, 'NULL'),
+teamName = NULLIF(@vfive, 'NULL'),
+franchID = NULLIF(@vsix, 'NULL'),
+divisionID = NULLIF(@vseven, 'NULL'),
+Rank = NULLIF(@veight, 'NULL'),
+GamesPlayed = NULLIF(@vnine, 'NULL'),
+GamesPlayedAtHome = NULLIF(@vten, 'NULL'),
+Wins = NULLIF(@veleven, 'NULL'),
+Losses = NULLIF(@vtweleve, 'NULL'),
+DivisionWinner = NULLIF(@vthirteen, 'NULL'),
+WildcardWinner = NULLIF(@vfourteen, 'NULL'),
+LeagueChampion = NULLIF(@vfifteen, 'NULL'),
+WorldSeriesWinner = NULLIF(@vsixteen, 'NULL'),
+Runs = NULLIF(@vseventeen, 'NULL'),
+AtBats= NULLIF(@veighteen, 'NULL'),
+HitsByBatters = NULLIF(@vnineteen, 'NULL'),
+Doubles = NULLIF(@vtwenty, 'NULL'),
+Triples = NULLIF(@vtwentyone, 'NULL'),
+HomeRunsByBatters = NULLIF(@vtwentytwo, 'NULL'),
+WalksByBatters = NULLIF(@vtwentythree, 'NULL'),
+StrikeoutsByBatters = NULLIF(@vtwentyfour, 'NULL'),
+StolenBases = NULLIF(@vtwentyfive, 'NULL'),
+CaughtStealing = NULLIF(@vtwentysix, 'NULL'),
+BattersHitByPitch = NULLIF(@vtwentyseven, 'NULL'),
+SacrificeFlies = NULLIF(@vtwentyeight, 'NULL'),
+OpponentsRunsScored = NULLIF(@vtwentynine, 'NULL'),
+EarnedRunsAllowed = NULLIF(@vthirty, 'NULL'),
+EarnedRunAvg = NULLIF(@vthirtyone, 'NULL'),
+CompleteGames = NULLIF(@vthirtytwo, 'NULL'),
+Shutouts = NULLIF(@vthirtythree, 'NULL'),
+Saves = NULLIF(@vthirtyfour, 'NULL'),
+OutsPitched = NULLIF(@vthirtyfive, 'NULL'),
+HitsAllowed = NULLIF(@vthirtysix, 'NULL'),
+HomeRunsAllowed = NULLIF(@vthirtyseven, 'NULL'),
+WalksAllowed = NULLIF(@vthirtyeight, 'NULL'),
+StrikeoutsByPitchers = NULLIF(@vthirtynine, 'NULL'),
+Errors = NULLIF(@vfourty, 'NULL'),
+DoublePlays = NULLIF(@vfourtyone, 'NULL'),
+FieldingPercentage = NULLIF(@vfourtytwo, 'NULL'),
+parkName = NULLIF(@vfourtythree, 'NULL'),
+attendance = NULLIF(@vfourtyfour, 'NULL'),
+ThreeYearParkFactorBatters = NULLIF(@vfourtyfive, 'NULL'),
+ThreeYearParkFactorPitchers = NULLIF(@vfourtysix, 'NULL'),
+teamIDBR = NULLIF(@vfourtyseven, 'NULL'),
+teamIDlahman45 = NULLIF(@vfourtyeight, 'NULL'),
+teamIDretro = NULLIF(@vfourtynine, 'NULL')
+;
 
-LOAD DATA INFILE './TeamsHalf.csv'
-INTO TABLE TeamsHalf
+SHOW WARNINGS;
+
+LOAD DATA INFILE 'TeamsHalf.csv'
+IGNORE INTO TABLE TeamsHalf
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven)
+SET
+TeamsHalfRowID = NULLIF(@vone, 'NULL'),
+year = NULLIF(@vtwo, 'NULL'),
+leagueID = NULLIF(@vthree, 'NULL'),
+teamID = NULLIF(@vfour, 'NULL'),
+Half = NULLIF(@vfive, 'NULL'),
+divisionID = NULLIF(@vsix, 'NULL'),
+DivWin = NULLIF(@vseven, 'NULL'),
+Rank = NULLIF(@veight, 'NULL'),
+GamesPlayed = NULLIF(@vnine, 'NULL'),
+Wins = NULLIF(@vten, 'NULL'),
+Losses = NULLIF(@veleven, 'NULL')
+;
 
+SHOW WARNINGS;

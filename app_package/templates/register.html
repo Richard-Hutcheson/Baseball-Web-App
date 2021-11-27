@@ -1,16 +1,29 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <!-- <form onsubmit="#">
-    <label for="usernameFieldID">Username</label>
-    <input class = "usernameField" id = "usernameFieldID">
-    <label for="passwordFieldID">Password</label>
-    <input class = "usernameField"  id = "passwordFieldID">  
-  </form> -->
-  <div style = "background-color: rgb(189, 89, 89); min-height: 100vh; overflow: auto; background-image: url('../static/img/registerbackground.png'); background-size: cover;
-              display: flex;
-              justify-content: center;
-              align-items: center;">
+
+  {% if created %}
+
+    {% set text = 'ACCOUNT CREATED' %}
+
+    {% if created == 'fail' %}
+      {% set text = 'ERROR CREATING ACCOUNT (username likely taken)' %}
+    {% endif %}
+    <div style = "display: block; height: 80px;" id = "alertBox">
+      <div id = "alert" style="text-align: center;">
+        <p><b>{{text}}</b></p>
+      </div>
+      {% if created == 'success' %}
+        <button id = "alertClose" style = "position: relative; left: 50%; transform: translateX(-50%); text-align: center; width: 100px; height: 30px; margin-bottom: 5px" onclick= "window.location.href = '/login'">CLOSE</button>
+      {% else %}
+        <button id = "alertClose" style = "position: relative; left: 50%; transform: translateX(-50%); text-align: center; width: 100px; height: 30px; margin-bottom: 5px" onclick= "document.getElementById('alertBox').style.display='none'">CLOSE</button>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div style = "background-color: rgb(189, 89, 89); min-height: 100vh; overflow: auto;
+              background-image: url('../static/img/registerbackground.png'); background-size: cover;
+              display: flex; justify-content: center; align-items: center;">
       <div class="container" >
         <div class="card" style="border-radius: 25px; color: rgb(189, 89, 89)">
           <div class="card-body p-md-5">
@@ -19,21 +32,13 @@
 
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Create Account</p>
 
-                <form class="mx-1 mx-md-4" onsubmit="">
+                <form class="mx-1 mx-md-4" action="/handleRegistration" method="post">
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="form3Example1c">Your Username <span style="color: rgb(155, 155, 155); font-size: .6rem;">(MAX 50 CHARS)</span></label>
-                      <input type="text" id="form3Example1c" class="form-control" maxlength="50" required/>
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="form3Example3c">Your Email <span style="color: rgb(155, 155, 155); font-size: .6rem;">(MAX 100 CHARS)</span></label>
-                      <input type="email" id="form3Example3c" class="form-control" maxlength="100" required/>
+                      <label class="form-label" for="form3Example1c">Username <span style="color: rgb(155, 155, 155); font-size: .6rem;">(MAX 50 CHARS)</span></label>
+                      <input type="text" id="form3Example1c" name = "username" class="form-control" maxlength="50" required/>
                     </div>
                   </div>
 
@@ -41,7 +46,7 @@
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="form3Example4c">Password <span style="color: rgb(155, 155, 155); font-size: .6rem;">(MAX 50 CHARS)</span></label>
-                      <input type="password" id="form3Example4c" class="form-control" maxlength="50" required />
+                      <input type="password" id="form3Example4c" class="form-control" name = "password" maxlength="50" required />
                     </div>
                   </div>
 
@@ -53,14 +58,11 @@
                   </div>
                 </form>
               </div>
-              <!-- <div class=" " style="width: 60%; height: 60%;">
-                <img src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-registration/draw1.png" class="img-fluid" alt="Sample image">
-              </div> -->
-
             </div>
           </div>
 
         </div>
       </div>
   </div>
+
 {% endblock content %}

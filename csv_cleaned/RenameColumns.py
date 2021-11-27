@@ -63,6 +63,7 @@ FieldingCols = {'playerID'  :     'personID',
                 'A'        :      'Assists',
                 'E'        :      'Errors',
                 'DP'       :      'DoublePlays',
+                'TP'       :      'TriplePlays',
                 'PB'       :      'PassedBallsByCatchers',
                 'WP'       :      'WildPitchesByCatchers',
                 'SB'       :      'OpponentStolenBasesByCatchers',
@@ -111,7 +112,7 @@ TeamsCols = {'yearID' : 'year',
              'PPF' : 'ThreeYearParkFactorPitchers'
 }
 
-AppearancesCols = {
+PlayerPositionsCols = {
 'playerID'  :     'personID',
 'lgID'      :     'leagueID',
 'yearID'    :     'year',
@@ -121,9 +122,9 @@ AppearancesCols = {
 'G_defense' :     'GamesPlayerOnDefense',
 'G_p'       :     'GamesAsPitcher',
 'G_c'       :     'GamesAsCatcher',
-'G_1b'      :     'GamesAsFirstBaseman',
-'G_2b'      :     'GamesAsSecondBaseman',
-'G_3b'      :     'GamesAsThirdBaseman',
+'G_1b'      :     'GamesAs1Baseman',
+'G_2b'      :     'GamesAs2Baseman',
+'G_3b'      :     'GamesAs3Baseman',
 'G_ss'      :     'GamesAsShortstop',
 'G_lf'      :     'GamesAsLeftfielder',
 'G_cf'      :     'GamesAsCenterfielder',
@@ -177,3 +178,8 @@ TeamsHalfCols = {
 'W'    :   'Wins',
 'L'    :   'Losses'
 }
+
+AwardsCols = {'playerID' : 'personID',
+              'lgID' : 'leagueID',
+              'yearID' : 'year',
+              'awardID' : 'awardName'}
