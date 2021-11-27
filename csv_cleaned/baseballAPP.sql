@@ -1,6 +1,5 @@
 USE baseballAPP;
 
-
 DROP TABLE IF EXISTS AllStar;
 DROP TABLE IF EXISTS Awards;
 DROP TABLE IF EXISTS Batting;
