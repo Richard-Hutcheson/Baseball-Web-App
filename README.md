@@ -32,6 +32,7 @@ run flask with "flask run", ensure .flaskenv has FLASK_APP environment variable 
 * copy all CSVs /usr/local/var/mysql/baseballAPP/
 * go to current directory of the BaseballApp.sql (in csv_cleaned) script and run in SQL
 * after running again, re-paste all the CSVs into /usr/local/var/mysql/baseballAPP/
+* run BaseballAPP.sql once more after using the database (\. BaseballApp.sql)
 
 #SQL BaseballApp.sql instructions for Windows
 * copy csi3335fall2021.py into same dir as csvParser.py
