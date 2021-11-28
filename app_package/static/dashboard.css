@@ -4,6 +4,8 @@ html {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    font-family: 'Roboto Slab', serif;
+
     }
     
 body{
@@ -73,12 +75,13 @@ button:hover{
     text-align: center;
     margin: 4rem 0 .5rem 0;
     width: 100%;
-
+    background-color: rgba(0, 0, 0, 0.692);
 }
 #standingContainer{
     position: relative;
     border-style: solid;
     border-radius: 1rem;
+    border-color: rgb(224, 213, 180);
     /* text-align: center; */
     height: 3rem;
     background-color: rgb(255, 255, 255);
@@ -145,12 +148,14 @@ button:hover{
 #favoriteTeamTxt{
     text-align: center;
     margin: 2rem 0 .5rem 0;
+    background-color: rgba(0, 0, 0, 0.692);
 
 }
 #roster{
     position: relative;
     display: block;
     border-style: solid;
+    border-color: rgb(224, 213, 180);
     height: auto;
     min-height: 300px;
     background-color: rgb(224, 213, 180);
@@ -179,9 +184,24 @@ button:hover{
     border-bottom-style: solid;
     border-color: white;
 }
+.player:hover{
+    background-color: rgba(0, 128, 0, 0.5);
+}
+
+
+#chngFaveTeamTxt{
+    margin: 1em auto .5em auto;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.692);
+}
 
 #faveTeamContainer{
-    margin-top: 1rem;
+    background-color: white;
+    color: black;
+    border-style: solid;
+    border-color: rgb(224, 213, 180);
+    border-radius: 1rem;
+
 }
 #selectorCenter{
     display: block;
@@ -190,19 +210,29 @@ button:hover{
     width: 200px;
     height: 100px;
     transform: translateX(-50%);
+    margin-top: .5rem;
+}
+#faveTeamLabel{
 }
 #faveTeamSelect{
     width: 200px;
     margin-bottom: 10px;
-
+    border-style: solid;
+    border-radius: .5rem;
+    border-color: rgb(224, 213, 180);
+    border-width: 5px;
 }
 #faveTeamYrSelect{
     width: 200px;
+    border-style: solid;
+    border-radius: .5rem;
+    border-color: rgb(224, 213, 180);
+    border-width: 5px;
 }
 #changeBtn{
     position: relative;
     display: block;
-    margin: .5rem auto 0 auto;
+    margin: .5rem auto .5rem auto;
     background-color: rgb(224, 213, 180);
     border-color: rgb(224, 213, 180);
     border-style: solid;

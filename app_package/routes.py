@@ -1,25 +1,10 @@
-from app_package import app
 from flask.globals import session
 from flask import render_template, request, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
-from app_package import db
-from app_package import engine
-from sqlalchemy import text
+from app_package import db, engine, app
+from sqlalchemy import text, update
 from app_package.Classes.user import User
-
-'''
-Future Richard, consider using sessions to pass data through redirection 
-without exposing information in the url heading. If you are okay with
-showing details in the url, then consider a dictionary being passed
-through url_for and then iterate over them with jinja by parsing over
-them with request.args.get('')
-
--Past Richard
-
-'''
-
-
 
 @app.route('/')
 @app.route('/index')
@@ -84,9 +69,13 @@ def dashboard():
             for row in result.fetchall():
                 yearList.append(row['year'])
             
-            #move current fave year to front
-            yearList.insert(0, 2020)
+            #retrieve fave year if it exists and move current fave year to front if it exists
             faveTeamYear = 2020
+            if 'faveYear' in session:
+                faveTeamYear = session['faveYear']
+                session.pop('faveYear', None)
+            yearList.insert(0, faveTeamYear)
+
 
             #GET PLAYERS FROM FAVORITE TEAM DURING SPECIFIED YEAR
             result = engine.execute(text(
@@ -108,13 +97,12 @@ def dashboard():
             pitchers = pitchers.fetchall()
             result = result.fetchall()
             for row in result:
-                age = faveTeamYear - row['birthyear']
+                age = int(faveTeamYear) - int(row['birthyear'])
                 personID = row['personID'] 
                 isBatter = 'Y'
                 isPitcher = 'N'
                 # DETERMINE IF BATTER OR PITCHER                
                 for pitcher in pitchers:
-                    print(personID, " == ", pitcher['personID'])
                     if (personID == pitcher['personID']):
                         isBatter = 'N'
                         isPitcher = 'Y'
@@ -189,7 +177,6 @@ def handleLogin():
 
     return redirect("/login")
 
-
 @app.route('/handleRegistration', methods=['GET', 'POST'])
 def handleRegistration():
     
@@ -215,6 +202,18 @@ def handleRegistration():
 @app.route('/changeFaveTeam', methods=['GET', 'POST'])
 def changeFaveTeam():
     
+    if request.method == 'POST':
+        faveTeam = request.form.get('teamSelect')
+        faveTeamYear = request.form.get("faveYearSelect")
+        engine.execute( text(
+            f'''
+            UPDATE users
+            SET favoriteTeam = '{faveTeam}'
+            WHERE username = '{session['username']}'
+            '''    
+        ))
+        session['faveYear'] = faveTeamYear
+        redirect('/dasboard')
     return redirect('/dashboard')
 
 @app.route('/logout', methods=['GET', 'POST'])
