@@ -278,37 +278,141 @@ isPostSeason VARCHAR(2)
 );
 
 CREATE TABLE PlayerPositions (
-playerPosRowID int NOT NULL AUTO_INCREMENT, personID VARCHAR(10), year smallint(6), teamID VARCHAR(3), leagueID CHAR(2), TotalGamesPlayed smallint(6), GamesStarted smallint(6), GamesPlayerBatted smallint(6), GamesPlayerOnDefense smallint(6), GamesAsPitcher smallint(6), GamesAsCatcher smallint(6), GamesAs1Baseman smallint(6), GamesAs2Baseman smallint(6), GamesAs3Baseman smallint(6), GamesAsShortstop smallint(6), GamesAsLeftfielder smallint(6), GamesAsCenterfielder smallint(6), GamesAsRightfielder smallint(6), GamesAsOutfielder smallint(6), GamesAsDesignatedHitter smallint(6), GamesAsPinchHitter smallint(6), GamesAsPinchRunner smallint(6),
+playerPosRowID int NOT NULL AUTO_INCREMENT,
+personID VARCHAR(10),
+year smallint(6),
+teamID VARCHAR(3),
+leagueID CHAR(2),
+TotalGamesPlayed smallint(6),
+GamesStarted smallint(6),
+GamesPlayerBatted smallint(6),
+GamesPlayerOnDefense smallint(6),
+GamesAsPitcher smallint(6),
+GamesAsCatcher smallint(6),
+GamesAs1Baseman smallint(6),
+GamesAs2Baseman smallint(6),
+GamesAs3Baseman smallint(6),
+GamesAsShortstop smallint(6),
+GamesAsLeftfielder smallint(6),
+GamesAsCenterfielder smallint(6),
+GamesAsRightfielder smallint(6),
+GamesAsOutfielder smallint(6),
+GamesAsDesignatedHitter smallint(6),
+GamesAsPinchHitter smallint(6),
+GamesAsPinchRunner smallint(6),
 PRIMARY KEY (playerPosRowID)
 );
 
 CREATE TABLE Players (
-personID VARCHAR(100), year smallint(6), stint VARCHAR(100), teamID VARCHAR(3), isPostSeason VARCHAR(2), isPitching VARCHAR(1), isBatting VARCHAR(1), isFielding VARCHAR(1),
+personID VARCHAR(100),
+year smallint(6),
+stint VARCHAR(100),
+teamID VARCHAR(3),
+isPostSeason VARCHAR(2),
+isPitching VARCHAR(1),
+isBatting VARCHAR(1),
+isFielding VARCHAR(1),
 FOREIGN KEY (personID) REFERENCES People(PersonID)
 );
 
 CREATE TABLE PostSeasonSeries (
-PostSeasonRowID int NOT NULL AUTO_INCREMENT, year smallint(6), round VARCHAR(100), teamIDwinner CHAR(3), leagueIDWinner CHAR(2), teamIDloser CHAR(3), leagueIDLoser CHAR(2), wins smallint(6), losses smallint(6), ties smallint(6),
+PostSeasonRowID int NOT NULL AUTO_INCREMENT,
+year smallint(6),
+round VARCHAR(100),
+teamIDwinner CHAR(3),
+leagueIDWinner CHAR(2),
+teamIDloser CHAR(3),
+leagueIDLoser CHAR(2),
+wins smallint(6),
+losses smallint(6),
+ties smallint(6),
 PRIMARY KEY (PostSeasonRowID)
 );
 
 CREATE TABLE Salaries (
-salaryRowID int NOT NULL AUTO_INCREMENT, personID VARCHAR(10), year smallint(6), teamID VARCHAR(3), leagueID CHAR(2), salary double,
+salaryRowID int NOT NULL AUTO_INCREMENT,
+personID VARCHAR(10),
+year smallint(6),
+teamID VARCHAR(3),
+leagueID CHAR(2),
+salary double,
 PRIMARY KEY (salaryRowID)
 );
 
 CREATE TABLE Schools (
-schoolID VARCHAR(50), schoolName CHAR(255), city CHAR(255), state CHAR(255), country CHAR(255),
+schoolID VARCHAR(50),
+schoolName CHAR(255),
+city CHAR(255),
+state CHAR(255),
+country CHAR(255),
 PRIMARY KEY (schoolID)
 );
 
 CREATE TABLE Teams (
-TeamsRowID INT NOT NULL AUTO_INCREMENT, year smallint(6), leagueID CHAR(2), teamID VARCHAR(3), teamName VARCHAR(255), franchID VARCHAR(3), divisionID VARCHAR(2), Rank smallint(6), GamesPlayed smallint(6), GamesPlayedAtHome smallint(6), Wins smallint(6), Losses smallint(6), DivisionWinner VARCHAR(1), WildcardWinner VARCHAR(1), LeagueChampion VARCHAR(1), WorldSeriesWinner VARCHAR(1), Runs smallint(6), AtBats smallint(6), HitsByBatters smallint(6), Doubles smallint(6), Triples smallint(6), HomeRunsByBatters smallint(6), WalksByBatters smallint(6), StrikeoutsByBatters smallint(6), StolenBases smallint(6), CaughtStealing smallint(6), BattersHitByPitch smallint(6), SacrificeFlies smallint(6), OpponentsRunsScored smallint(6), EarnedRunsAllowed smallint(6), EarnedRunAvg double, CompleteGames smallint(6), Shutouts smallint(6), Saves smallint(6), OutsPitched INT(11), HitsAllowed smallint(6), HomeRunsAllowed smallint(6), WalksAllowed smallint(6), StrikeoutsByPitchers smallint(6), Errors int(11), DoublePlays int(11), FieldingPercentage double, parkName varchar(50), attendance int(11), ThreeYearParkFactorBatters int(11), ThreeYearParkFactorPitchers int(11), teamIDBR VARCHAR(3), teamIDlahman45 VARCHAR(3), teamIDretro VARCHAR(3),
+TeamsRowID INT NOT NULL AUTO_INCREMENT,
+year smallint(6),
+leagueID CHAR(2),
+teamID VARCHAR(3),
+teamName VARCHAR(255),
+franchID VARCHAR(3),
+divisionID VARCHAR(2),
+Rank smallint(6),
+GamesPlayed smallint(6),
+GamesPlayedAtHome smallint(6),
+Wins smallint(6),
+Losses smallint(6),
+DivisionWinner VARCHAR(1),
+WildcardWinner VARCHAR(1),
+LeagueChampion VARCHAR(1),
+WorldSeriesWinner VARCHAR(1),
+Runs smallint(6),
+AtBats smallint(6),
+HitsByBatters smallint(6),
+Doubles smallint(6),
+Triples smallint(6),
+HomeRunsByBatters smallint(6),
+WalksByBatters smallint(6),
+StrikeoutsByBatters smallint(6),
+StolenBases smallint(6),
+CaughtStealing smallint(6),
+BattersHitByPitch smallint(6),
+SacrificeFlies smallint(6),
+OpponentsRunsScored smallint(6),
+EarnedRunsAllowed smallint(6),
+EarnedRunAvg double,
+CompleteGames smallint(6),
+Shutouts smallint(6),
+Saves smallint(6),
+OutsPitched INT(11),
+HitsAllowed smallint(6),
+HomeRunsAllowed smallint(6),
+WalksAllowed smallint(6),
+StrikeoutsByPitchers smallint(6),
+Errors int(11),
+DoublePlays int(11),
+FieldingPercentage double,
+parkName varchar(50),
+attendance int(11),
+ThreeYearParkFactorBatters int(11),
+ThreeYearParkFactorPitchers int(11),
+teamIDBR VARCHAR(3),
+teamIDlahman45 VARCHAR(3),
+teamIDretro VARCHAR(3),
 PRIMARY KEY (TeamsRowID)
 );
 
 CREATE TABLE TeamsHalf (
-TeamsHalfRowID int NOT NULL AUTO_INCREMENT, year smallint(6), leagueID CHAR(2), teamID VARCHAR(3), Half VARCHAR(1), divisionID VARCHAR(2), DivWin VARCHAR(1), Rank smallint(6), GamesPlayed smallint(6), Wins smallint(6), Losses smallint(6),
+TeamsHalfRowID int NOT NULL AUTO_INCREMENT,
+year smallint(6),
+leagueID CHAR(2),
+teamID VARCHAR(3),
+Half VARCHAR(1),
+divisionID VARCHAR(2),
+DivWin VARCHAR(1),
+Rank smallint(6),
+GamesPlayed smallint(6),
+Wins smallint(6),
+Losses smallint(6),
 PRIMARY KEY (TeamsHalfRowID)
 );
 
@@ -881,4 +985,8 @@ ALTER TABLE Awards
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 ALTER TABLE Awards
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+-- add Batting Foreign Keys
+ALTER TABLE Batting
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
