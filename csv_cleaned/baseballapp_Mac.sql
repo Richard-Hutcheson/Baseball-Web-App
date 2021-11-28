@@ -896,7 +896,7 @@ IGNORE INTO TABLE Teams
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
-(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour,@vtwentyfive,@vtwentysix,@vtwentyseven,@vtwentyeight,@vtwentynine,@vthirty,@vthirtyone,@vthirtytwo,@thirtythree,@thirtyfour,@thirtyfive,@thirtysix,@thirtyseven,@thirtyeight,@thirtynine,@fourty,@fourtyone,@fourtytwo,@fourtythree,@fourtyfour,@fourtyfive,@fourtysix,@fourtyseven,@fourtyeight,@fourtynine)
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@v12,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour,@vtwentyfive,@vtwentysix,@vtwentyseven,@vtwentyeight,@vtwentynine,@vthirty,@vthirtyone,@vthirtytwo,@thirtythree,@thirtyfour,@thirtyfive,@thirtysix,@thirtyseven,@thirtyeight,@thirtynine,@fourty,@fourtyone,@fourtytwo,@fourtythree,@fourtyfour,@fourtyfive,@fourtysix,@fourtyseven,@fourtyeight,@fourtynine)
 SET
 TeamsRowID = NULLIF(@vone, 'NULL'),
 year = NULLIF(@vtwo, 'NULL'),
@@ -909,7 +909,7 @@ Rank = NULLIF(@veight, 'NULL'),
 GamesPlayed = NULLIF(@vnine, 'NULL'),
 GamesPlayedAtHome = NULLIF(@vten, 'NULL'),
 Wins = NULLIF(@veleven, 'NULL'),
-Losses = NULLIF(@vtweleve, 'NULL'),
+Losses = NULLIF(@v12, 'NULL'),
 DivisionWinner = NULLIF(@vthirteen, 'NULL'),
 WildcardWinner = NULLIF(@vfourteen, 'NULL'),
 LeagueChampion = NULLIF(@vfifteen, 'NULL'),
