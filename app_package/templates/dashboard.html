@@ -17,7 +17,6 @@
                 <p id = "yearTextID">year:</p>
                 <input type = "number" id = "yearSelect" name = 'year' min="1871" max="2020" required/>
             </div>
-    
         </div>
     
         <button id = "yearSelectBtn">
@@ -25,7 +24,13 @@
         </button>
     </form>
 </div>
-<p id="favoriteTeamTxt">Favorite Team: <span id = "favoriteTeam">{{faveTeam}}</span>, Year: {{faveTeamYear}}</p>
+{% if faveTeam != 'NONE' %}
+    <p id="favoriteTeamTxt">Favorite Team: <span id = "favoriteTeam">{{faveTeam}}</span>, Year: {{faveTeamYear}}</p>
+{% else %}
+    <p id="favoriteTeamTxt">Favorite Team: <span id = "favoriteTeam">None</span></p>
+
+{% endif %}
+
 <div id = "roster">
     <div id ="attributeList">
         <p>NAME</p>
@@ -40,25 +45,26 @@
             <span class = "nameVal">{{player['name']}}</span>
             <span class = "ageVal">{{player['age']}}</span>
             <span class = "birthPlaceVal">{{player['birthPlace']}}</span>
-            <span class = "batterVal">N</span>
-            <span class = "pitcherVal">N</span> 
+            <span class = "batterVal">{{player['batter']}}</span>
+            <span class = "pitcherVal">{{player['pitcher']}}</span> 
         </div>
         {% endfor %}
     </div>
 </div>
+<p id = "chngFaveTeamTxt">Change Favorite Team</p>
 <div id = "faveTeamContainer">
-    <form action="/changeFaveTeam">
+    <form action="/changeFaveTeam" method = 'post'>
         <div id ="selectorCenter">
-            <label for="faveTeamSelect">Favorite Team</label>
-            <select  id="faveTeamSelect">
+            <label id = "faveTeamLabel" for="faveTeamSelect">Favorite Team</label>
+            <select  id="faveTeamSelect" name = 'teamSelect'>
                 {% for t in teamNames %}
-                    <option value = {{t}}>{{t}}</option>
+                    <option value = '{{t}}'>{{t}}</option>
                 {% endfor %}
             </select>
             <label for="faveTeamYrSelect">Favorite Team Year</label>
-            <select  id="faveTeamYrSelect">
+            <select  id="faveTeamYrSelect" name = 'faveYearSelect'>
                 {% for y in teamYears %}
-                    <option value = {{y}}>{{y}}</option>
+                    <option value = '{{y}}'>{{y}}</option>
                 {% endfor %}
             </select>
         </div>

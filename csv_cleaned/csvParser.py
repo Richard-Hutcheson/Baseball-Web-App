@@ -619,7 +619,11 @@ def clean_homegamesCSV():
 def main():
 
     #change the current directory into folder with CSV files
+<<<<<<< HEAD
+    os.chdir("../csv_files") #------------------------------------------------AUSTIN I EDITED THIS LINE FROM ./csv_files to ../csv_files 
+=======
     os.chdir("../csv_files")
+>>>>>>> 334898a7abde01f1f344f11f0999b669799f0e79
     #get list of file names in directory
     fileList = os.listdir()
 
