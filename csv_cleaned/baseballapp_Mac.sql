@@ -85,7 +85,7 @@ round VARCHAR(10)
 CREATE TABLE CollegePlaying (
 CollegePlayingRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(9) NOT NULL,
-schoolID VARCHAR(15),
+schoolID VARCHAR(50),
 year smallint(6) NOT NULL,
 PRIMARY KEY (CollegePlayingRowID)
 );
@@ -989,4 +989,36 @@ ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
 -- add Batting Foreign Keys
 ALTER TABLE Batting
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+ALTER TABLE Batting
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+-- add CollegePlaying Foreign Keys
+ALTER TABLE CollegePlaying
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+ALTER TABLE CollegePlaying
+ADD FOREIGN KEY (schoolID) REFERENCES Schools(schoolID);
+
+-- add Fielding Foreign Keys
+ALTER TABLE Fielding
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+ALTER TABLE Fielding
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+-- add FieldingOF Foreign Keys
+ALTER TABLE FieldingOF
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+-- add FieldingOFsplit Foreign Keys
+ALTER TABLE FieldingOFsplit
+ADD FOREIGN KEY (personID) REFERENCES Person(personID);
+
+ALTER TABLE FieldingOFsplit
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+-- add HallOfFame Foreign Keys
+ALTER TABLE HallOfFame
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
