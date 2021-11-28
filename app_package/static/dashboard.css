@@ -212,8 +212,7 @@ button:hover{
     transform: translateX(-50%);
     margin-top: .5rem;
 }
-#faveTeamLabel{
-}
+
 #faveTeamSelect{
     width: 200px;
     margin-bottom: 10px;

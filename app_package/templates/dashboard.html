@@ -56,7 +56,7 @@
     <form action="/changeFaveTeam" method = 'post'>
         <div id ="selectorCenter">
             <label id = "faveTeamLabel" for="faveTeamSelect">Favorite Team</label>
-            <select  id="faveTeamSelect" name = 'teamSelect'>
+            <select  id="faveTeamSelect" name = 'teamSelect' onchange = "updateYears()">
                 {% for t in teamNames %}
                     <option value = '{{t}}'>{{t}}</option>
                 {% endfor %}
@@ -73,6 +73,16 @@
     </form>
 
 </div>
+
+<script>
+
+    function updateYears(){
+        let e = document.getElementById('faveTeamSelect');
+        let val = e.options[e.selectedIndex].text;
+        document.location.href = '/handleYearChange?team=' + val;
+    }
+
+</script>
 
 
 {% endblock content %}
