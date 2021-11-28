@@ -11,11 +11,11 @@
 
 <p id = "standingtitle" >Search Standing By Year</p>
 <div id = "standingContainer">
-    <form action="/searchResults">
+    <form action="/searchResults" method = "post">
         <div class = "center" id = "standingInner">
             <div id = "yearGroup">
                 <p id = "yearTextID">year:</p>
-                <input type = "number" id = "yearSelect" min="1871" max="2000" required/>
+                <input type = "number" id = "yearSelect" name = 'year' min="1871" max="2020" required/>
             </div>
     
         </div>

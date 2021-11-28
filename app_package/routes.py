@@ -150,6 +150,27 @@ def register():
 
 @app.route('/searchResults', methods=['GET', 'POST'])
 def searchResults():
+
+    year = request.form.get('year')
+    print(str(year))
+
+    if 'username' in session:
+        usernameUp = session['username']
+        usernameUp = usernameUp.upper()
+        #get list of teams in db
+        result = engine.execute(
+            text(
+                f'''
+                SELECT teamName
+                FROM teams t
+                WHERE t.year = '{year}'
+                GROUP BY teamName
+                '''
+            )
+        )
+
+        return render_template('searchResults.html', title='Results',output_data=result.fetchall())
+
     return render_template('searchResults.html', title='Results')
 
 @app.route('/handleLogin', methods=['GET', 'POST'])

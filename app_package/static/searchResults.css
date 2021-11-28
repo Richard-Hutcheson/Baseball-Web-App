@@ -15,7 +15,14 @@ tbody tr:nth-child(odd) {
 tbody tr:nth-child(even) {
   background-color: #eee;
 }
-
+#usernameID{
+    position: absolute;
+    display: inline;
+    font-weight: bold;
+    left: 3rem;
+    opacity: 100%;
+    font-size: larger;
+}
 body{
   background: url("img/resultsImage.jpg") no-repeat center center fixed;
   background-size: cover;
