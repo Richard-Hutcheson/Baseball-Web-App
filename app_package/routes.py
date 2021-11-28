@@ -152,10 +152,10 @@ def searchResults():
         result = engine.execute(
             text(
                 f'''
-                SELECT teamName
-                FROM teams t
+                SELECT t.teamName, l.leagueName, t.divisionID, t.Wins, t.Losses
+                FROM teams t JOIN Leagues l ON(t.leagueID = l.leagueID)
                 WHERE t.year = '{year}'
-                GROUP BY teamName
+                ORDER BY t.leagueID, t.divisionID
                 '''
             )
         )

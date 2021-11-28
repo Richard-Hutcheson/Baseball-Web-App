@@ -28,7 +28,10 @@
     <thead>
     <tr>
         <th>Team Name</th>
+        <th>League</th>
         <th>Division</th>
+        <th>Wins</th>
+        <th>Losses</th>
         <th>Playoff Results</th>
         <th>Games Behind (GB)</th>
     </tr>
@@ -38,8 +41,20 @@
             <tr>
                 <td>{{row[0]}}</td>
                 <td>{{row[1]}}</td>
-                <td>{{row[2]}}</td>
+
+                {% if row[2]|string() == "C"|string() %}
+                     {% set output = 'Central' %}
+                {% elif row[2]|string() == "E"|string() %}
+                     {% set output = 'East' %}
+                {% elif row[2]|string() == "W"|string() %}
+                     {% set output = 'West' %}
+                {% else %}
+                     {% set output = 'N/A' %}
+                {% endif %}
+                <td>{{output}}</td>
                 <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+                <td>{{row[5]}}</td>
             </tr>
         {% endfor %}
     </tbody>
