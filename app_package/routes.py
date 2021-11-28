@@ -46,24 +46,34 @@ def dashboard():
         ))
 
         favoritesInfo = [dict(row) for row in result.fetchall()]
-        #user does have a favorite team and year
-        if (favoritesInfo[0]['favoriteTeam'] != None):
+        #user DOES have a favorite team and year
+        if ('tempFaveTeam' in session or favoritesInfo[0]['favoriteTeam'] != None):
+            if ('tempFaveTeam' in session):
+                tempFaveTeam = session['tempFaveTeam']
+                print("FAVE TEAM = ", tempFaveTeam)
+                session.pop('tempFaveTeam', None)
+            else:
+                tempFaveTeam = faveTeamYear
+                tempFaveTeam = faveTeam
+
             faveTeam = favoritesInfo[0]['favoriteTeam']
             ndx1 = 0
             ndx2 = 0
+            
             for i in range(0, len(teamNames)):
-                if (teamNames[i] == faveTeam):
+                if (teamNames[i] == tempFaveTeam):
                     ndx2 = i
             #do the swap
-            temp = ndx1
+            temp = teamNames[ndx1]
             teamNames[ndx1] = teamNames[ndx2]
-            teamNames[ndx2] = teamNames[temp]
+            teamNames[ndx2] = temp
+
             #get team's years
             result = engine.execute(text(
                 f'''
                 SELECT year
                 FROM teams
-                WHERE teamName = '{faveTeam}'
+                WHERE teamName = '{tempFaveTeam}'
                 '''
             ))
             for row in result.fetchall():
@@ -97,7 +107,10 @@ def dashboard():
             pitchers = pitchers.fetchall()
             result = result.fetchall()
             for row in result:
-                age = int(faveTeamYear) - int(row['birthyear'])
+                if (isinstance(row['birthyear'], int) ):
+                    age = int(faveTeamYear) - int(row['birthyear'])
+                else:
+                    age = 'unknown'
                 personID = row['personID'] 
                 isBatter = 'Y'
                 isPitcher = 'N'
@@ -215,6 +228,16 @@ def changeFaveTeam():
         session['faveYear'] = faveTeamYear
         redirect('/dasboard')
     return redirect('/dashboard')
+
+@app.route('/handleYearChange', methods=['GET', 'POST'])
+def handleYearChange():
+    faveTeam = request.args.get('team')
+    if (faveTeam != None):
+        session['tempFaveTeam'] = faveTeam
+
+    return redirect("/dashboard")
+
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
