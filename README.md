@@ -35,4 +35,4 @@ run flask with "flask run", ensure .flaskenv has FLASK_APP environment variable 
 #SQL BaseballApp.sql instructions for Windows
 * copy csi3335fall2021.py into same dir as csvParser.py
 * copy paste all cleaned csv files into MYSQL/bin/baseballapp/
-* move baseballAPP.sql to MYSQL/ and run from SQL terminal
+* move baseballapp_Mac.sql to MYSQL/ and run from SQL terminal
