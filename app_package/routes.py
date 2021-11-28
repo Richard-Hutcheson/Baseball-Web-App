@@ -91,33 +91,42 @@ def dashboard():
             #GET PLAYERS FROM FAVORITE TEAM DURING SPECIFIED YEAR
             result = engine.execute(text(
                 f'''
-                SELECT concat(nameFirst, ' ', nameLast) as name, birthYear as birthyear, concat(birthCity, ', ', birthState, ', ', birthCountry) as birthPlace
+                SELECT concat(nameFirst, ' ', nameLast) as name, birthYear as birthyear, concat(birthCity, ', ', birthState, ', ', birthCountry) as birthPlace, p.personID as personID
                 FROM people as p, teams as t, players as pl
                 WHERE p.personID = pl.personID AND t.teamID = pl.teamID AND pl.year = '{faveTeamYear}' AND t.teamName = '{faveTeam}' AND t.year = pl.year
                 GROUP BY p.personID
                 ORDER BY p.nameFirst
                 '''
             ))
+            pitchers = engine.execute(text(
+                    f'''
+                    SELECT personID
+                    FROM pitching as p, teams as t
+                    WHERE t.teamID = p.teamID AND t.teamName = '{faveTeam}' AND t.year = '{faveTeamYear}' AND p.year = t.year AND isPostSeason = 'N'
+                    '''
+            ))
+            pitchers = pitchers.fetchall()
+            result = result.fetchall()
             for row in result:
                 age = faveTeamYear - row['birthyear']
                 personID = row['personID'] 
+                isBatter = 'Y'
+                isPitcher = 'N'
+                # DETERMINE IF BATTER OR PITCHER                
+                for pitcher in pitchers:
+                    print(personID, " == ", pitcher['personID'])
+                    if (personID == pitcher['personID']):
+                        isBatter = 'N'
+                        isPitcher = 'Y'
+                        break
                 player = {
                     'name': row['name'],
                     'age': age,
-                    'birthPlace': row['birthPlace']
+                    'birthPlace': row['birthPlace'],
+                    'batter': isBatter,
+                    'pitcher': isPitcher,
                 }
-                #DETERMINE IF PLAYER OR PITCHER
-                subResult = engine.execute(text(
-                    f'''
-                    SELECT concat(nameFirst, ' ', nameLast) as name, birthYear as birthyear, concat(birthCity, ', ', birthState, ', ', birthCountry) as birthPlace
-                    FROM people as p, teams as t, players as pl
-                    WHERE p.personID = pl.personID AND t.teamID = pl.teamID AND pl.year = '{faveTeamYear}' AND t.teamName = '{faveTeam}' AND t.year = pl.year
-                    GROUP BY p.personID
-                    ORDER BY p.nameFirst
-                    '''
-                ))
                 playerList.append(player)
-            
 
         else:
             teamNames.insert(0, 'None')
