@@ -156,6 +156,58 @@ def searchResults():
                 '''
             )
         )
+        # Query to grab only the winners (who will have a GB of 0)
+        GBWinners = engine.execute(
+            text(
+                f'''
+                SELECT t1.teamName, l1.leagueName, t1.divisionID,(t1.Wins/t1.GamesPlayed) as 'PCT',t1.Wins
+                FROM Teams t1 JOIN Leagues l1 ON(t1.leagueID = l1.leagueID)
+                WHERE t1.year = '{year}' AND (t1.Wins/t1.GamesPlayed) IN (
+                    SELECT MAX(t.Wins/t.GamesPlayed)
+                    FROM Teams t JOIN Leagues l ON(t.leagueID = l.leagueID)
+                    WHERE t.year = '{year}' AND t1.leagueID = t.leagueID and t1.divisionID = t.divisionID 
+                    GROUP BY t.leagueID, t.divisionID
+                )
+                GROUP BY t1.leagueID, t1.divisionID;
+                '''
+            )
+        )
+        # Query to fetch all the teams (including the winners)
+        GBOthers = engine.execute(
+            text(
+                f'''
+                SELECT t1.teamName, l1.leagueName, t1.divisionID,(t1.Wins/t1.GamesPlayed) as 'PCT', t1.Wins
+                FROM Teams t1 JOIN Leagues l1 ON(t1.leagueID = l1.leagueID)
+                WHERE t1.year = '{year}' 
+                GROUP BY t1.leagueID, t1.divisionID, t1.teamName;
+                '''
+            )
+        )
+
+
+        checker = 0
+        map = dict()
+        for rowONE in GBOthers.fetchall():
+            # reset boolean
+            checker = 0
+            for rowTWO in GBWinners.fetchall:
+                if rowONE['teamName'] == rowTWO['teamName']:
+                    # their GB will be 0
+                    map[rowONE['teamName']] = 0
+                    checker = 1
+
+            # If it still wasn't found then do calculations
+            if checker == 0:
+                for rowTWO in GBWinners.fetchall:
+                    if rowONE['leagueName'] == rowTWO['leagueName'] and rowONE['divisionID'] == rowTWO['divisionID']:
+                        map[rowONE['teamName']] = ((rowTWO['Wins'] - rowONE['Wins'] ) + )
+
+
+
+
+        for row in GBWinners.fetchall():
+            print(row['teamName'] + " " + str(row['PCT']))
+
 
         return render_template('searchResults.html', title='Results',output_data=result.fetchall())
 
