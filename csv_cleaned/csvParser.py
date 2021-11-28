@@ -177,8 +177,8 @@ def clean_fieldingCSV():
     df_fielding.insert(loc=df_fielding.shape[1], column='round', value=["NULL" for i in range(0, df_fielding.shape[0])])
 
     # added post season column
-    df_fielding.insert(loc=df_fielding.shape[1], column='isPostSeason', value=['N' for i in range(0, df_fielding.shape[0])])
-    df_fielding_post.insert(loc=df_fielding_post.shape[1], column='isPostSeason', value=['Y' for i in range(0, df_fielding_post.shape[0])])
+    df_fielding.insert(loc=df_fielding.shape[1], column='isPostSeason', value=["N" for i in range(0, df_fielding.shape[0])])
+    df_fielding_post.insert(loc=df_fielding_post.shape[1], column='isPostSeason', value=["Y" for i in range(0, df_fielding_post.shape[0])])
 
     # added empty TP column to fielding df
     df_fielding.insert(loc=13, column='TP', value=["NULL" for i in range(0, df_fielding.shape[0])])
@@ -202,7 +202,7 @@ def clean_fieldingCSV():
     # df_combined_isPostSeasonCol = df_combined.pop('isPostSeason')
     # df_combined.insert(loc=df_combined.shape[1] - 1, column='isPostSeason', value=df_combined_isPostSeasonCol)
 
-    df_combined['isPostSeason'] = df_combined['isPostSeason'].astype('string')
+    # df_combined['isPostSeason'] = df_combined['isPostSeason'].astype('string')
 
     # pandas interprets the "NA" league id as a null value
     df_combined.loc[df_combined['leagueID'].isnull(), 'leagueID'] = "NA"
