@@ -213,7 +213,7 @@ def searchResults():
             if checker == 0:
                 for rowTWO in GBWinners.fetchall:
                     if rowONE['leagueName'] == rowTWO['leagueName'] and rowONE['divisionID'] == rowTWO['divisionID']:
-                        map[rowONE['teamName']] = ((rowTWO['Wins'] - rowONE['Wins'] ) + )
+                        map[rowONE['teamName']] = ((rowTWO['Wins'] - rowONE['Wins'] ))
 
 
 
