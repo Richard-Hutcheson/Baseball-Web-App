@@ -43,7 +43,7 @@ PRIMARY KEY (AllStarRowID)
 CREATE TABLE Awards (
 AwardsRowID int NOT NULL AUTO_INCREMENT,
 awardName VARCHAR(100),
-year smallint(6),
+year smallint(6) NOT NULL,
 leagueID CHAR(2),
 personID VARCHAR(10) NOT NULL,
 pointsWon double,
@@ -57,7 +57,7 @@ PRIMARY KEY (AwardsRowID)
 
 CREATE TABLE Batting (
 personID VARCHAR(10) NOT NULL,
-year smallint(6),
+year smallint(6) NOT NULL,
 stint smallint(6),
 teamID VARCHAR(3),
 leagueID CHAR(2),
@@ -86,7 +86,7 @@ CREATE TABLE CollegePlaying (
 CollegePlayingRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(9) NOT NULL,
 schoolID VARCHAR(15),
-year smallint(6),
+year smallint(6) NOT NULL,
 PRIMARY KEY (CollegePlayingRowID)
 );
 
@@ -100,7 +100,7 @@ PRIMARY KEY (DivisionRowID)
 
 CREATE TABLE Fielding (
 personID VARCHAR(10) NOT NULL,
-year smallint(6),
+year smallint(6) NOT NULL,
 stint smallint(6),
 teamID VARCHAR(3),
 leagueID VARCHAR(2),
@@ -119,12 +119,12 @@ OpponentStolenBasesByCatchers smallint(6),
 OpponentsCaughtStealingByCatchers smallint(6),
 ZoneRating double,
 round VARCHAR(10),
-isPostSeason CHAR(2)
+isPostSeason VARCHAR(2)
 );
 
 CREATE TABLE FieldingOF (
 personID VARCHAR(10) NOT NULL,
-year smallint(6),
+year smallint(6) NOT NULL,
 stint smallint(6),
 GamesPlayedLeftField smallint(6),
 GamesPlayedCenterField smallint(6),
@@ -133,7 +133,7 @@ GamesPlayedRightField smallint(6)
 
 CREATE TABLE FieldingOFsplit (
 personID VARCHAR(10) NOT NULL,
-year smallint(6),
+year smallint(6) NOT NULL,
 stint smallint(6),
 teamID VARCHAR(3),
 leagueID CHAR(2),
@@ -158,7 +158,7 @@ PRIMARY KEY (franchID)
 CREATE TABLE HallOfFame (
 HallOfFameRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(10) NOT NULL,
-year smallint(6),
+year smallint(6) NOT NULL,
 votedBy VARCHAR(64),
 ballots smallint(6),
 needed smallint(6),
@@ -170,7 +170,7 @@ PRIMARY KEY (HallOfFameRowID)
 );
 
 CREATE TABLE HomeGames (
-year smallint(6),
+year smallint(6) NOT NULL,
 leagueID CHAR(2),
 teamID VARCHAR(3),
 parkID VARCHAR(6),
@@ -191,7 +191,7 @@ PRIMARY KEY (leagueID)
 CREATE TABLE Managers (
 ManagerRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(10) NOT NULL,
-year smallint(6),
+year smallint(6) NOT NULL,
 teamID VARCHAR(3),
 leagueID CHAR(2),
 inseason smallint(6),
@@ -244,7 +244,7 @@ PRIMARY KEY(personID)
 
 CREATE TABLE Pitching (
 personID VARCHAR(10) NOT NULL,
-year smallint(6),
+year smallint(6) NOT NULL,
 stint smallint(6),
 teamID VARCHAR(3),
 leagueID VARCHAR(2),
@@ -280,7 +280,7 @@ isPostSeason VARCHAR(2)
 CREATE TABLE PlayerPositions (
 playerPosRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(10) NOT NULL,
-year smallint(6),
+year smallint(6) NOT NULL,
 teamID VARCHAR(3),
 leagueID CHAR(2),
 TotalGamesPlayed smallint(6),
@@ -305,7 +305,7 @@ PRIMARY KEY (playerPosRowID)
 
 CREATE TABLE Players (
 personID VARCHAR(100) NOT NULL,
-year smallint(6),
+year smallint(6) NOT NULL,
 stint VARCHAR(100),
 teamID VARCHAR(3),
 isPostSeason VARCHAR(2),
@@ -317,7 +317,7 @@ FOREIGN KEY (personID) REFERENCES People(PersonID)
 
 CREATE TABLE PostSeasonSeries (
 PostSeasonRowID int NOT NULL AUTO_INCREMENT,
-year smallint(6),
+year smallint(6) NOT NULL,
 round VARCHAR(100),
 teamIDwinner CHAR(3),
 leagueIDWinner CHAR(2),
@@ -332,7 +332,7 @@ PRIMARY KEY (PostSeasonRowID)
 CREATE TABLE Salaries (
 salaryRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(10) NOT NULL,
-year smallint(6),
+year smallint(6) NOT NULL,
 teamID VARCHAR(3),
 leagueID CHAR(2),
 salary double,
@@ -350,7 +350,7 @@ PRIMARY KEY (schoolID)
 
 CREATE TABLE Teams (
 TeamsRowID INT NOT NULL AUTO_INCREMENT,
-year smallint(6),
+year smallint(6) NOT NULL,
 leagueID CHAR(2),
 teamID VARCHAR(3),
 teamName VARCHAR(255),
@@ -403,7 +403,7 @@ PRIMARY KEY (TeamsRowID)
 
 CREATE TABLE TeamsHalf (
 TeamsHalfRowID int NOT NULL AUTO_INCREMENT,
-year smallint(6),
+year smallint(6) NOT NULL,
 leagueID CHAR(2),
 teamID VARCHAR(3),
 Half VARCHAR(1),
