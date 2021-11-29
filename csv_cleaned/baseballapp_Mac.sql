@@ -419,7 +419,7 @@ PRIMARY KEY (TeamsHalfRowID)
 LOAD DATA INFILE 'AllStar.csv'
 IGNORE INTO TABLE AllStar
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone, @vtwo, @vthree, @vfour, @vfive, @vsix, @vseven, @veight, @vnine)
 SET
@@ -439,7 +439,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Awards.csv'
 IGNORE INTO TABLE Awards
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone, @vtwo, @vthree, @vfour, @vfive, @vsix, @vseven, @veight, @vnine, @vten, @veleven)
 SET
@@ -461,7 +461,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Batting.csv'
 IGNORE INTO TABLE Batting
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour)
 SET
@@ -496,7 +496,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'CollegePlaying.csv'
 IGNORE INTO TABLE CollegePlaying
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour)
 SET
@@ -511,7 +511,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Divisions.csv'
 IGNORE INTO TABLE Divisions
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour)
 SET
@@ -526,7 +526,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Fielding.csv'
 IGNORE INTO TABLE Fielding
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone)
 SET
@@ -558,7 +558,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'FieldingOF.csv'
 IGNORE INTO TABLE FieldingOF
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix)
 SET
@@ -575,7 +575,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'FieldingOFsplit.csv'
 IGNORE INTO TABLE FieldingOFsplit
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen)
 SET
@@ -599,7 +599,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Franchises.csv'
 IGNORE INTO TABLE Franchises
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour)
 SET
@@ -614,7 +614,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'HallOfFame.csv'
 IGNORE INTO TABLE HallOfFame
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten)
 SET
@@ -635,7 +635,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'HomeGames.csv'
 IGNORE INTO TABLE HomeGames
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine)
 SET
@@ -655,7 +655,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Leagues.csv'
 IGNORE INTO TABLE Leagues
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree)
 SET
@@ -669,7 +669,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Managers.csv'
 IGNORE INTO TABLE Managers
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen)
 SET
@@ -693,7 +693,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Parks.csv'
 IGNORE INTO TABLE Parks
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix)
 SET
@@ -710,7 +710,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'People.csv'
 IGNORE INTO TABLE People
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour)
 SET
@@ -744,7 +744,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Pitching.csv'
 IGNORE INTO TABLE Pitching
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour,@vtwentyfive,@vtwentysix,@vtwentyseven,@vtwentyeight,@vtwentynine,@vthirty,@vthirtyone,@vthirtytwo)
 SET
@@ -787,7 +787,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'PlayerPositions.csv'
 IGNORE INTO TABLE PlayerPositions
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo)
 SET
@@ -820,7 +820,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Players.csv'
 IGNORE INTO TABLE Players
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight)
 SET
@@ -839,7 +839,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'PostSeasonSeries.csv'
 IGNORE INTO TABLE PostSeasonSeries
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten)
 SET
@@ -860,7 +860,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Salaries.csv'
 IGNORE INTO TABLE Salaries
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix)
 SET
@@ -878,7 +878,7 @@ LOAD DATA INFILE 'Schools.csv'
 IGNORE INTO TABLE Schools
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive)
 SET
@@ -894,9 +894,9 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Teams.csv'
 IGNORE INTO TABLE Teams
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
-(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@v12,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour,@vtwentyfive,@vtwentysix,@vtwentyseven,@vtwentyeight,@vtwentynine,@vthirty,@vthirtyone,@vthirtytwo,@thirtythree,@thirtyfour,@thirtyfive,@thirtysix,@thirtyseven,@thirtyeight,@thirtynine,@fourty,@fourtyone,@fourtytwo,@fourtythree,@fourtyfour,@fourtyfive,@fourtysix,@fourtyseven,@fourtyeight,@fourtynine)
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour,@vtwentyfive,@vtwentysix,@vtwentyseven,@vtwentyeight,@vtwentynine,@vthirty,@vthirtyone,@vthirtytwo,@thirtythree,@thirtyfour,@thirtyfive,@thirtysix,@thirtyseven,@thirtyeight,@thirtynine,@fourty,@fourtyone,@fourtytwo,@fourtythree,@fourtyfour,@fourtyfive,@fourtysix,@fourtyseven,@fourtyeight,@fourtynine)
 SET
 TeamsRowID = NULLIF(@vone, 'NULL'),
 year = NULLIF(@vtwo, 'NULL'),
@@ -909,7 +909,7 @@ Rank = NULLIF(@veight, 'NULL'),
 GamesPlayed = NULLIF(@vnine, 'NULL'),
 GamesPlayedAtHome = NULLIF(@vten, 'NULL'),
 Wins = NULLIF(@veleven, 'NULL'),
-Losses = NULLIF(@v12, 'NULL'),
+Losses = NULLIF(@vtwelve, 'NULL'),
 DivisionWinner = NULLIF(@vthirteen, 'NULL'),
 WildcardWinner = NULLIF(@vfourteen, 'NULL'),
 LeagueChampion = NULLIF(@vfifteen, 'NULL'),
@@ -954,7 +954,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'TeamsHalf.csv'
 IGNORE INTO TABLE TeamsHalf
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven)
 SET
