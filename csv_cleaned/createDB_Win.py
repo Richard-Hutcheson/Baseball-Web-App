@@ -22,6 +22,7 @@ def main():
         file = open(SQL_Script_fname, 'r')
 
         sqlScript = file.readlines()
+        file.close()
 
         regexp = re.compile('^--')
 
