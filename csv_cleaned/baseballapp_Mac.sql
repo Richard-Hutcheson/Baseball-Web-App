@@ -975,6 +975,7 @@ Losses = NULLIF(@veleven, 'NULL')
 SHOW WARNINGS;
 
 -- add Allstar Foreign Keys
+
 ALTER TABLE AllStar
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
@@ -982,6 +983,7 @@ ALTER TABLE AllStar
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 -- add Awards Foreign Keys
+
 ALTER TABLE Awards
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
@@ -989,6 +991,7 @@ ALTER TABLE Awards
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
 -- add Batting Foreign Keys
+
 ALTER TABLE Batting
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
@@ -996,12 +999,14 @@ ALTER TABLE Batting
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 -- add schoolIDs that are nulled
+
 INSERT INTO Schools (schoolID)
 SELECT DISTINCT a.schoolID
 FROM CollegePlaying a
 WHERE a.schoolID NOT IN (SELECT sc.schoolID FROM schools sc);
 
 -- add CollegePlaying Foreign Keys
+
 ALTER TABLE CollegePlaying
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
@@ -1009,6 +1014,7 @@ ALTER TABLE CollegePlaying
 ADD FOREIGN KEY (schoolID) REFERENCES Schools(schoolID);
 
 -- add Fielding Foreign Keys
+
 ALTER TABLE Fielding
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
@@ -1016,6 +1022,7 @@ ALTER TABLE Fielding
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
 -- add FieldingOFsplit Foreign Keys
+
 ALTER TABLE FieldingOFsplit
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
@@ -1027,6 +1034,7 @@ ALTER TABLE HallOfFame
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
 -- add HomeGames Foreign Keys
+
 ALTER TABLE HomeGames
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
@@ -1034,6 +1042,7 @@ ALTER TABLE HomeGames
 ADD FOREIGN KEY (parkID) REFERENCES Parks(parkID);
 
 -- add Managers Foreign Keys
+
 ALTER TABLE Managers
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
@@ -1041,6 +1050,7 @@ ALTER TABLE Managers
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 -- add Pitching Foreign Keys
+
 ALTER TABLE Pitching
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
@@ -1050,10 +1060,11 @@ ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 -- add PlayerPositions Foreign Keys
 
 -- This entry of person is not in people
-INSERT INTO people (personID)
+
+INSERT INTO People (personID)
 SELECT a.personID
 FROM PlayerPositions a
-WHERE a.personID NOT IN (SELECT pe.personID FROM people pe);
+WHERE a.personID NOT IN (SELECT pe.personID FROM People pe);
 
 ALTER TABLE PlayerPositions
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
@@ -1062,6 +1073,7 @@ ALTER TABLE PlayerPositions
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 -- add Salaries Foreign Keys
+
 ALTER TABLE Salaries
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
@@ -1069,6 +1081,7 @@ ALTER TABLE Salaries
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 -- add Teams Foreign Keys
+
 ALTER TABLE Teams
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
@@ -1076,9 +1089,11 @@ ALTER TABLE Teams
 ADD FOREIGN KEY (franchID) REFERENCES Franchises(franchID);
 
 -- add TeamsHalf Foreign Keys
+
 ALTER TABLE TeamsHalf
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 -- add FieldingOF Foreign Keys
+
 ALTER TABLE FieldingOF
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
