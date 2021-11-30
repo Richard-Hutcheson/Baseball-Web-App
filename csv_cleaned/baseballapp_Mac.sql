@@ -281,7 +281,7 @@ isPostSeason VARCHAR(2)
 CREATE TABLE PlayerPositions (
 playerPosRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(10) NOT NULL,
-year smallint(6) NOT NULL,
+year smallint(6),
 teamID VARCHAR(3),
 leagueID CHAR(2),
 TotalGamesPlayed smallint(6),
@@ -995,6 +995,12 @@ ADD FOREIGN KEY (personID) REFERENCES People(personID);
 ALTER TABLE Batting
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
+-- add schoolIDs that are nulled
+INSERT INTO Schools (schoolID)
+SELECT DISTINCT a.schoolID
+FROM CollegePlaying a
+WHERE a.schoolID NOT IN (SELECT sc.schoolID FROM schools sc);
+
 -- add CollegePlaying Foreign Keys
 ALTER TABLE CollegePlaying
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
@@ -1007,10 +1013,6 @@ ALTER TABLE Fielding
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 ALTER TABLE Fielding
-ADD FOREIGN KEY (personID) REFERENCES People(personID);
-
--- add FieldingOF Foreign Keys
-ALTER TABLE FieldingOF
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
 -- add FieldingOFsplit Foreign Keys
@@ -1046,6 +1048,13 @@ ALTER TABLE Pitching
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 -- add PlayerPositions Foreign Keys
+
+-- This entry of person is not in people
+INSERT INTO people (personID)
+SELECT a.personID
+FROM PlayerPositions a
+WHERE a.personID NOT IN (SELECT pe.personID FROM people pe);
+
 ALTER TABLE PlayerPositions
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
@@ -1069,3 +1078,7 @@ ADD FOREIGN KEY (franchID) REFERENCES Franchises(franchID);
 -- add TeamsHalf Foreign Keys
 ALTER TABLE TeamsHalf
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+-- add FieldingOF Foreign Keys
+ALTER TABLE FieldingOF
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
