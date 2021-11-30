@@ -1,6 +1,6 @@
 USE baseballapp;
 
-
+SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS AllStar;
 DROP TABLE IF EXISTS Awards;
@@ -10,22 +10,23 @@ DROP TABLE IF EXISTS Divisions;
 DROP TABLE IF EXISTS Fielding;
 DROP TABLE IF EXISTS FieldingOF;
 DROP TABLE IF EXISTS FieldingOFsplit;
-DROP TABLE IF EXISTS Franchises;
 DROP TABLE IF EXISTS HallOfFame;
 DROP TABLE IF EXISTS HomeGames;
-DROP TABLE IF EXISTS Leagues;
 DROP TABLE IF EXISTS Managers;
 DROP TABLE IF EXISTS Parks;
 DROP TABLE IF EXISTS Players;
 DROP TABLE IF EXISTS Pitching;
 DROP TABLE IF EXISTS People;
-DROP TABLE IF EXISTS PlayerPositions;
 DROP TABLE IF EXISTS PostSeasonSeries;
 DROP TABLE IF EXISTS Salaries;
 DROP TABLE IF EXISTS Schools;
 DROP TABLE IF EXISTS Teams;
 DROP TABLE IF EXISTS TeamsHalf;
+DROP TABLE IF EXISTS Leagues;
+DROP TABLE IF EXISTS Franchises;
+DROP TABLE IF EXISTS PlayerPositions;
 
+SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE AllStar (
 AllStarRowID int NOT NULL AUTO_INCREMENT,
@@ -84,8 +85,8 @@ round VARCHAR(10)
 
 CREATE TABLE CollegePlaying (
 CollegePlayingRowID int NOT NULL AUTO_INCREMENT,
-personID VARCHAR(9) NOT NULL,
-schoolID VARCHAR(15),
+personID VARCHAR(10) NOT NULL,
+schoolID VARCHAR(50),
 year smallint(6) NOT NULL,
 PRIMARY KEY (CollegePlayingRowID)
 );
@@ -280,7 +281,7 @@ isPostSeason VARCHAR(2)
 CREATE TABLE PlayerPositions (
 playerPosRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(10) NOT NULL,
-year smallint(6) NOT NULL,
+year smallint(6),
 teamID VARCHAR(3),
 leagueID CHAR(2),
 TotalGamesPlayed smallint(6),
@@ -304,7 +305,7 @@ PRIMARY KEY (playerPosRowID)
 );
 
 CREATE TABLE Players (
-personID VARCHAR(100) NOT NULL,
+personID VARCHAR(10) NOT NULL,
 year smallint(6) NOT NULL,
 stint VARCHAR(100),
 teamID VARCHAR(3),
@@ -312,7 +313,7 @@ isPostSeason VARCHAR(2),
 isPitching VARCHAR(1),
 isBatting VARCHAR(1),
 isFielding VARCHAR(1),
-FOREIGN KEY (personID) REFERENCES People(PersonID)
+FOREIGN KEY(personID) REFERENCES People(personID)
 );
 
 CREATE TABLE PostSeasonSeries (
@@ -340,7 +341,7 @@ PRIMARY KEY (salaryRowID)
 );
 
 CREATE TABLE Schools (
-schoolID VARCHAR(50),
+schoolID VARCHAR(50) NOT NULL,
 schoolName CHAR(255),
 city CHAR(255),
 state CHAR(255),
@@ -528,7 +529,7 @@ IGNORE INTO TABLE Fielding
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
-(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@twentyone)
+(@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone)
 SET
 personID = NULLIF(@vone, 'NULL'),
 year = NULLIF(@vtwo, 'NULL'),
@@ -909,7 +910,7 @@ Rank = NULLIF(@veight, 'NULL'),
 GamesPlayed = NULLIF(@vnine, 'NULL'),
 GamesPlayedAtHome = NULLIF(@vten, 'NULL'),
 Wins = NULLIF(@veleven, 'NULL'),
-Losses = NULLIF(@vtweleve, 'NULL'),
+Losses = NULLIF(@vtwelve, 'NULL'),
 DivisionWinner = NULLIF(@vthirteen, 'NULL'),
 WildcardWinner = NULLIF(@vfourteen, 'NULL'),
 LeagueChampion = NULLIF(@vfifteen, 'NULL'),
@@ -989,4 +990,95 @@ ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
 -- add Batting Foreign Keys
 ALTER TABLE Batting
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+ALTER TABLE Batting
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+-- add schoolIDs that are nulled
+INSERT INTO Schools (schoolID)
+SELECT DISTINCT a.schoolID
+FROM CollegePlaying a
+WHERE a.schoolID NOT IN (SELECT sc.schoolID FROM schools sc);
+
+-- add CollegePlaying Foreign Keys
+ALTER TABLE CollegePlaying
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+ALTER TABLE CollegePlaying
+ADD FOREIGN KEY (schoolID) REFERENCES Schools(schoolID);
+
+-- add Fielding Foreign Keys
+ALTER TABLE Fielding
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+ALTER TABLE Fielding
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+-- add FieldingOFsplit Foreign Keys
+ALTER TABLE FieldingOFsplit
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+ALTER TABLE FieldingOFsplit
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+-- add HallOfFame Foreign Keys
+ALTER TABLE HallOfFame
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+-- add HomeGames Foreign Keys
+ALTER TABLE HomeGames
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+ALTER TABLE HomeGames
+ADD FOREIGN KEY (parkID) REFERENCES Parks(parkID);
+
+-- add Managers Foreign Keys
+ALTER TABLE Managers
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+ALTER TABLE Managers
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+-- add Pitching Foreign Keys
+ALTER TABLE Pitching
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+ALTER TABLE Pitching
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+-- add PlayerPositions Foreign Keys
+
+-- This entry of person is not in people
+INSERT INTO people (personID)
+SELECT a.personID
+FROM PlayerPositions a
+WHERE a.personID NOT IN (SELECT pe.personID FROM people pe);
+
+ALTER TABLE PlayerPositions
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+ALTER TABLE PlayerPositions
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+-- add Salaries Foreign Keys
+ALTER TABLE Salaries
+ADD FOREIGN KEY (personID) REFERENCES People(personID);
+
+ALTER TABLE Salaries
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+-- add Teams Foreign Keys
+ALTER TABLE Teams
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+ALTER TABLE Teams
+ADD FOREIGN KEY (franchID) REFERENCES Franchises(franchID);
+
+-- add TeamsHalf Foreign Keys
+ALTER TABLE TeamsHalf
+ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
+
+-- add FieldingOF Foreign Keys
+ALTER TABLE FieldingOF
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
