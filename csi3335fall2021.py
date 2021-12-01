@@ -1,4 +1,6 @@
-user = {'host': 'localhost',
+user = {
+	'host': 'localhost',
 	'username': 'root',
-	'password' : 'csi',
-	'db': 'baseballAPP'}
+	'password' : 'pass',
+	'db': 'baseballapp'
+}
