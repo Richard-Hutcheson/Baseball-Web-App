@@ -15,46 +15,60 @@ def printCursor(cur):
 
 def main():
 
+    # create database SQL connection
     con = sql.connect(user=user['username'], password=user['password'], host=user['host'], db=user['db'])
 
     with con:
 
+        # run the csv parser
         print("\ncreating CSVs...\n")
         subprocess.call("python csvParser.py", shell=True)
 
+        # create database cursor
         cur = con.cursor()
         SQL_Script_fname = 'baseballapp_Mac.sql'
 
+        # open SQL file
         file = open(SQL_Script_fname, 'r')
 
+        # read the SQL script
         sqlScript = file.readlines()
+
+        # close the input file
         file.close()
 
+        # regex match for sql comments
         regexp = re.compile('^--')
 
+        # create SQL script without comments
         sqlScript = [i for i in sqlScript if not regexp.match(i)]
 
+        # join the script as one string
         sqlScript = ' '.join(sqlScript)
 
+        # replace the new line characters and preserve the '\n' for load data in file
         sqlScript = sqlScript.replace('\n', ' ').replace("\\n", '\\n')
 
+        # split commands with array by semi colons
         commands = sqlScript.split(";")
 
+        # remove empty line at the end of commands
         commands.pop(len(commands) - 1)
 
+        # reconcat semi-colons back at the end of each command
         commands = list(map(lambda a: a + ';', commands))
 
+        # execute data base commands
         print("\nbuilding database...\n")
         for i in range(0, len(commands)):
             cur.execute(commands[i])
 
-
+        # show tables from SQL
         cur.execute("SHOW TABLES;")
 
+        # print database tables
         print("DB Creation Successful: ")
         printCursor(cur)
-
-
 
 if __name__ == "__main__":
     main()
