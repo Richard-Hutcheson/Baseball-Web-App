@@ -21,57 +21,61 @@
     </nav>
 
     <h1 id = "Standings"> Standings:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Playoff Results:</h1></div>
+    <div class="animated pulse">
+        <table>
+            <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>League</th>
+                <th>Division</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>PCT</th>
+                <th></th>
+                <th>Games Behind (GB)</th>
+                <th>Division Winner</th>
+                <th>Wild Card Winner</th>
+                <th>League Champion</th>
+                <th>World Series Winner</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for row in output_data %}
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+        
+                        {% if row[2]|string() == "C"|string() %}
+                             {% set output = 'Central' %}
+                        {% elif row[2]|string() == "E"|string() %}
+                             {% set output = 'East' %}
+                        {% elif row[2]|string() == "W"|string() %}
+                             {% set output = 'West' %}
+                        {% else %}
+                             {% set output = 'N/A' %}
+                        {% endif %}
+                        <td>{{output}}</td>
+                        <td>{{row[3]}}</td>
+                        <td>{{row[4]}}</td>
+                        <td>{{row[5]}}</td>
+                        <td><t></t></td>
+                        {% for key,value in gbData %}
+                             {% if row[0]|string() == key|string() %}
+                                 <td>{{value}}</td>
+                            {% endif %}
+                        {% endfor %}
+                        <td>{{row[6]}}</td>
+                        <td>{{row[7]}}</td>
+                        <td>{{row[8]}}</td>
+                        <td>{{row[9]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </body>
 
-    <div class="animated pulse">
-<table>
-    <thead>
-    <tr>
-        <th>Team Name</th>
-        <th>League</th>
-        <th>Division</th>
-        <th>Wins</th>
-        <th>Losses</th>
-        <th>PCT</th>
-        <th>Games Behind (GB)</th>
-        <th>Division Winner</th>
-        <th>Wild Card Winner</th>
-        <th>League Champion</th>
-        <th>World Series Winner</th>
-    </tr>
-    </thead>
-    <tbody>
-        {% for row in output_data %}
-            <tr>
-                <td>{{row[0]}}</td>
-                <td>{{row[1]}}</td>
 
-                {% if row[2]|string() == "C"|string() %}
-                     {% set output = 'Central' %}
-                {% elif row[2]|string() == "E"|string() %}
-                     {% set output = 'East' %}
-                {% elif row[2]|string() == "W"|string() %}
-                     {% set output = 'West' %}
-                {% else %}
-                     {% set output = 'N/A' %}
-                {% endif %}
-                <td>{{output}}</td>
-                <td>{{row[3]}}</td>
-                <td>{{row[4]}}</td>
-                <td>{{row[5]}}</td>
-                {% for key,value in gbData %}
-                     {% if row[0]|string() == key|string() %}
-                         <td>{{value}}</td>
-                    {% endif %}
-                {% endfor %}
-                <td>{{row[6]}}</td>
-                <td>{{row[7]}}</td>
-                <td>{{row[8]}}</td>
-                <td>{{row[9]}}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
-    </div>
 
 {% endblock content %}

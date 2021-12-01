@@ -591,7 +591,7 @@ def clean_homegamesCSV():
 def main():
 
     #change the current directory into folder with CSV files
-    os.chdir("./csv_files")
+    os.chdir("../csv_files")
 
     #get list of file names in directory
     fileList = os.listdir()
