@@ -163,15 +163,131 @@ def searchResults():
         result = engine.execute(
             text(
                 f'''
-                SELECT t.teamName, l.leagueName, t.divisionID, t.Wins, t.Losses
-                FROM teams t JOIN Leagues l ON(t.leagueID = l.leagueID)
-                WHERE t.year = '{year}'
-                ORDER BY t.leagueID, t.divisionID
-                '''
+                      SELECT t.teamName, l.leagueName, t.divisionID, t.Wins, t.Losses,(t.Wins/t.GamesPlayed) as 'PCT',
+                      t.DivisionWinner,t.WildcardWinner,t.LeagueChampion,t.WorldSeriesWinner
+                      FROM teams t JOIN Leagues l ON(t.leagueID = l.leagueID)
+                      WHERE t.year = '{year}'
+                      ORDER BY t.leagueID, t.divisionID, (t.Wins/t.GamesPlayed) DESC;
+                      '''
             )
         )
 
-        return render_template('searchResults.html', title='Results',output_data=result.fetchall())
+        # When divisions were formed:
+        if int(year) >= 1969:
+            # Query to grab only the winners (who will have a GB of 0)
+            GBWinners = engine.execute(
+                text(
+                    f'''
+                    SELECT t1.teamName, l1.leagueName, t1.divisionID,(t1.Wins/t1.GamesPlayed) as 'PCT',t1.Wins,t1.Losses
+                    FROM Teams t1 JOIN Leagues l1 ON(t1.leagueID = l1.leagueID)
+                    WHERE t1.year = '{year}' AND (t1.Wins/t1.GamesPlayed) IN (
+                        SELECT MAX(t.Wins/t.GamesPlayed)
+                        FROM Teams t JOIN Leagues l ON(t.leagueID = l.leagueID)
+                        WHERE t.year = '{year}' AND t1.leagueID = t.leagueID and t1.divisionID = t.divisionID 
+                        GROUP BY t.leagueID, t.divisionID
+                    )
+                    GROUP BY t1.leagueID, t1.divisionID;
+                    '''
+                )
+            )
+            # Query to fetch all the teams (including the winners)
+            GBOthers = engine.execute(
+                text(
+                    f'''
+                    SELECT t1.teamName, l1.leagueName, t1.divisionID,(t1.Wins/t1.GamesPlayed) as 'PCT', t1.Wins,t1.Losses
+                    FROM Teams t1 JOIN Leagues l1 ON(t1.leagueID = l1.leagueID)
+                    WHERE t1.year = '{year}' 
+                    GROUP BY t1.leagueID, t1.divisionID, t1.teamName;
+                    '''
+                )
+            )
+
+            gbWin = GBWinners.fetchall()
+            gbAll = GBOthers.fetchall()
+
+            #for row in gbAll:
+                #print(row['teamName'] + " " + str(row['PCT']))
+
+
+            #THIS CODE ONLY WORKS FOR ANYTHING >= 1969 (when divisions between leagues were formed), so
+            #Just implement checker for
+            checker = 0
+            map = dict()
+            for rowONE in gbAll:
+                # reset boolean
+                checker = 0
+                for rowTWO in gbWin:
+                    if rowONE['teamName'] == rowTWO['teamName']:
+                        # their GB will be 0
+                        map[str(rowONE['teamName'])] = 0
+                        checker = 1
+
+                # If it still wasn't found then do calculations
+                if checker == 0:
+                    for rowTWO in gbWin:
+                        # This is where you would compare based on that same teams league and division to calculate
+                        # the GB
+                        if rowONE['leagueName'] == rowTWO['leagueName'] and rowONE['divisionID'] == rowTWO['divisionID']:
+                            map[str(rowONE['teamName'])] = ((rowTWO['Wins'] - rowONE['Wins'])
+                                                            + (rowONE['Losses'] - rowTWO['Losses'])) / 2
+
+            #for key, value in map.items():
+                #print(key, ' : ', value)
+        else:
+            # BEFORE DIVISIONS ( < 1969)
+            # Query to grab only the winners OF A LEAGUE!!!!!! (who will have a GB of 0)
+            GBWinners = engine.execute(
+                text(
+                    f'''
+                        SELECT t1.teamName, l1.leagueName,(t1.Wins/t1.GamesPlayed) as 'PCT',t1.Wins,t1.Losses
+                        FROM Teams t1 JOIN Leagues l1 ON(t1.leagueID = l1.leagueID)
+                        WHERE t1.year = '{year}' AND (t1.Wins/t1.GamesPlayed) IN (
+                            SELECT MAX(t.Wins/t.GamesPlayed)
+                            FROM Teams t JOIN Leagues l ON(t.leagueID = l.leagueID)
+                            WHERE t.year = '{year}' AND t1.leagueID = t.leagueID
+                            GROUP BY t.leagueID
+                        )
+                        GROUP BY t1.leagueID;
+                            '''
+                )
+            )
+            # Query to fetch all the teams (including the winners)
+            GBOthers = engine.execute(
+                text(
+                    f'''
+                        SELECT t1.teamName, l1.leagueName,(t1.Wins/t1.GamesPlayed) as 'PCT', t1.Wins,t1.Losses
+                        FROM Teams t1 JOIN Leagues l1 ON(t1.leagueID = l1.leagueID)
+                        WHERE t1.year = '{year}' 
+                        GROUP BY t1.leagueID, t1.teamName;
+                               '''
+                )
+            )
+
+            gbWin = GBWinners.fetchall()
+            gbAll = GBOthers.fetchall()
+
+            checker = 0
+            map = dict()
+            for rowONE in gbAll:
+                # reset boolean
+                checker = 0
+                for rowTWO in gbWin:
+                    if rowONE['teamName'] == rowTWO['teamName']:
+                        # their GB will be 0
+                        map[str(rowONE['teamName'])] = 0
+                        checker = 1
+
+                # If it still wasn't found then do calculations
+                if checker == 0:
+                    for rowTWO in gbWin:
+                        # This is where you would compare based on that same teams league to calculate
+                        # the GB
+                        if rowONE['leagueName'] == rowTWO['leagueName']:
+                            map[str(rowONE['teamName'])] = ((rowTWO['Wins'] - rowONE['Wins'])
+                                                            + (rowONE['Losses'] - rowTWO['Losses'])) / 2
+
+
+        return render_template('searchResults.html', title='Results',output_data=result.fetchall(), gbData = map.items())
 
     return render_template('searchResults.html', title='Results')
 
