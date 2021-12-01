@@ -19,13 +19,24 @@ def main():
     con = sql.connect(user=user['username'], password=user['password'], host=user['host'], db=user['db'])
 
     with con:
-
-        # run the csv parser
-        print("\ncreating CSVs...\n")
-        subprocess.call("python csvParser.py", shell=True)
-
         # create database cursor
         cur = con.cursor()
+
+        cur.execute("SELECT @@datadir;")
+
+        databasePath = cur.fetchall()[0][0] + user['db'] + '/'
+        databaseFiles = []
+
+        # remove existing csvs to allow database to drop if needed
+        if os.path.exists(databasePath):
+            databaseFiles = os.listdir(databasePath)
+            databaseFiles = ' '.join(databaseFiles)
+
+            if '.csv' in databaseFiles:
+
+                # convert this to the windows equivalent
+                subprocess.call("rm " + databasePath + '*.csv', shell=True)
+
         SQL_Script_fname = 'baseballapp_Win.sql'
 
         # open SQL file
@@ -47,7 +58,7 @@ def main():
         sqlScript = ' '.join(sqlScript)
 
         # replace the new line characters and preserve the '\n' for load data in file
-        sqlScript = sqlScript.replace('\r\n', ' ').replace("\\r\\n", '\\r\\n')
+        sqlScript = sqlScript.replace('\n', ' ').replace("\\n", '\\n')
 
         # split commands with array by semi colons
         commands = sqlScript.split(";")
@@ -58,9 +69,24 @@ def main():
         # reconcat semi-colons back at the end of each command
         commands = list(map(lambda a: a + ';', commands))
 
+        regexLoadTables = re.compile("^LOAD DATA INFILE")
+
+        isCSVLoaded = False
+
         # execute data base commands
         print("\nbuilding database...\n")
+
         for i in range(0, len(commands)):
+
+            commands[i] = commands[i].strip(' ')
+
+            if regexLoadTables.match(commands[i]) and not isCSVLoaded:
+
+                # convert this to the windows equivalent
+                subprocess.call('python csvParser.py', shell=True)
+                isCSVLoaded = True
+
+            print(commands[i])
             cur.execute(commands[i])
 
         # show tables from SQL
