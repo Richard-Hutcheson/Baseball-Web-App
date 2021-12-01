@@ -1,3 +1,6 @@
+DROP DATABASE IF EXISTS baseballapp;
+CREATE DATABASE baseballapp;
+
 USE baseballapp;
 
 SET FOREIGN_KEY_CHECKS = 0;
