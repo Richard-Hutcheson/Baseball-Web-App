@@ -614,7 +614,7 @@ def main():
         cur.execute("SELECT @@datadir;")
 
         databasePath = cur.fetchall()[0][0]
-        databasePath = databasePath + 'baseballapp/'
+        databasePath = databasePath + user['db'] + '/'
 
         #change the current directory into folder with CSV files
         os.chdir("../csv_files")
