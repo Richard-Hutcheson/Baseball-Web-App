@@ -325,34 +325,6 @@ def clean_teamsCSV():
 
     df_teams.rename(columns=cols.TeamsCols, inplace=True)
 
-    # This code is adding park ID to teams
-    # TODO: fix conflicting park names in dictionary
-
-    # parkName_parkID_dict = pd.Series(df_parks.parkID.values, index=[x.lower() for x in df_parks.parkName.values]).to_dict()
-    #
-    # df_parkAlias = df_parks[~df_parks['parkAlias'].isnull()]
-    #
-    # parkAlias_parkID_dict = pd.Series(df_parkAlias.parkID.values, index=[x.lower() for x in df_parkAlias.parkAlias.values]).to_dict()
-    #
-    # parkID_teams_col = []
-    #
-    # for i in df_teams.parkName.values:
-    #
-    #     if isinstance(i, float):
-    #         parkID_teams_col.append(None)
-    #         continue
-    #
-    #     entry = parkName_parkID_dict.get(i.lower())
-    #
-    #     if entry == None:
-    #         entry = parkAlias_parkID_dict.get(i.lower())
-    #         parkID_teams_col.append(entry)
-    #     else:
-    #         parkID_teams_col.append(entry)
-    #
-    #
-    # df_teams.insert(loc=20, column='parkID', value=parkID_teams_col)
-
     # pandas interprets the "NA" league id as a null value
     df_teams.loc[df_teams['leagueID'].isnull(), 'leagueID'] = "NA"
 
@@ -619,7 +591,7 @@ def clean_homegamesCSV():
 def main():
 
     #change the current directory into folder with CSV files
-    os.chdir("../csv_files")
+    os.chdir("./csv_files")
 
     #get list of file names in directory
     fileList = os.listdir()
