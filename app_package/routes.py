@@ -46,17 +46,17 @@ def dashboard():
         ))
 
         favoritesInfo = [dict(row) for row in result.fetchall()]
+        
         #user DOES have a favorite team and year
         if ('tempFaveTeam' in session or favoritesInfo[0]['favoriteTeam'] != None):
+            faveTeam = favoritesInfo[0]['favoriteTeam']
+            
             if ('tempFaveTeam' in session):
                 tempFaveTeam = session['tempFaveTeam']
-                print("FAVE TEAM = ", tempFaveTeam)
                 session.pop('tempFaveTeam', None)
             else:
-                tempFaveTeam = faveTeamYear
                 tempFaveTeam = faveTeam
 
-            faveTeam = favoritesInfo[0]['favoriteTeam']
             ndx1 = 0
             ndx2 = 0
             
@@ -78,9 +78,10 @@ def dashboard():
             ))
             for row in result.fetchall():
                 yearList.append(row['year'])
-            
+            yearList.reverse()
+            faveTeamYear = yearList[0]
             #retrieve fave year if it exists and move current fave year to front if it exists
-            faveTeamYear = 2020
+            # faveTeamYear = 2020
             if 'faveYear' in session:
                 faveTeamYear = session['faveYear']
                 session.pop('faveYear', None)
