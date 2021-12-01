@@ -20,7 +20,7 @@
         <a id = "redirectDashboard" href = "/dashboard"> Back to dashboard</a>
     </nav>
 
-    <h1 id = "Standings"> Standings: </h1></div>
+    <h1 id = "Standings"> Standings:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Playoff Results:</h1></div>
 </body>
 
     <div class="animated pulse">
@@ -32,8 +32,12 @@
         <th>Division</th>
         <th>Wins</th>
         <th>Losses</th>
-        <th>Playoff Results</th>
+        <th>PCT</th>
         <th>Games Behind (GB)</th>
+        <th>Division Winner</th>
+        <th>Wild Card Winner</th>
+        <th>League Champion</th>
+        <th>World Series Winner</th>
     </tr>
     </thead>
     <tbody>
@@ -55,6 +59,15 @@
                 <td>{{row[3]}}</td>
                 <td>{{row[4]}}</td>
                 <td>{{row[5]}}</td>
+                {% for key,value in gbData %}
+                     {% if row[0]|string() == key|string() %}
+                         <td>{{value}}</td>
+                    {% endif %}
+                {% endfor %}
+                <td>{{row[6]}}</td>
+                <td>{{row[7]}}</td>
+                <td>{{row[8]}}</td>
+                <td>{{row[9]}}</td>
             </tr>
         {% endfor %}
     </tbody>
