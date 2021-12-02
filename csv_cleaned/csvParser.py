@@ -608,122 +608,121 @@ def main():
 
     conn = sql.connect(user=user['username'], password=user['password'], host=user['host'], db=user['db'])
 
-    with conn:
-        cur = conn.cursor()
+    cur = conn.cursor()
 
-        cur.execute("SELECT @@datadir;")
+    cur.execute("SELECT @@datadir;")
 
-        databasePath = cur.fetchall()[0][0]
-        databasePath = databasePath + user['db'] + '/'
+    databasePath = cur.fetchall()[0][0]
+    databasePath = databasePath + user['db'] + '/'
 
-        #change the current directory into folder with CSV files
-        os.chdir("../csv_files")
+    #change the current directory into folder with CSV files
+    os.chdir("../csv_files")
 
-        #get list of file names in directory
-        fileList = os.listdir()
+    #get list of file names in directory
+    fileList = os.listdir()
 
-        # clean People.csv
-        print("cleaning People.csv...")
-        clean_peopleCSV(databasePath)
+    # clean People.csv
+    print("cleaning People.csv...")
+    clean_peopleCSV(databasePath)
 
-        # clean Managers.csv
-        print("cleaning Managers.csv...")
-        os.chdir("../csv_files")
-        clean_managerCSV(databasePath)
+    # clean Managers.csv
+    print("cleaning Managers.csv...")
+    os.chdir("../csv_files")
+    clean_managerCSV(databasePath)
 
-        # clean Batting.csv
-        print("cleaning Batting.csv...")
-        os.chdir("../csv_files")
-        clean_battingCSV(databasePath)
+    # clean Batting.csv
+    print("cleaning Batting.csv...")
+    os.chdir("../csv_files")
+    clean_battingCSV(databasePath)
 
-        # clean Pitching.csv
-        print("cleaning Pitching.csv...")
-        os.chdir("../csv_files")
-        clean_pitchingCSV(databasePath)
+    # clean Pitching.csv
+    print("cleaning Pitching.csv...")
+    os.chdir("../csv_files")
+    clean_pitchingCSV(databasePath)
 
-        # clean Fielding.csv
-        print("cleaning Fielding.csv...")
-        os.chdir("../csv_files")
-        clean_fieldingCSV(databasePath)
+    # clean Fielding.csv
+    print("cleaning Fielding.csv...")
+    os.chdir("../csv_files")
+    clean_fieldingCSV(databasePath)
 
-        # clean Players.csv dependencies: Batting.csv, Pitching.csv, Fielding.csv (in csv_cleaned)
-        print("cleaning Players.csv...")
-        clean_playersCSV(databasePath)
+    # clean Players.csv dependencies: Batting.csv, Pitching.csv, Fielding.csv (in csv_cleaned)
+    print("cleaning Players.csv...")
+    clean_playersCSV(databasePath)
 
-        # clean Salaries.csv
-        print("cleaning Salaries.csv...")
-        os.chdir("../csv_files")
-        clean_salaryCSV(databasePath)
+    # clean Salaries.csv
+    print("cleaning Salaries.csv...")
+    os.chdir("../csv_files")
+    clean_salaryCSV(databasePath)
 
-        # clean Appearances.csv
-        print("cleaning PlayerPositions.csv...")
-        os.chdir("../csv_files")
-        clean_playerPositionsCSV(databasePath)
+    # clean Appearances.csv
+    print("cleaning PlayerPositions.csv...")
+    os.chdir("../csv_files")
+    clean_playerPositionsCSV(databasePath)
 
-        # clean Parks.csv
-        print("cleaning Parks.csv...")
-        os.chdir("../csv_files")
-        clean_parksCSV(databasePath)
+    # clean Parks.csv
+    print("cleaning Parks.csv...")
+    os.chdir("../csv_files")
+    clean_parksCSV(databasePath)
 
-        # clean Teams.csv dependencies csv_cleaned/Parks.csv
-        print("cleaning Teams.csv...")
-        os.chdir("../csv_files")
-        clean_teamsCSV(databasePath)
+    # clean Teams.csv dependencies csv_cleaned/Parks.csv
+    print("cleaning Teams.csv...")
+    os.chdir("../csv_files")
+    clean_teamsCSV(databasePath)
 
-        # clean Division.csv
-        print("cleaning Division.csv...")
-        os.chdir("../csv_files")
-        clean_divisionCSV(databasePath)
+    # clean Division.csv
+    print("cleaning Division.csv...")
+    os.chdir("../csv_files")
+    clean_divisionCSV(databasePath)
 
-        # clean Leagues.csv
-        print("cleaning Leagues.csv...")
-        os.chdir("../csv_files")
-        clean_leaguesCSV(databasePath)
+    # clean Leagues.csv
+    print("cleaning Leagues.csv...")
+    os.chdir("../csv_files")
+    clean_leaguesCSV(databasePath)
 
-        # clean Franchises.csv
-        print("cleaning Franchises.csv...")
-        os.chdir("../csv_files")
-        clean_franchisesCSV(databasePath)
+    # clean Franchises.csv
+    print("cleaning Franchises.csv...")
+    os.chdir("../csv_files")
+    clean_franchisesCSV(databasePath)
 
-        print("cleaning Awards.csv...")
-        os.chdir("../csv_files")
-        clean_awardsCSV(databasePath)
+    print("cleaning Awards.csv...")
+    os.chdir("../csv_files")
+    clean_awardsCSV(databasePath)
 
-        print("cleaning Schools.csv...")
-        os.chdir("../csv_files")
-        clean_schoolCSV(databasePath)
+    print("cleaning Schools.csv...")
+    os.chdir("../csv_files")
+    clean_schoolCSV(databasePath)
 
-        print("cleaning HallOfFame.csv...")
-        os.chdir("../csv_files")
-        clean_HallOfFameCSV(databasePath)
+    print("cleaning HallOfFame.csv...")
+    os.chdir("../csv_files")
+    clean_HallOfFameCSV(databasePath)
 
-        print("cleaning CollegePlaying.csv...")
-        os.chdir("../csv_files")
-        clean_collegePlayerCSV(databasePath)
+    print("cleaning CollegePlaying.csv...")
+    os.chdir("../csv_files")
+    clean_collegePlayerCSV(databasePath)
 
-        print("cleaning AllStar.csv...")
-        os.chdir("../csv_files")
-        clean_allStarCSV(databasePath)
+    print("cleaning AllStar.csv...")
+    os.chdir("../csv_files")
+    clean_allStarCSV(databasePath)
 
-        print("cleaning TeamsHalf.csv...")
-        os.chdir("../csv_files")
-        clean_teamsHalfCSV(databasePath)
+    print("cleaning TeamsHalf.csv...")
+    os.chdir("../csv_files")
+    clean_teamsHalfCSV(databasePath)
 
-        print("cleaning SeriesPost.csv...")
-        os.chdir("../csv_files")
-        clean_seriesPostCSV(databasePath)
+    print("cleaning SeriesPost.csv...")
+    os.chdir("../csv_files")
+    clean_seriesPostCSV(databasePath)
 
-        print("cleaning FieldingOF.csv...")
-        os.chdir("../csv_files")
-        clean_fieldingOFCSV(databasePath)
+    print("cleaning FieldingOF.csv...")
+    os.chdir("../csv_files")
+    clean_fieldingOFCSV(databasePath)
 
-        print("cleaning FieldingOFSplit.csv...")
-        os.chdir("../csv_files")
-        clean_fieldingOFSplitCSV(databasePath)
+    print("cleaning FieldingOFSplit.csv...")
+    os.chdir("../csv_files")
+    clean_fieldingOFSplitCSV(databasePath)
 
-        print("cleaning HomeGames.csv...")
-        os.chdir("../csv_files")
-        clean_homegamesCSV(databasePath)
+    print("cleaning HomeGames.csv...")
+    os.chdir("../csv_files")
+    clean_homegamesCSV(databasePath)
 
 if __name__ == "__main__":
     main()
