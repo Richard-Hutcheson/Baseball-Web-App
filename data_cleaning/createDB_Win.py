@@ -35,7 +35,7 @@ def main():
             if i.endswith(".csv"):
                 os.remove(databasePath + i)
 
-    SQL_Script_fname = 'baseballapp_Win.sql'
+    SQL_Script_fname = 'RAN_Win.sql'
 
     # open SQL file
     file = open(SQL_Script_fname, 'r')
@@ -96,6 +96,7 @@ def main():
         for i in databaseFiles:
             if i.endswith(".csv"):
                 os.remove(databasePath + i)
+
     # show tables from SQL
     cur.execute("SHOW TABLES;")
 

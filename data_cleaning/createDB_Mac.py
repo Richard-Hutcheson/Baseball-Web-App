@@ -35,7 +35,7 @@ def main():
             if '.csv' in databaseFiles:
                 subprocess.call("rm " + databasePath + '*.csv', shell=True)
 
-        SQL_Script_fname = 'baseballapp_Mac.sql'
+        SQL_Script_fname = 'RAN_Mac.sql'
 
         # open SQL file
         file = open(SQL_Script_fname, 'r')
