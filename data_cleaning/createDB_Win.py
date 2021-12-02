@@ -17,7 +17,7 @@ def main():
 
     # create database SQL connection
     
-    con = sql.connect(user=user['username'], password=user['password'], host=user['host'], db=user['db'])
+    con = sql.connect(user=user['username'], password=user['password'], host=user['host'])
     #with con:
     # create database cursor
     cur = con.cursor()
@@ -25,7 +25,6 @@ def main():
     cur.execute("SELECT @@datadir;")
 
     databasePath = cur.fetchall()[0][0] + user['db'] + '\\'
-    print(databasePath)
     databaseFiles = []
 
     # remove existing csvs to allow database to drop if needed
@@ -79,9 +78,7 @@ def main():
         commands[i] = commands[i].strip(' ')
 
         if regexLoadTables.match(commands[i]) and not isCSVLoaded:
-            print("before")
             subprocess.call('python csvParser.py', shell=True)
-            print("after")
             isCSVLoaded = True
 
         print(commands[i])

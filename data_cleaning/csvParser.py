@@ -373,6 +373,7 @@ def clean_TeamsFranchisesCSV(db_path):
 
     saveCSV(df_franchises, out_file)
 
+
 def clean_awardsCSV(db_path):
 
     # awards file dependencies
