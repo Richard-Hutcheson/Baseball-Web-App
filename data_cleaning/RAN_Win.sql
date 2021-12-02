@@ -844,7 +844,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'SeriesPost.csv'
 IGNORE INTO TABLE SeriesPost
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten)
 SET
