@@ -16,7 +16,7 @@ def printCursor(cur):
 def main():
 
     # create database SQL connection
-    con = sql.connect(user=user['username'], password=user['password'], host=user['host'], db=user['db'])
+    con = sql.connect(user=user['username'], password=user['password'], host=user['host'])
 
     with con:
         # create database cursor

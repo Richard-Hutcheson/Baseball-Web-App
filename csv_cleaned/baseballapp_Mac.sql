@@ -1,11 +1,12 @@
-DROP DATABASE IF EXISTS baseballapp;
-CREATE DATABASE baseballapp;
+DROP DATABASE IF EXISTS RAN;
+CREATE DATABASE RAN;
 
-USE baseballapp;
+USE RAN;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS AllStar;
+DROP TABLE IF EXISTS AllstarFull;
+DROP TABLE IF EXISTS Appearances;
 DROP TABLE IF EXISTS Awards;
 DROP TABLE IF EXISTS Batting;
 DROP TABLE IF EXISTS CollegePlaying;
@@ -15,23 +16,23 @@ DROP TABLE IF EXISTS FieldingOF;
 DROP TABLE IF EXISTS FieldingOFsplit;
 DROP TABLE IF EXISTS HallOfFame;
 DROP TABLE IF EXISTS HomeGames;
+DROP TABLE IF EXISTS Leagues;
 DROP TABLE IF EXISTS Managers;
 DROP TABLE IF EXISTS Parks;
-DROP TABLE IF EXISTS Players;
-DROP TABLE IF EXISTS Pitching;
 DROP TABLE IF EXISTS People;
-DROP TABLE IF EXISTS PostSeasonSeries;
+DROP TABLE IF EXISTS Pitching;
+DROP TABLE IF EXISTS Players;
 DROP TABLE IF EXISTS Salaries;
 DROP TABLE IF EXISTS Schools;
+DROP TABLE IF EXISTS SeriesPost;
 DROP TABLE IF EXISTS Teams;
+DROP TABLE IF EXISTS TeamsFranchises;
 DROP TABLE IF EXISTS TeamsHalf;
-DROP TABLE IF EXISTS Leagues;
-DROP TABLE IF EXISTS Franchises;
-DROP TABLE IF EXISTS PlayerPositions;
+
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-CREATE TABLE AllStar (
+CREATE TABLE AllstarFull (
 AllStarRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(10) NOT NULL,
 year smallint(6),
@@ -151,7 +152,7 @@ Errors smallint(6),
 DoublePlays smallint(6)
 );
 
-CREATE TABLE Franchises (
+CREATE TABLE TeamsFranchises (
 franchID VARCHAR(3),
 franchName VARCHAR(50),
 active VARCHAR(1),
@@ -281,7 +282,7 @@ round VARCHAR(10),
 isPostSeason VARCHAR(2)
 );
 
-CREATE TABLE PlayerPositions (
+CREATE TABLE Appearances (
 playerPosRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(10) NOT NULL,
 year smallint(6),
@@ -319,7 +320,7 @@ isFielding VARCHAR(1),
 FOREIGN KEY(personID) REFERENCES People(personID)
 );
 
-CREATE TABLE PostSeasonSeries (
+CREATE TABLE SeriesPost (
 PostSeasonRowID int NOT NULL AUTO_INCREMENT,
 year smallint(6) NOT NULL,
 round VARCHAR(100),
@@ -420,8 +421,8 @@ Losses smallint(6),
 PRIMARY KEY (TeamsHalfRowID)
 );
 
-LOAD DATA INFILE 'AllStar.csv'
-IGNORE INTO TABLE AllStar
+LOAD DATA INFILE 'AllstarFull.csv'
+IGNORE INTO TABLE AllstarFull
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
@@ -600,8 +601,8 @@ DoublePlays = NULLIF(@vthirteen, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'Franchises.csv'
-IGNORE INTO TABLE Franchises
+LOAD DATA INFILE 'TeamsFranchises.csv'
+IGNORE INTO TABLE TeamsFranchises
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
@@ -788,8 +789,8 @@ isPostSeason = NULLIF(@vthirtytwo, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'PlayerPositions.csv'
-IGNORE INTO TABLE PlayerPositions
+LOAD DATA INFILE 'Appearances.csv'
+IGNORE INTO TABLE Appearances
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
@@ -840,8 +841,8 @@ isFielding = NULLIF(@veight, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'PostSeasonSeries.csv'
-IGNORE INTO TABLE PostSeasonSeries
+LOAD DATA INFILE 'SeriesPost.csv'
+IGNORE INTO TABLE SeriesPost
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
@@ -977,12 +978,12 @@ Losses = NULLIF(@veleven, 'NULL')
 
 SHOW WARNINGS;
 
--- add Allstar Foreign Keys
+-- add AllstarFull Foreign Keys
 
-ALTER TABLE AllStar
+ALTER TABLE AllstarFull
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
-ALTER TABLE AllStar
+ALTER TABLE AllstarFull
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 -- add Awards Foreign Keys
@@ -1060,19 +1061,19 @@ ADD FOREIGN KEY (personID) REFERENCES People(personID);
 ALTER TABLE Pitching
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
--- add PlayerPositions Foreign Keys
+-- add Appearances Foreign Keys
 
 -- This entry of person is not in people
 
 INSERT INTO People (personID)
 SELECT a.personID
-FROM PlayerPositions a
+FROM Appearances a
 WHERE a.personID NOT IN (SELECT pe.personID FROM People pe);
 
-ALTER TABLE PlayerPositions
+ALTER TABLE Appearances
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
-ALTER TABLE PlayerPositions
+ALTER TABLE Appearances
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 -- add Salaries Foreign Keys
@@ -1089,7 +1090,7 @@ ALTER TABLE Teams
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 ALTER TABLE Teams
-ADD FOREIGN KEY (franchID) REFERENCES Franchises(franchID);
+ADD FOREIGN KEY (franchID) REFERENCES TeamsFranchises(franchID);
 
 -- add TeamsHalf Foreign Keys
 

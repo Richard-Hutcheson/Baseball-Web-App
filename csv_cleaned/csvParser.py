@@ -281,9 +281,9 @@ def clean_salaryCSV(db_path):
 
     saveCSV(df_salary, out_file)
 
-def clean_playerPositionsCSV(db_path):
+def clean_appearancesCSV(db_path):
     appearances_file = 'Appearances.csv'
-    out_file = db_path + 'PlayerPositions.csv'
+    out_file = db_path + appearances_file
 
     df_playerPos = pd.read_csv(appearances_file, delimiter=',')
 
@@ -295,7 +295,7 @@ def clean_playerPositionsCSV(db_path):
     # pandas interprets the "NA" league id as a null value
     df_playerPos.loc[df_playerPos['leagueID'].isnull(), 'leagueID'] = "NA"
 
-    df_playerPos.insert(loc=0, column='playerPosRowID', value=range(1, df_playerPos.shape[0] + 1))
+    df_playerPos.insert(loc=0, column='appearancesID', value=range(1, df_playerPos.shape[0] + 1))
 
     df_playerPos.fillna("NULL", inplace=True)
 
@@ -318,13 +318,10 @@ def clean_parksCSV(db_path):
 
 def clean_teamsCSV(db_path):
     teams_file = 'Teams.csv'
-    parks_file = db_path + 'Parks.csv'
     out_file = db_path + teams_file
 
     df_teams = pd.read_csv(teams_file, delimiter=',')
     os.chdir("../csv_cleaned")
-    df_parks = pd.read_csv(parks_file, delimiter=',')
-    os.chdir("../csv_files")
 
     df_teamName_col = df_teams.pop('name')
 
@@ -369,9 +366,9 @@ def clean_leaguesCSV(db_path):
 
     saveCSV(df_league, out_file)
 
-def clean_franchisesCSV(db_path):
+def clean_TeamsFranchisesCSV(db_path):
     franchises_file = 'TeamsFranchises.csv'
-    out_file = db_path + 'Franchises.csv'
+    out_file = db_path + franchises_file
 
     df_franchises = pd.read_csv(franchises_file, delimiter=',')
 
@@ -494,9 +491,9 @@ def clean_collegePlayerCSV(db_path):
 
     saveCSV(df_collegePlayer, out_file)
 
-def clean_allStarCSV(db_path):
+def clean_AllstarFullCSV(db_path):
     allStarFull_file = 'AllstarFull.csv'
-    outFile = db_path + 'AllStar.csv'
+    outFile = db_path + allStarFull_file
 
     df_allstarfull = pd.read_csv(allStarFull_file, delimiter=',')
 
@@ -538,7 +535,7 @@ def clean_teamsHalfCSV(db_path):
 
 def clean_seriesPostCSV(db_path):
     seriesPost_file = 'SeriesPost.csv'
-    outFile = db_path + 'PostSeasonSeries.csv'
+    outFile = db_path + seriesPost_file
 
     df_post = pd.read_csv(seriesPost_file, delimiter=',')
 
@@ -655,9 +652,9 @@ def main():
     clean_salaryCSV(databasePath)
 
     # clean Appearances.csv
-    print("cleaning PlayerPositions.csv...")
+    print("cleaning Appearances.csv...")
     os.chdir("../csv_files")
-    clean_playerPositionsCSV(databasePath)
+    clean_appearancesCSV(databasePath)
 
     # clean Parks.csv
     print("cleaning Parks.csv...")
@@ -679,10 +676,10 @@ def main():
     os.chdir("../csv_files")
     clean_leaguesCSV(databasePath)
 
-    # clean Franchises.csv
-    print("cleaning Franchises.csv...")
+    # clean TeamsFranchises.csv
+    print("cleaning TeamsFranchises.csv...")
     os.chdir("../csv_files")
-    clean_franchisesCSV(databasePath)
+    clean_TeamsFranchisesCSV(databasePath)
 
     print("cleaning Awards.csv...")
     os.chdir("../csv_files")
@@ -700,9 +697,9 @@ def main():
     os.chdir("../csv_files")
     clean_collegePlayerCSV(databasePath)
 
-    print("cleaning AllStar.csv...")
+    print("cleaning AllstarFull.csv...")
     os.chdir("../csv_files")
-    clean_allStarCSV(databasePath)
+    clean_AllstarFullCSV(databasePath)
 
     print("cleaning TeamsHalf.csv...")
     os.chdir("../csv_files")
