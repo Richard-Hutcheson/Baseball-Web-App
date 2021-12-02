@@ -33,11 +33,9 @@ def main():
             databaseFiles = ' '.join(databaseFiles)
 
             if '.csv' in databaseFiles:
-
-                # convert this to the windows equivalent
                 subprocess.call("rm " + databasePath + '*.csv', shell=True)
 
-        SQL_Script_fname = 'baseballapp_Win.sql'
+        SQL_Script_fname = 'baseballapp_Mac.sql'
 
         # open SQL file
         file = open(SQL_Script_fname, 'r')
@@ -81,13 +79,18 @@ def main():
             commands[i] = commands[i].strip(' ')
 
             if regexLoadTables.match(commands[i]) and not isCSVLoaded:
-
-                # convert this to the windows equivalent
                 subprocess.call('python csvParser.py', shell=True)
                 isCSVLoaded = True
 
             print(commands[i])
             cur.execute(commands[i])
+
+        databaseFiles = os.listdir(databasePath)
+        databaseFiles = ' '.join(databaseFiles)
+
+        # clean up CSVs
+        if '.csv' in databaseFiles:
+            subprocess.call("rm " + databasePath + '*.csv', shell=True)
 
         # show tables from SQL
         cur.execute("SHOW TABLES;")

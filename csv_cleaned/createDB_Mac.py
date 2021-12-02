@@ -85,6 +85,13 @@ def main():
             print(commands[i])
             cur.execute(commands[i])
 
+        databaseFiles = os.listdir(databasePath)
+        databaseFiles = ' '.join(databaseFiles)
+
+        # clean up CSVs
+        if '.csv' in databaseFiles:
+            subprocess.call("rm " + databasePath + '*.csv', shell=True)
+
         # show tables from SQL
         cur.execute("SHOW TABLES;")
 
