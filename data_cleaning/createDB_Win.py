@@ -1,8 +1,11 @@
 import pymysql as sql
-from csi3335fall2021 import mysql
 import os
 import re
 import subprocess
+import sys
+
+sys.path.append('../')
+from csi3335fall2021 import mysql
 
 def printCursor(cur):
     count = 0
