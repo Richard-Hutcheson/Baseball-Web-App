@@ -1,8 +1,12 @@
-USE baseballapp;
+DROP DATABASE IF EXISTS RAN;
+CREATE DATABASE RAN;
+
+USE RAN;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS AllStar;
+DROP TABLE IF EXISTS AllstarFull;
+DROP TABLE IF EXISTS Appearances;
 DROP TABLE IF EXISTS Awards;
 DROP TABLE IF EXISTS Batting;
 DROP TABLE IF EXISTS CollegePlaying;
@@ -12,23 +16,23 @@ DROP TABLE IF EXISTS FieldingOF;
 DROP TABLE IF EXISTS FieldingOFsplit;
 DROP TABLE IF EXISTS HallOfFame;
 DROP TABLE IF EXISTS HomeGames;
+DROP TABLE IF EXISTS Leagues;
 DROP TABLE IF EXISTS Managers;
 DROP TABLE IF EXISTS Parks;
-DROP TABLE IF EXISTS Players;
-DROP TABLE IF EXISTS Pitching;
 DROP TABLE IF EXISTS People;
-DROP TABLE IF EXISTS PostSeasonSeries;
+DROP TABLE IF EXISTS Pitching;
+DROP TABLE IF EXISTS Players;
 DROP TABLE IF EXISTS Salaries;
 DROP TABLE IF EXISTS Schools;
+DROP TABLE IF EXISTS SeriesPost;
 DROP TABLE IF EXISTS Teams;
+DROP TABLE IF EXISTS TeamsFranchises;
 DROP TABLE IF EXISTS TeamsHalf;
-DROP TABLE IF EXISTS Leagues;
-DROP TABLE IF EXISTS Franchises;
-DROP TABLE IF EXISTS PlayerPositions;
+
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-CREATE TABLE AllStar (
+CREATE TABLE AllstarFull (
 AllStarRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(10) NOT NULL,
 year smallint(6),
@@ -148,7 +152,7 @@ Errors smallint(6),
 DoublePlays smallint(6)
 );
 
-CREATE TABLE Franchises (
+CREATE TABLE TeamsFranchises (
 franchID VARCHAR(3),
 franchName VARCHAR(50),
 active VARCHAR(1),
@@ -278,7 +282,7 @@ round VARCHAR(10),
 isPostSeason VARCHAR(2)
 );
 
-CREATE TABLE PlayerPositions (
+CREATE TABLE Appearances (
 playerPosRowID int NOT NULL AUTO_INCREMENT,
 personID VARCHAR(10) NOT NULL,
 year smallint(6),
@@ -316,7 +320,7 @@ isFielding VARCHAR(1),
 FOREIGN KEY(personID) REFERENCES People(personID)
 );
 
-CREATE TABLE PostSeasonSeries (
+CREATE TABLE SeriesPost (
 PostSeasonRowID int NOT NULL AUTO_INCREMENT,
 year smallint(6) NOT NULL,
 round VARCHAR(100),
@@ -417,10 +421,10 @@ Losses smallint(6),
 PRIMARY KEY (TeamsHalfRowID)
 );
 
-LOAD DATA INFILE 'AllStar.csv'
-IGNORE INTO TABLE AllStar
+LOAD DATA INFILE 'AllstarFull.csv'
+IGNORE INTO TABLE AllstarFull
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone, @vtwo, @vthree, @vfour, @vfive, @vsix, @vseven, @veight, @vnine)
 SET
@@ -440,7 +444,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Awards.csv'
 IGNORE INTO TABLE Awards
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone, @vtwo, @vthree, @vfour, @vfive, @vsix, @vseven, @veight, @vnine, @vten, @veleven)
 SET
@@ -462,7 +466,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Batting.csv'
 IGNORE INTO TABLE Batting
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour)
 SET
@@ -497,7 +501,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'CollegePlaying.csv'
 IGNORE INTO TABLE CollegePlaying
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour)
 SET
@@ -512,7 +516,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Divisions.csv'
 IGNORE INTO TABLE Divisions
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour)
 SET
@@ -527,7 +531,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Fielding.csv'
 IGNORE INTO TABLE Fielding
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone)
 SET
@@ -559,7 +563,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'FieldingOF.csv'
 IGNORE INTO TABLE FieldingOF
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix)
 SET
@@ -576,7 +580,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'FieldingOFsplit.csv'
 IGNORE INTO TABLE FieldingOFsplit
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen)
 SET
@@ -597,10 +601,10 @@ DoublePlays = NULLIF(@vthirteen, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'Franchises.csv'
-IGNORE INTO TABLE Franchises
+LOAD DATA INFILE 'TeamsFranchises.csv'
+IGNORE INTO TABLE TeamsFranchises
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour)
 SET
@@ -615,7 +619,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'HallOfFame.csv'
 IGNORE INTO TABLE HallOfFame
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten)
 SET
@@ -636,7 +640,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'HomeGames.csv'
 IGNORE INTO TABLE HomeGames
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine)
 SET
@@ -656,7 +660,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Leagues.csv'
 IGNORE INTO TABLE Leagues
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree)
 SET
@@ -670,7 +674,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Managers.csv'
 IGNORE INTO TABLE Managers
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen)
 SET
@@ -694,7 +698,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Parks.csv'
 IGNORE INTO TABLE Parks
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix)
 SET
@@ -711,7 +715,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'People.csv'
 IGNORE INTO TABLE People
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour)
 SET
@@ -745,7 +749,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Pitching.csv'
 IGNORE INTO TABLE Pitching
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour,@vtwentyfive,@vtwentysix,@vtwentyseven,@vtwentyeight,@vtwentynine,@vthirty,@vthirtyone,@vthirtytwo)
 SET
@@ -785,10 +789,10 @@ isPostSeason = NULLIF(@vthirtytwo, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'PlayerPositions.csv'
-IGNORE INTO TABLE PlayerPositions
+LOAD DATA INFILE 'Appearances.csv'
+IGNORE INTO TABLE Appearances
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo)
 SET
@@ -821,7 +825,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Players.csv'
 IGNORE INTO TABLE Players
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight)
 SET
@@ -837,10 +841,10 @@ isFielding = NULLIF(@veight, 'NULL')
 
 SHOW WARNINGS;
 
-LOAD DATA INFILE 'PostSeasonSeries.csv'
-IGNORE INTO TABLE PostSeasonSeries
+LOAD DATA INFILE 'SeriesPost.csv'
+IGNORE INTO TABLE SeriesPost
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten)
 SET
@@ -861,7 +865,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Salaries.csv'
 IGNORE INTO TABLE Salaries
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix)
 SET
@@ -879,7 +883,7 @@ LOAD DATA INFILE 'Schools.csv'
 IGNORE INTO TABLE Schools
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive)
 SET
@@ -895,7 +899,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'Teams.csv'
 IGNORE INTO TABLE Teams
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven,@vtwelve,@vthirteen,@vfourteen,@vfifteen,@vsixteen,@vseventeen,@veighteen,@vnineteen,@vtwenty,@vtwentyone,@vtwentytwo,@vtwentythree,@vtwentyfour,@vtwentyfive,@vtwentysix,@vtwentyseven,@vtwentyeight,@vtwentynine,@vthirty,@vthirtyone,@vthirtytwo,@thirtythree,@thirtyfour,@thirtyfive,@thirtysix,@thirtyseven,@thirtyeight,@thirtynine,@fourty,@fourtyone,@fourtytwo,@fourtythree,@fourtyfour,@fourtyfive,@fourtysix,@fourtyseven,@fourtyeight,@fourtynine)
 SET
@@ -955,7 +959,7 @@ SHOW WARNINGS;
 LOAD DATA INFILE 'TeamsHalf.csv'
 IGNORE INTO TABLE TeamsHalf
 FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS
 (@vone,@vtwo,@vthree,@vfour,@vfive,@vsix,@vseven,@veight,@vnine,@vten,@veleven)
 SET
@@ -974,12 +978,12 @@ Losses = NULLIF(@veleven, 'NULL')
 
 SHOW WARNINGS;
 
--- add Allstar Foreign Keys
+-- add AllstarFull Foreign Keys
 
-ALTER TABLE AllStar
+ALTER TABLE AllstarFull
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
-ALTER TABLE AllStar
+ALTER TABLE AllstarFull
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 -- add Awards Foreign Keys
@@ -1057,19 +1061,19 @@ ADD FOREIGN KEY (personID) REFERENCES People(personID);
 ALTER TABLE Pitching
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
--- add PlayerPositions Foreign Keys
+-- add Appearances Foreign Keys
 
 -- This entry of person is not in people
 
 INSERT INTO People (personID)
 SELECT a.personID
-FROM PlayerPositions a
+FROM Appearances a
 WHERE a.personID NOT IN (SELECT pe.personID FROM People pe);
 
-ALTER TABLE PlayerPositions
+ALTER TABLE Appearances
 ADD FOREIGN KEY (personID) REFERENCES People(personID);
 
-ALTER TABLE PlayerPositions
+ALTER TABLE Appearances
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 -- add Salaries Foreign Keys
@@ -1086,7 +1090,7 @@ ALTER TABLE Teams
 ADD FOREIGN KEY (leagueID) REFERENCES Leagues(leagueID);
 
 ALTER TABLE Teams
-ADD FOREIGN KEY (franchID) REFERENCES Franchises(franchID);
+ADD FOREIGN KEY (franchID) REFERENCES TeamsFranchises(franchID);
 
 -- add TeamsHalf Foreign Keys
 

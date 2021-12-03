@@ -2,20 +2,19 @@
 import csv
 import os
 import pandas as pd
-import pymysql
+import pymysql as sql
 from csi3335fall2021 import user
 import RenameColumns as cols
 import numpy
 
-
-def saveCSV(dataFrame, name):
-    os.chdir("../csv_cleaned")
-    dataFrame.to_csv(name, index=False)
+def saveCSV(dataFrame, outpath):
+    dataFrame.to_csv(outpath, index=False)
 
 
-def clean_peopleCSV():
+def clean_peopleCSV(db_path):
     file = 'People.csv'
     df = pd.read_csv(file, delimiter=',')
+    out_file = db_path + file
 
     columnNames = ['playerID', 'nameFirst', 'nameLast', 'birthYear','birthMonth',
                    'birthDay','birthCountry','birthState','birthCity', 'deathYear',
@@ -34,11 +33,12 @@ def clean_peopleCSV():
 
     df_clean.fillna("NULL", inplace=True)
 
-    saveCSV(df_clean, file)
+    saveCSV(df_clean, out_file)
 
-def clean_managerCSV():
+def clean_managerCSV(db_path):
     file = 'Managers.csv'
     file2 = 'ManagersHalf.csv'
+    out_file = db_path + file
 
     df = pd.read_csv(file, delimiter=',')
     df_half = pd.read_csv(file2, delimiter=',')
@@ -71,11 +71,12 @@ def clean_managerCSV():
 
     df_combined.fillna("NULL", inplace=True)
 
-    saveCSV(df_combined, file)
+    saveCSV(df_combined, out_file)
 
-def clean_battingCSV():
+def clean_battingCSV(db_path):
     bat_file = 'Batting.csv'
     bat_post_file = 'BattingPost.csv'
+    out_file = db_path + bat_file
 
     df_batting = pd.read_csv(bat_file, delimiter=',')
     df_batting_post = pd.read_csv(bat_post_file, delimiter=',')
@@ -112,11 +113,12 @@ def clean_battingCSV():
 
     df_combined.fillna("NULL", inplace=True)
 
-    saveCSV(df_combined, bat_file)
+    saveCSV(df_combined, out_file)
 
-def clean_pitchingCSV():
+def clean_pitchingCSV(db_path):
     pit_file = 'Pitching.csv'
     pit_file_post = 'PitchingPost.csv'
+    out_file = db_path + pit_file
 
     # create data frames for pitching and pitching post
     df_pit = pd.read_csv(pit_file, delimiter=',')
@@ -157,11 +159,12 @@ def clean_pitchingCSV():
 
     df_combined.fillna("NULL", inplace=True)
 
-    saveCSV(df_combined, pit_file)
+    saveCSV(df_combined, out_file)
 
-def clean_fieldingCSV():
+def clean_fieldingCSV(db_path):
     fielding_file = 'Fielding.csv'
     fielding_post_file = 'FieldingPost.csv'
+    out_file = db_path + fielding_file
 
     df_fielding = pd.read_csv(fielding_file, delimiter=',')
     df_fielding_post = pd.read_csv(fielding_post_file, delimiter=',')
@@ -209,14 +212,14 @@ def clean_fieldingCSV():
 
     df_combined.fillna("NULL", inplace=True)
 
-    saveCSV(df_combined, fielding_file)
+    saveCSV(df_combined, out_file)
 
 
-def clean_playersCSV():
-    out_file = 'Players.csv'
-    pit_file = 'Pitching.csv'
-    bat_file = 'Batting.csv'
-    outfield_file = 'Fielding.csv'
+def clean_playersCSV(db_path):
+    out_file = db_path + 'Players.csv'
+    pit_file = db_path + 'Pitching.csv'
+    bat_file = db_path + 'Batting.csv'
+    outfield_file = db_path + 'Fielding.csv'
 
     pit_file_df = pd.read_csv(pit_file, delimiter=',')
     bat_file_df = pd.read_csv(bat_file, delimiter=',')
@@ -253,12 +256,11 @@ def clean_playersCSV():
 
     df_combined.fillna("NULL", inplace=True)
 
-    os.chdir("../csv_files")
-
     saveCSV(df_combined, out_file)
 
-def clean_salaryCSV():
+def clean_salaryCSV(db_path):
     salary_file = 'Salaries.csv'
+    out_file = db_path + salary_file
 
     df_salary = pd.read_csv(salary_file, delimiter=',')
 
@@ -274,11 +276,11 @@ def clean_salaryCSV():
 
     df_salary.fillna("NULL", inplace=True)
 
-    saveCSV(df_salary, salary_file)
+    saveCSV(df_salary, out_file)
 
-def clean_playerPositionsCSV():
+def clean_appearancesCSV(db_path):
     appearances_file = 'Appearances.csv'
-    out_file = 'PlayerPositions.csv'
+    out_file = db_path + appearances_file
 
     df_playerPos = pd.read_csv(appearances_file, delimiter=',')
 
@@ -290,14 +292,15 @@ def clean_playerPositionsCSV():
     # pandas interprets the "NA" league id as a null value
     df_playerPos.loc[df_playerPos['leagueID'].isnull(), 'leagueID'] = "NA"
 
-    df_playerPos.insert(loc=0, column='playerPosRowID', value=range(1, df_playerPos.shape[0] + 1))
+    df_playerPos.insert(loc=0, column='appearancesID', value=range(1, df_playerPos.shape[0] + 1))
 
     df_playerPos.fillna("NULL", inplace=True)
 
     saveCSV(df_playerPos, out_file)
 
-def clean_parksCSV():
+def clean_parksCSV(db_path):
     parks_file = 'Parks.csv'
+    out_file = db_path + parks_file
 
     df_park = pd.read_csv(parks_file, delimiter=',')
 
@@ -308,16 +311,13 @@ def clean_parksCSV():
     df_park.fillna("NULL", inplace=True)
 
 
-    saveCSV(df_park, parks_file)
+    saveCSV(df_park, out_file)
 
-def clean_teamsCSV():
+def clean_teamsCSV(db_path):
     teams_file = 'Teams.csv'
-    parks_file = 'Parks.csv'
+    out_file = db_path + teams_file
 
     df_teams = pd.read_csv(teams_file, delimiter=',')
-    os.chdir("../csv_cleaned")
-    df_parks = pd.read_csv(parks_file, delimiter=',')
-    os.chdir("../csv_files")
 
     df_teamName_col = df_teams.pop('name')
 
@@ -332,10 +332,11 @@ def clean_teamsCSV():
 
     df_teams.fillna("NULL", inplace=True)
 
-    saveCSV(df_teams, teams_file)
+    saveCSV(df_teams, out_file)
 
-def clean_divisionCSV():
+def clean_divisionCSV(db_path):
     div_file = 'Divisions.csv'
+    out_file = db_path + div_file
 
     df_division = pd.read_csv(div_file, delimiter=',', usecols=['rowID', 'divID', 'divisionName', 'isActive'])
 
@@ -343,10 +344,11 @@ def clean_divisionCSV():
 
     df_division.fillna("NULL", inplace=True)
 
-    saveCSV(df_division, div_file)
+    saveCSV(df_division, out_file)
 
-def clean_leaguesCSV():
+def clean_leaguesCSV(db_path):
     league_file = 'Leagues.csv'
+    out_file = db_path + league_file
 
     df_league = pd.read_csv(league_file, delimiter=',')
 
@@ -358,11 +360,11 @@ def clean_leaguesCSV():
     df_league.fillna("NULL", inplace=True)
 
 
-    saveCSV(df_league, league_file)
+    saveCSV(df_league, out_file)
 
-def clean_franchisesCSV():
+def clean_TeamsFranchisesCSV(db_path):
     franchises_file = 'TeamsFranchises.csv'
-    out_file = 'Franchises.csv'
+    out_file = db_path + franchises_file
 
     df_franchises = pd.read_csv(franchises_file, delimiter=',')
 
@@ -371,14 +373,15 @@ def clean_franchisesCSV():
 
     saveCSV(df_franchises, out_file)
 
-def clean_awardsCSV():
+
+def clean_awardsCSV(db_path):
 
     # awards file dependencies
     awards_man_file = 'AwardsManagers.csv'
     awards_players_file = 'AwardsPlayers.csv'
     awards_man_share_file = 'AwardsShareManagers.csv'
     awards_players_share_file = 'AwardsSharePlayers.csv'
-    out_file = 'Awards.csv'
+    out_file = db_path + 'Awards.csv'
 
     # create dataframes of all the file dependencies
     df_awards_man = pd.read_csv(awards_man_file, delimiter=',')
@@ -442,8 +445,9 @@ def clean_awardsCSV():
 
     saveCSV(df_awards, out_file)
 
-def clean_schoolCSV():
+def clean_schoolCSV(db_path):
     school_file = 'Schools.csv'
+    out_file = db_path + school_file
 
     df_schools = pd.read_csv(school_file, delimiter=',')
 
@@ -451,10 +455,11 @@ def clean_schoolCSV():
 
     df_schools.fillna("NULL", inplace=True)
 
-    saveCSV(df_schools, school_file)
+    saveCSV(df_schools, out_file)
 
-def clean_HallOfFameCSV():
+def clean_HallOfFameCSV(db_path):
     hallOfFame_file = 'HallOfFame.csv'
+    out_file = db_path + hallOfFame_file
 
     df_halloffame = pd.read_csv(hallOfFame_file, delimiter=',')
 
@@ -466,10 +471,11 @@ def clean_HallOfFameCSV():
     df_halloffame.fillna("NULL", inplace=True)
 
 
-    saveCSV(df_halloffame, hallOfFame_file)
+    saveCSV(df_halloffame, out_file)
 
-def clean_collegePlayerCSV():
+def clean_collegePlayerCSV(db_path):
     collegePlayer_file = 'CollegePlaying.csv'
+    out_file = db_path + collegePlayer_file
 
     df_collegePlayer = pd.read_csv(collegePlayer_file, delimiter=',')
 
@@ -480,11 +486,11 @@ def clean_collegePlayerCSV():
 
     df_collegePlayer.fillna("NULL", inplace=True)
 
-    saveCSV(df_collegePlayer, collegePlayer_file)
+    saveCSV(df_collegePlayer, out_file)
 
-def clean_allStarCSV():
+def clean_AllstarFullCSV(db_path):
     allStarFull_file = 'AllstarFull.csv'
-    outFile = 'AllStar.csv'
+    outFile = db_path + allStarFull_file
 
     df_allstarfull = pd.read_csv(allStarFull_file, delimiter=',')
 
@@ -507,8 +513,9 @@ def clean_allStarCSV():
 
     saveCSV(df_allstarfull, outFile)
 
-def clean_teamsHalfCSV():
+def clean_teamsHalfCSV(db_path):
     teamsHalf_file = 'TeamsHalf.csv'
+    out_file = db_path + teamsHalf_file
 
     df_teamsHalf = pd.read_csv(teamsHalf_file, delimiter=',')
 
@@ -521,11 +528,11 @@ def clean_teamsHalfCSV():
 
     df_teamsHalf.fillna("NULL", inplace=True)
 
-    saveCSV(df_teamsHalf, teamsHalf_file)
+    saveCSV(df_teamsHalf, out_file)
 
-def clean_seriesPostCSV():
+def clean_seriesPostCSV(db_path):
     seriesPost_file = 'SeriesPost.csv'
-    outFile = 'PostSeasonSeries.csv'
+    outFile = db_path + seriesPost_file
 
     df_post = pd.read_csv(seriesPost_file, delimiter=',')
 
@@ -545,8 +552,9 @@ def clean_seriesPostCSV():
 
     saveCSV(df_post, outFile)
 
-def clean_fieldingOFCSV():
+def clean_fieldingOFCSV(db_path):
     fieldingOF_file = 'FieldingOF.csv'
+    out_file = db_path + fieldingOF_file
 
     df_fieldingOF = pd.read_csv(fieldingOF_file, delimiter=',')
 
@@ -554,10 +562,11 @@ def clean_fieldingOFCSV():
 
     df_fieldingOF.fillna("NULL", inplace=True)
 
-    saveCSV(df_fieldingOF, fieldingOF_file)
+    saveCSV(df_fieldingOF, out_file)
 
-def clean_fieldingOFSplitCSV():
+def clean_fieldingOFSplitCSV(db_path):
     fieldingOFSplit_file = 'FieldingOFsplit.csv'
+    out_file = db_path + fieldingOFSplit_file
 
     df_fieldingOFSplit = pd.read_csv(fieldingOFSplit_file, delimiter=',')
 
@@ -572,10 +581,11 @@ def clean_fieldingOFSplitCSV():
     df_fieldingOFSplit.fillna("NULL", inplace=True)
 
 
-    saveCSV(df_fieldingOFSplit, fieldingOFSplit_file)
+    saveCSV(df_fieldingOFSplit, out_file)
 
-def clean_homegamesCSV():
+def clean_homegamesCSV(db_path):
     homegames_file = 'HomeGames.csv'
+    out_file = db_path + homegames_file
 
     df_homegames = pd.read_csv(homegames_file, delimiter=',')
 
@@ -586,118 +596,100 @@ def clean_homegamesCSV():
 
     df_homegames.fillna("NULL", inplace=True)
 
-    saveCSV(df_homegames, homegames_file)
+    saveCSV(df_homegames, out_file)
 
 def main():
 
-    #change the current directory into folder with CSV files
-    os.chdir("../csv_files")
+    conn = sql.connect(user=user['username'], password=user['password'], host=user['host'], db=user['db'])
 
-    #get list of file names in directory
-    fileList = os.listdir()
+    cur = conn.cursor()
+
+    cur.execute("SELECT @@datadir;")
+
+    databasePath = cur.fetchall()[0][0]
+    databasePath = databasePath + user['db'] + '/'
 
     # clean People.csv
     print("cleaning People.csv...")
-    clean_peopleCSV()
+    clean_peopleCSV(databasePath)
 
     # clean Managers.csv
     print("cleaning Managers.csv...")
-    os.chdir("../csv_files")
-    clean_managerCSV()
+    clean_managerCSV(databasePath)
 
     # clean Batting.csv
     print("cleaning Batting.csv...")
-    os.chdir("../csv_files")
-    clean_battingCSV()
+    clean_battingCSV(databasePath)
 
     # clean Pitching.csv
     print("cleaning Pitching.csv...")
-    os.chdir("../csv_files")
-    clean_pitchingCSV()
+    clean_pitchingCSV(databasePath)
 
     # clean Fielding.csv
     print("cleaning Fielding.csv...")
-    os.chdir("../csv_files")
-    clean_fieldingCSV()
+    clean_fieldingCSV(databasePath)
 
-    # clean Players.csv dependencies: Batting.csv, Pitching.csv, Fielding.csv (in csv_cleaned)
+    # clean Players.csv dependencies: Batting.csv, Pitching.csv, Fielding.csv (in data_cleaning)
     print("cleaning Players.csv...")
-    clean_playersCSV()
+    clean_playersCSV(databasePath)
 
     # clean Salaries.csv
     print("cleaning Salaries.csv...")
-    os.chdir("../csv_files")
-    clean_salaryCSV()
+    clean_salaryCSV(databasePath)
 
     # clean Appearances.csv
-    print("cleaning PlayerPositions.csv...")
-    os.chdir("../csv_files")
-    clean_playerPositionsCSV()
+    print("cleaning Appearances.csv...")
+    clean_appearancesCSV(databasePath)
 
     # clean Parks.csv
     print("cleaning Parks.csv...")
-    os.chdir("../csv_files")
-    clean_parksCSV()
+    clean_parksCSV(databasePath)
 
-    # clean Teams.csv dependencies csv_cleaned/Parks.csv
+    # clean Teams.csv dependencies data_cleaning/Parks.csv
     print("cleaning Teams.csv...")
-    os.chdir("../csv_files")
-    clean_teamsCSV()
+    clean_teamsCSV(databasePath)
 
     # clean Division.csv
     print("cleaning Division.csv...")
-    os.chdir("../csv_files")
-    clean_divisionCSV()
+    clean_divisionCSV(databasePath)
 
     # clean Leagues.csv
     print("cleaning Leagues.csv...")
-    os.chdir("../csv_files")
-    clean_leaguesCSV()
+    clean_leaguesCSV(databasePath)
 
-    # clean Franchises.csv
-    print("cleaning Franchises.csv...")
-    os.chdir("../csv_files")
-    clean_franchisesCSV()
+    # clean TeamsFranchises.csv
+    print("cleaning TeamsFranchises.csv...")
+    clean_TeamsFranchisesCSV(databasePath)
 
     print("cleaning Awards.csv...")
-    os.chdir("../csv_files")
-    clean_awardsCSV()
+    clean_awardsCSV(databasePath)
 
     print("cleaning Schools.csv...")
-    os.chdir("../csv_files")
-    clean_schoolCSV()
+    clean_schoolCSV(databasePath)
 
     print("cleaning HallOfFame.csv...")
-    os.chdir("../csv_files")
-    clean_HallOfFameCSV()
+    clean_HallOfFameCSV(databasePath)
 
     print("cleaning CollegePlaying.csv...")
-    os.chdir("../csv_files")
-    clean_collegePlayerCSV()
+    clean_collegePlayerCSV(databasePath)
 
-    print("cleaning AllStar.csv...")
-    os.chdir("../csv_files")
-    clean_allStarCSV()
+    print("cleaning AllstarFull.csv...")
+    clean_AllstarFullCSV(databasePath)
 
     print("cleaning TeamsHalf.csv...")
-    os.chdir("../csv_files")
-    clean_teamsHalfCSV()
+    clean_teamsHalfCSV(databasePath)
 
     print("cleaning SeriesPost.csv...")
-    os.chdir("../csv_files")
-    clean_seriesPostCSV()
+    clean_seriesPostCSV(databasePath)
 
     print("cleaning FieldingOF.csv...")
-    os.chdir("../csv_files")
-    clean_fieldingOFCSV()
+    clean_fieldingOFCSV(databasePath)
 
     print("cleaning FieldingOFSplit.csv...")
-    os.chdir("../csv_files")
-    clean_fieldingOFSplitCSV()
+    clean_fieldingOFSplitCSV(databasePath)
 
     print("cleaning HomeGames.csv...")
-    os.chdir("../csv_files")
-    clean_homegamesCSV()
+    clean_homegamesCSV(databasePath)
 
 if __name__ == "__main__":
     main()
