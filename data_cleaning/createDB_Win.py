@@ -1,5 +1,5 @@
 import pymysql as sql
-from csi3335fall2021 import user
+from csi3335fall2021 import mysql
 import os
 import re
 import subprocess
@@ -17,14 +17,14 @@ def main():
 
     # create database SQL connection
     
-    con = sql.connect(user=user['username'], password=user['password'], host=user['host'])
+    con = sql.connect(user=mysql['username'], password=mysql['password'], host=mysql['host'])
     #with con:
     # create database cursor
     cur = con.cursor()
 
     cur.execute("SELECT @@datadir;")
 
-    databasePath = cur.fetchall()[0][0] + user['db'] + '\\'
+    databasePath = cur.fetchall()[0][0] + mysql['db'] + '\\'
     print("DATABASE PATHJ + ",  databasePath)
     databaseFiles = []
 
