@@ -23,6 +23,13 @@ tbody tr:nth-child(odd) {
   background-color: #fff;
 }
 
+table, tr{
+    background-color: rgba(0, 0, 0, 0.0) !important;
+}
+#hiddenColRow{
+  background-color:brown;
+}
+
 tbody tr:nth-child(even) {
   background-color: #eee;
 }
@@ -54,6 +61,10 @@ body{
 
 }
 
+#yesPlayoff{
+
+}
+
 #redirectDashboard{
   position: absolute;
   display: inline;
@@ -69,4 +80,10 @@ body{
   font-variant: normal;
   text-transform: lowercase;
   text-decoration: underline;
+}
+
+th {
+  background: black;
+  position: sticky;
+  top: 0;
 }

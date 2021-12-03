@@ -163,11 +163,11 @@ def searchResults():
         result = engine.execute(
             text(
                 f'''
-                      SELECT t.teamName, l.leagueName, t.divisionID, t.Wins, t.Losses,(t.Wins/t.GamesPlayed) as 'PCT',
+                      SELECT t.teamName, l.leagueName, t.divisionID, t.Wins, t.Losses,(t.Wins/(t.Wins+t.Losses)) as 'PCT',
                       t.DivisionWinner,t.WildcardWinner,t.LeagueChampion,t.WorldSeriesWinner
                       FROM teams t JOIN Leagues l ON(t.leagueID = l.leagueID)
                       WHERE t.year = '{year}'
-                      ORDER BY t.leagueID, t.divisionID, (t.Wins/t.GamesPlayed) DESC;
+                      ORDER BY t.leagueID, t.divisionID, (t.Wins/(t.Wins+t.Losses)) DESC;
                       '''
             )
         )
@@ -178,7 +178,7 @@ def searchResults():
             GBWinners = engine.execute(
                 text(
                     f'''
-                    SELECT t1.teamName, l1.leagueName, t1.divisionID,(t1.Wins/t1.GamesPlayed) as 'PCT',t1.Wins,t1.Losses
+                    SELECT t1.teamName, l1.leagueName, t1.divisionID,(t1.Wins/(t1.Wins+t1.Losses)) as 'PCT',t1.Wins,t1.Losses
                     FROM Teams t1 JOIN Leagues l1 ON(t1.leagueID = l1.leagueID)
                     WHERE t1.year = '{year}' AND (t1.Wins/t1.GamesPlayed) IN (
                         SELECT MAX(t.Wins/t.GamesPlayed)
@@ -194,7 +194,7 @@ def searchResults():
             GBOthers = engine.execute(
                 text(
                     f'''
-                    SELECT t1.teamName, l1.leagueName, t1.divisionID,(t1.Wins/t1.GamesPlayed) as 'PCT', t1.Wins,t1.Losses
+                    SELECT t1.teamName, l1.leagueName, t1.divisionID,(t1.Wins/(t1.Wins+t1.Losses)) as 'PCT', t1.Wins,t1.Losses
                     FROM Teams t1 JOIN Leagues l1 ON(t1.leagueID = l1.leagueID)
                     WHERE t1.year = '{year}' 
                     GROUP BY t1.leagueID, t1.divisionID, t1.teamName;
@@ -239,7 +239,7 @@ def searchResults():
             GBWinners = engine.execute(
                 text(
                     f'''
-                        SELECT t1.teamName, l1.leagueName,(t1.Wins/t1.GamesPlayed) as 'PCT',t1.Wins,t1.Losses
+                        SELECT t1.teamName, l1.leagueName,(t1.Wins/(t1.Wins+t1.Losses)) as 'PCT',t1.Wins,t1.Losses
                         FROM Teams t1 JOIN Leagues l1 ON(t1.leagueID = l1.leagueID)
                         WHERE t1.year = '{year}' AND (t1.Wins/t1.GamesPlayed) IN (
                             SELECT MAX(t.Wins/t.GamesPlayed)
@@ -255,7 +255,7 @@ def searchResults():
             GBOthers = engine.execute(
                 text(
                     f'''
-                        SELECT t1.teamName, l1.leagueName,(t1.Wins/t1.GamesPlayed) as 'PCT', t1.Wins,t1.Losses
+                        SELECT t1.teamName, l1.leagueName,(t1.Wins/(t1.Wins+t1.Losses)) as 'PCT', t1.Wins,t1.Losses
                         FROM Teams t1 JOIN Leagues l1 ON(t1.leagueID = l1.leagueID)
                         WHERE t1.year = '{year}' 
                         GROUP BY t1.leagueID, t1.teamName;
@@ -286,8 +286,42 @@ def searchResults():
                             map[str(rowONE['teamName'])] = ((rowTWO['Wins'] - rowONE['Wins'])
                                                             + (rowONE['Losses'] - rowTWO['Losses'])) / 2
 
+            #for key, value in map.items():
+                #print(key, ' : ', value)
+        # NEW CODE HERE, If this breaks then uncomment the other return and comment out the code below:
+        # ---------------------------------------------------------------------------------------------------
+        resultsList = []
+        for row in result.fetchall():
+            resultsList.append(row)
 
-        return render_template('searchResults.html', title='Results',output_data=result.fetchall(), gbData = map.items())
+        count = 0
+        currentLeague = ""
+        currentDivision = ""
+        ndx = 0
+        for row in resultsList:
+            if count == 0:
+                currentLeague = row['leagueName']
+                currentDivision = row['divisionID']
+                count = 1
+            else:
+                if currentLeague != row['leagueName'] or currentDivision != row['divisionID']:
+                    #insert at that index an empty row so that it will be divided for the final output
+                    resultsList.insert(ndx,"")
+                    currentLeague = row['leagueName']
+                    currentDivision = row['divisionID']
+
+            ndx = ndx + 1
+
+
+        #for row in resultsList:
+            #print(row)
+
+
+        return render_template('searchResults.html', title='Results', output_data=resultsList, gbData=map.items(), theYear = year)
+
+        #--------------------------------------------------------------------------------------------------------------
+
+        #return render_template('searchResults.html', title='Results',output_data=result.fetchall(), gbData = map.items())
 
     return render_template('searchResults.html', title='Results')
 
