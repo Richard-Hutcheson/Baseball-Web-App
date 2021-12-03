@@ -14,123 +14,125 @@
 
 {% block content %}
 <body>
-
     <nav class = "navbar">
-         <p id = "usernameID">{{ username }}</p>
-        <a id = "redirectDashboard" href = "/dashboard"> Back to dashboard</a>
+        <a id = "redirectDashboard" href = "/dashboard">BACK</a>
     </nav>
+    <div class = "bodyContent">
+        <div class = "headerWrapper">
+            <h1 class = "header"> Standings for '<span id = "searchedYear">{{ theYear }}</span>' </h1>
+            <h1 class = "header">Playoff Results:</h1>
+        </div>
 
-    <h1 id = "Standings"> Standings for {{ theYear }}:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Playoff Results:</h1></div>
-    <div class="animated pulse">
-        <table>
-            <thead>
-            <tr>
-                <th>Team Name</th>
-                <th>League</th>
-                <th>Division</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th>PCT</th>
-                <th>Games Behind (GB)</th>
-                <th id = hiddenColRow></th>
-                <th>Division Winner</th>
-                <th>Wild Card Winner</th>
-                <th>League Champion</th>
-                <th>World Series Winner</th>
-            </tr>
-            </thead>
-            <tbody>
-                {% for row in output_data %}
-                    {% if row|string() != '' %}
-                        <tr>
-                            <td>{{row[0]}}</td>
-                            <td>{{row[1]}}</td>
-
-                            {% if row[2]|string() == "C"|string() %}
-                                 {% set output = 'Central' %}
-                            {% elif row[2]|string() == "E"|string() %}
-                                 {% set output = 'East' %}
-                            {% elif row[2]|string() == "W"|string() %}
-                                 {% set output = 'West' %}
-                            {% else %}
-                                {% if row[0]|string() == ""|string() %}
-                                    {% set output = '' %}
+        <div class="animated pulse">
+            <table>
+                <thead>
+                <tr>
+                    <th>Team Name</th>
+                    <th>League</th>
+                    <th>Division</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>PCT</th>
+                    <th>Games Behind (GB)</th>
+                    <th id = hiddenColRow></th>
+                    <th>Division Winner</th>
+                    <th>Wild Card Winner</th>
+                    <th>League Champion</th>
+                    <th>World Series Winner</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for row in output_data %}
+                        {% if row|string() != '' %}
+                            <tr>
+                                <td>{{row[0]}}</td>
+                                <td>{{row[1]}}</td>
+    
+                                {% if row[2]|string() == "C"|string() %}
+                                     {% set output = 'Central' %}
+                                {% elif row[2]|string() == "E"|string() %}
+                                     {% set output = 'East' %}
+                                {% elif row[2]|string() == "W"|string() %}
+                                     {% set output = 'West' %}
                                 {% else %}
-                                    {% set output = 'N/A' %}
+                                    {% if row[0]|string() == ""|string() %}
+                                        {% set output = '' %}
+                                    {% else %}
+                                        {% set output = 'N/A' %}
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
-                            <td>{{output}}</td>
-                            <td>{{row[3]}}</td>
-                            <td>{{row[4]}}</td>
-                            <td>{{row[5]}}</td>
-                            {% for key,value in gbData %}
-                                 {% if row[0]|string() == key|string() %}
-                                     <td>{{value}}</td>
+                                <td>{{output}}</td>
+                                <td>{{row[3]}}</td>
+                                <td>{{row[4]}}</td>
+                                <td>{{row[5]}}</td>
+                                {% for key,value in gbData %}
+                                     {% if row[0]|string() == key|string() %}
+                                         <td>{{value}}</td>
+                                    {% endif %}
+                                {% endfor %}
+    
+                                <td id = hiddenColRow></td>
+    
+                                {% if row[6]|string() == "Y"|string() %}
+                                    {% set divOutput = 'YES' %}
+                                    <td style= "color: #208b27;">{{divOutput}}</td>
+                                {% elif  row[6]|string() == "None"|string() %}
+                                    {% set divOutput = 'N/A' %}
+                                    <td>{{divOutput}}</td>
+                                {% else %}
+                                    <td>{{row[6]}}</td>
                                 {% endif %}
-                            {% endfor %}
-
+    
+                                {% if row[7]|string() == "Y"|string() %}
+                                    {% set divOutput = 'YES' %}
+                                    <td style= "color: #208b27;">{{divOutput}}</td>
+                                {% elif  row[7]|string() == "None"|string() %}
+                                    {% set divOutput = 'N/A' %}
+                                    <td>{{divOutput}}</td>
+                                {% else %}
+                                    <td>{{row[7]}}</td>
+                                {% endif %}
+    
+                                {% if row[8]|string() == "Y"|string() %}
+                                    {% set divOutput = 'YES' %}
+                                    <td style= "color: #208b27;">{{divOutput}}</td>
+                                {% elif  row[8]|string() == "None"|string() %}
+                                    {% set divOutput = 'N/A' %}
+                                    <td>{{divOutput}}</td>
+                                {% else %}
+                                    <td>{{row[8]}}</td>
+                                {% endif %}
+    
+                                {% if row[9]|string() == "Y"|string() %}
+                                    {% set divOutput = 'YES' %}
+                                    <td style= "color: #208b27;">{{divOutput}}</td>
+                                {% elif  row[9]|string() == "None"|string() %}
+                                    {% set divOutput = 'N/A' %}
+                                    <td>{{divOutput}}</td>
+                                {% else %}
+                                    <td>{{row[9]}}</td>
+                                {% endif %}
+    
+                            </tr>
+                        {% else %}
                             <td id = hiddenColRow></td>
-
-                            {% if row[6]|string() == "Y"|string() %}
-                                {% set divOutput = 'YES' %}
-                                <td style= "color: #208b27;">{{divOutput}}</td>
-                            {% elif  row[6]|string() == "None"|string() %}
-                                {% set divOutput = 'N/A' %}
-                                <td>{{divOutput}}</td>
-                            {% else %}
-                                <td>{{row[6]}}</td>
-                            {% endif %}
-
-                            {% if row[7]|string() == "Y"|string() %}
-                                {% set divOutput = 'YES' %}
-                                <td style= "color: #208b27;">{{divOutput}}</td>
-                            {% elif  row[7]|string() == "None"|string() %}
-                                {% set divOutput = 'N/A' %}
-                                <td>{{divOutput}}</td>
-                            {% else %}
-                                <td>{{row[7]}}</td>
-                            {% endif %}
-
-                            {% if row[8]|string() == "Y"|string() %}
-                                {% set divOutput = 'YES' %}
-                                <td style= "color: #208b27;">{{divOutput}}</td>
-                            {% elif  row[8]|string() == "None"|string() %}
-                                {% set divOutput = 'N/A' %}
-                                <td>{{divOutput}}</td>
-                            {% else %}
-                                <td>{{row[8]}}</td>
-                            {% endif %}
-
-                            {% if row[9]|string() == "Y"|string() %}
-                                {% set divOutput = 'YES' %}
-                                <td style= "color: #208b27;">{{divOutput}}</td>
-                            {% elif  row[9]|string() == "None"|string() %}
-                                {% set divOutput = 'N/A' %}
-                                <td>{{divOutput}}</td>
-                            {% else %}
-                                <td>{{row[9]}}</td>
-                            {% endif %}
-
-                        </tr>
-                    {% else %}
-                        <td id = hiddenColRow></td>
-                        <td id = hiddenColRow></td>
-                        <td id = hiddenColRow></td>
-                        <td id = hiddenColRow></td>
-                        <td id = hiddenColRow></td>
-                        <td id = hiddenColRow></td>
-                        <td id = hiddenColRow></td>
-                        <td id = hiddenColRow></td>
-                        <td id = hiddenColRow></td>
-                        <td id = hiddenColRow></td>
-                        <td id = hiddenColRow></td>
-                        <td id = hiddenColRow></td>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+                            <td id = hiddenColRow></td>
+                            <td id = hiddenColRow></td>
+                            <td id = hiddenColRow></td>
+                            <td id = hiddenColRow></td>
+                            <td id = hiddenColRow></td>
+                            <td id = hiddenColRow></td>
+                            <td id = hiddenColRow></td>
+                            <td id = hiddenColRow></td>
+                            <td id = hiddenColRow></td>
+                            <td id = hiddenColRow></td>
+                            <td id = hiddenColRow></td>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-
 </body>
 
 

@@ -91,7 +91,7 @@ def dashboard():
             #GET PLAYERS FROM FAVORITE TEAM DURING SPECIFIED YEAR
             result = engine.execute(text(
                 f'''
-                SELECT concat(nameFirst, ' ', nameLast) as name, birthYear as birthyear, concat(birthCity, ', ', birthState, ', ', birthCountry) as birthPlace, p.personID as personID
+                SELECT concat(nameFirst, ' ', nameLast) as name, birthYear as birthyear, birthCity as birthCity, birthState as birthState, birthCountry as birthCountry, p.personID as personID
                 FROM people as p, teams as t, players as pl
                 WHERE p.personID = pl.personID AND t.teamID = pl.teamID AND pl.year = '{faveTeamYear}' AND t.teamName = '{faveTeam}' AND t.year = pl.year
                 GROUP BY p.personID
@@ -121,10 +121,19 @@ def dashboard():
                         isBatter = 'N'
                         isPitcher = 'Y'
                         break
+                birthplace = ''
+                if (row['birthCity'] == None and row['birthCountry'] == None and row['birthCountry'] == None):
+                    birthplace = 'unknown'
+                else:
+                    city = (row['birthCity'] + ', ')  if row['birthCity'] != None else ''
+                    state = (row['birthState'] + ', ') if row['birthState'] != None else ''
+                    country = (row['birthCountry']) if row['birthCountry'] != None else ''
+                    birthplace = city + state + country
+
                 player = {
                     'name': row['name'],
                     'age': age,
-                    'birthPlace': row['birthPlace'],
+                    'birthPlace': birthplace,
                     'batter': isBatter,
                     'pitcher': isPitcher,
                 }
