@@ -1,31 +1,31 @@
+
+
 table{
-  background-color: #333;
+  background-color: rgba(206, 188, 135, 0.705);
   width: 100px;
-  border: 1px solid ghostwhite;
+  border: 1px solid rgb(245, 237, 212);
   font-size: 20px;
   text-align:center;
   margin-left: auto;
   margin-right: auto;
-  color: ghostwhite;
+  color: black;
   padding: 4px 10px;
 }
 th, td {
-  background-color: #333;
-  border: 1px solid ghostwhite;
+  background-color: rgb(245, 237, 212);
+  border: 1px solid gray;
   font-size: 20px;
   text-align:center;
   margin-left: auto;
   margin-right: auto;
-  color: ghostwhite;
+  color: black;
   padding: 4px 10px;
 }
-tbody tr:nth-child(odd) {
-  background-color: #fff;
+
+#hiddenColRow{
+  background-color:rgb(246, 246, 246);
 }
 
-tbody tr:nth-child(even) {
-  background-color: #eee;
-}
 #usernameID{
     position: absolute;
     display: inline;
@@ -33,13 +33,27 @@ tbody tr:nth-child(even) {
     left: 3rem;
     opacity: 100%;
     font-size: larger;
+    color:black;
 }
 body{
   background: url("img/resultsImage.jpg") no-repeat center center fixed;
   background-size: cover;
+  font-family: 'Roboto Slab', serif;
+  min-height: 100vh;
 }
-
-#Standings{
+.bodyContent{
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  margin-top: 3em;
+}
+.headerWrapper{
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto;
+  text-align: center;
+}
+.header{
   text-align: center;
   font-family: Impact, Charcoal, sans-serif;
   font-size: 36px;
@@ -51,22 +65,38 @@ body{
   font-style: normal;
   font-variant: normal;
   text-transform: uppercase;
-
+  text-shadow: rgb(29, 29, 29) 0px 0px 10px;
+}
+#searchedYear{
+  color:rgb(126, 177, 126);
+  text-shadow: rgb(0, 0, 0) 0px 0px 10px;
 }
 
 #redirectDashboard{
   position: absolute;
   display: inline;
-  right: 3rem;
-  text-align: right;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-  letter-spacing: 2px;
-  word-spacing: 2px;
-  color: #FFFFFF;
-  font-weight: 700;
-  font-style: normal;
-  font-variant: normal;
-  text-transform: lowercase;
-  text-decoration: underline;
+  right: 10px;
+  top: 10px;
+  background-color: rgb(245, 245, 245);
+  border-radius: .5em;
+  border-style: solid;
+  border-width: .5em;
+  border-color: rgb(245, 245, 245);
+  text-decoration: none;
+  color: black;
+  transition-duration: .5s;
+  font-family:monospace;
+  font-weight: bold;
+  width: 100px;
+  text-align: center;
+}
+#redirectDashboard:hover{
+  opacity: 75%;
+}
+
+
+th {
+  background: white;
+  position: sticky;
+  top: 0;
 }
