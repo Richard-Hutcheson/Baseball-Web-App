@@ -8,7 +8,10 @@ Team Members:
 
 
 ## Install Instructions
-* 
+1. Ensure you have correct credentials for username and password in csi3335fall2021.py
+2. Follow the Create Database instructions in the section below
+3. Navigate to the root project folder (Baseball-Web-App)
+4. run flask with "flask run", ensure .flaskenv has FLASK_APP environment variable saved
 
 # Project Dependencies (using Anaconda
 * pip install python-dotenv
@@ -22,15 +25,15 @@ Team Members:
 #Create database (RUN THIS BEFORE STARTING THE FLASK APP)
 
 #MacOS 
-* Navigate to the data_cleaning directory in the project.
-* Ensure that RAN_Mac.sql, csvParser.py, and createDB_Mac.py are in data_cleaning.
-* Ensure the .csv files are in data_cleaning directory. 
-* Run the createDB_Mac.py script ("python createDB_Mac.py").
-* Congrats! database should be created!
+1. Navigate to the data_cleaning directory in the project.
+2. Ensure that RAN_Mac.sql, csvParser.py, and createDB_Mac.py are in data_cleaning.
+3. Ensure the .csv files are in data_cleaning directory. 
+4. Run the createDB_Mac.py script ("python createDB_Mac.py").
+5. Congrats! database created!
 
 #Windows
-* Navigate to the data_cleaning directory in the project.
-* Ensure that RAN_Win.sql, csvParser.py, and createDB_Win.py are present in data_cleaning.
-* Ensure the .csv files are in data_cleaning directory.
-* Run the createDB_Win.py script ("python createDB_Win.py")
-* Congrats! database should be created!
+1. Navigate to the data_cleaning directory in the project.
+2. Ensure that RAN_Win.sql, csvParser.py, and createDB_Win.py are present in data_cleaning.
+3. Ensure the .csv files are in data_cleaning directory.
+4. Run the createDB_Win.py script ("python createDB_Win.py")
+5. Congrats! database should be created!
