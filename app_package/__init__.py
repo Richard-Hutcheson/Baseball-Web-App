@@ -1,16 +1,15 @@
-from flask_bcrypt import Bcrypt
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 from myConfig import Config
-from csi3335fall2021 import user
+from csi3335fall2021 import mysql
 import pymysql
 
 app = Flask(__name__)
 
 # create a new database in terminal called baseballapp
-engineUrl = 'mysql+pymysql://' + user['username'] + ':' + user['password'] + '@' + user['host'] + ':3306/' + user['db']
+engineUrl = 'mysql+pymysql://' + mysql['username'] + ':' + mysql['password'] + '@' + mysql['host'] + ':3306/' + mysql['db']
 app.config['SQLALCHEMY_DATABASE_URI'] = engineUrl
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_object(Config)

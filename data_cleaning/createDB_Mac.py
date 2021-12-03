@@ -1,5 +1,5 @@
 import pymysql as sql
-from csi3335fall2021 import user
+from csi3335fall2021 import mysql
 import os
 import re
 import subprocess
@@ -16,7 +16,7 @@ def printCursor(cur):
 def main():
 
     # create database SQL connection
-    con = sql.connect(user=user['username'], password=user['password'], host=user['host'])
+    con = sql.connect(user=mysql['username'], password=mysql['password'], host=mysql['host'])
 
     with con:
         # create database cursor
@@ -24,7 +24,7 @@ def main():
 
         cur.execute("SELECT @@datadir;")
 
-        databasePath = cur.fetchall()[0][0] + user['db'] + '/'
+        databasePath = cur.fetchall()[0][0] + mysql['db'] + '/'
         databaseFiles = []
 
         # remove existing csvs to allow database to drop if needed

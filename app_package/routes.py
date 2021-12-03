@@ -39,7 +39,7 @@ def dashboard():
         #GET USER'S FAVORITE TEAM AND FAVORITE TEAM YEAR
         result = engine.execute(text(
             f'''
-            SELECT favoriteTeam, favoriteYear
+            SELECT favoriteTeam
             FROM users
             WHERE username = '{usernameUp}'
             '''

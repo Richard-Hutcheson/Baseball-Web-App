@@ -1,7 +1,7 @@
 mysql = {
 	'host': 'localhost',
 	'username': 'root',
-	'password' : 'pass',
+	'password' : 'csi',
 	'db': 'RAN'
 }
 

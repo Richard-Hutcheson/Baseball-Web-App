@@ -3,9 +3,8 @@ import csv
 import os
 import pandas as pd
 import pymysql as sql
-from csi3335fall2021 import user
+from csi3335fall2021 import mysql
 import RenameColumns as cols
-import numpy
 
 def saveCSV(dataFrame, outpath):
     dataFrame.to_csv(outpath, index=False)
@@ -600,14 +599,14 @@ def clean_homegamesCSV(db_path):
 
 def main():
 
-    conn = sql.connect(user=user['username'], password=user['password'], host=user['host'], db=user['db'])
+    conn = sql.connect(user=mysql['username'], password=mysql['password'], host=mysql['host'], db=mysql['db'])
 
     cur = conn.cursor()
 
     cur.execute("SELECT @@datadir;")
 
     databasePath = cur.fetchall()[0][0]
-    databasePath = databasePath + user['db'] + '/'
+    databasePath = databasePath + mysql['db'] + '/'
 
     # clean People.csv
     print("cleaning People.csv...")

@@ -10,22 +10,14 @@ Team Members:
 ## Install Instructions
 * 
 
-# Anaconda Dependencies
-* conda install -c conda-forge flask-sqlalchemy
-* conda install -c conda-forge sqlalchemy-utils
-* conda install -c anaconda colorama
-* conda install -c anaconda pymysql
+# Project Dependencies (using Anaconda
 * pip install python-dotenv
 * conda install -c anaconda flask
+* conda install -c conda-forge flask-sqlalchemy
+* conda install -c conda-forge sqlalchemy-utils
+* conda install -c anaconda pymysql
 * conda install -c anaconda pandas
-* werkzeug
-
-TIP:
-
-conda list --export > package-list.txt
-conda create -n myenv --file package-list.txt
-
-run flask with "flask run", ensure .flaskenv has FLASK_APP environment variable saved
+* conda install -c anaconda werkzeug
 
 #SQL BaseballAPP.sql instructions for mac
 * run csvParser.py (if needed, change directory in csvParser.py from ./csv_files to: os.chdir("../csv_files"))
