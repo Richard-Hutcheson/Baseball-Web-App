@@ -28,10 +28,8 @@ def main():
     cur.execute("SELECT @@datadir;")
 
     databasePath = cur.fetchall()[0][0] + mysql['db'] + '\\'
-<<<<<<< HEAD
-=======
+
     print("DATABASE PATHJ + ",  databasePath)
->>>>>>> Austinb
     databaseFiles = []
 
     # remove existing csvs to allow database to drop if needed
