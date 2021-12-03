@@ -5,7 +5,7 @@
 files=`ls *.csv`
 
 
-echo "USE baseballAPP;"
+echo "USE RAN;"
 echo
 echo
 

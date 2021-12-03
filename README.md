@@ -19,14 +19,18 @@ Team Members:
 * conda install -c anaconda pandas
 * conda install -c anaconda werkzeug
 
-#SQL BaseballAPP.sql instructions for mac
-* run csvParser.py (if needed, change directory in csvParser.py from ./csv_files to: os.chdir("../csv_files"))
-* copy all CSVs /usr/local/var/mysql/baseballAPP/
-* go to current directory of the BaseballApp.sql (in csv_cleaned) script and run in SQL
-* after running again, re-paste all the CSVs into /usr/local/var/mysql/baseballAPP/
-* run BaseballAPP.sql once more after using the database (\. BaseballApp.sql)
+#Create database (RUN THIS BEFORE STARTING THE FLASK APP)
 
-#SQL BaseballApp.sql instructions for Windows
-* copy csi3335fall2021.py into same dir as csvParser.py
-* copy paste all cleaned csv files into MYSQL/bin/baseballapp/
-* move RAN_Mac.sql to MYSQL/ and run from SQL terminal
+#MacOS 
+* Navigate to the data_cleaning directory in the project.
+* Ensure that RAN_Mac.sql, csvParser.py, and createDB_Mac.py are in data_cleaning.
+* Ensure the .csv files are in data_cleaning directory. 
+* Run the createDB_Mac.py script ("python createDB_Mac.py").
+* Congrats! database should be created!
+
+#Windows
+* Navigate to the data_cleaning directory in the project.
+* Ensure that RAN_Win.sql, csvParser.py, and createDB_Win.py are present in data_cleaning.
+* Ensure the .csv files are in data_cleaning directory.
+* Run the createDB_Win.py script ("python createDB_Win.py")
+* Congrats! database should be created!

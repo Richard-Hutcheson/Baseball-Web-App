@@ -1,8 +1,11 @@
 import pymysql as sql
-from csi3335fall2021 import mysql
 import os
 import re
 import subprocess
+import sys
+
+sys.path.append('../')
+from csi3335fall2021 import mysql
 
 def printCursor(cur):
     count = 0
@@ -25,6 +28,10 @@ def main():
     cur.execute("SELECT @@datadir;")
 
     databasePath = cur.fetchall()[0][0] + mysql['db'] + '\\'
+<<<<<<< HEAD
+=======
+    print("DATABASE PATHJ + ",  databasePath)
+>>>>>>> Austinb
     databaseFiles = []
 
     # remove existing csvs to allow database to drop if needed

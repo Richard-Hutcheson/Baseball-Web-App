@@ -1,10 +1,12 @@
-# Import Module
-import csv
 import os
 import pandas as pd
 import pymysql as sql
-from csi3335fall2021 import mysql
 import RenameColumns as cols
+import numpy
+import sys
+
+sys.path.append('../')
+from csi3335fall2021 import mysql
 
 def saveCSV(dataFrame, outpath):
     dataFrame.to_csv(outpath, index=False)

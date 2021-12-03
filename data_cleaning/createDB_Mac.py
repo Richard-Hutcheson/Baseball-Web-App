@@ -1,8 +1,11 @@
 import pymysql as sql
-from csi3335fall2021 import mysql
 import os
+import sys
 import re
 import subprocess
+
+sys.path.append('../')
+from csi3335fall2021 import mysql
 
 def printCursor(cur):
     count = 0
@@ -20,6 +23,7 @@ def main():
 
     with con:
         # create database cursor
+
         cur = con.cursor()
 
         cur.execute("SELECT @@datadir;")
